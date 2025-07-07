@@ -14,4 +14,10 @@ public class ControllerPoetUp {
         if (result==0) return "Utente registrato";
         else return "Registrazione fallita";
 	}
+	
+	public static String autenticazione(String email, String pwd) {
+		Integer result = EntityPoetUp.autenticazione(email,pwd);
+		if(result == 0) return "Utente autenticato";
+		else return "Autenticazione fallita";
+	}
 }

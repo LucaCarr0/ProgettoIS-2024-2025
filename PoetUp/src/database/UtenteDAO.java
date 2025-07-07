@@ -8,6 +8,7 @@ public class UtenteDAO {
 	private String email;
 	private String pwd;
 	private boolean amministratore;
+	private int id;
 	
 	public UtenteDAO() {
 
@@ -48,7 +49,9 @@ public class UtenteDAO {
 				UtenteDAO utente_temp = new UtenteDAO(); 
 				
 				utente_temp.setEmail(rs.getString("email"));
-				utente_temp.setPwd(rs.getString("cognome"));
+				utente_temp.setPwd(rs.getString("password"));
+				utente_temp.setAmministratore(rs.getBoolean("amministratore"));
+				utente_temp.setId(rs.getInt("id"));
 				lista_utenti_temp.add(utente_temp); 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -82,6 +85,15 @@ public class UtenteDAO {
 	public void setAmministratore(boolean amministratore) {
 		this.amministratore = amministratore;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	
 	
 

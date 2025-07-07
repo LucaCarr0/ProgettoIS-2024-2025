@@ -6,8 +6,8 @@ public class EntityUtente {
 
 	private String email;
 	private String pwd;
-	
-	
+	private int id;
+	private boolean amministratore;
 	
 	public EntityUtente(){ 
 		
@@ -39,6 +39,22 @@ public class EntityUtente {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isAmministratore() {
+		return amministratore;
+	}
+
+	public void setAmministratore(boolean amministratore) {
+		this.amministratore = amministratore;
 	}
 
 	public void inizializzaProfilo(int id_utente, String nickname) {

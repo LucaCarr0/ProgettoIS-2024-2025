@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import database.UtenteDAO;
+import session.SessioneUtente;
 
 public class EntityPoetUp {
 	
@@ -13,7 +14,6 @@ public class EntityPoetUp {
 	
 	public static Integer registrazione(String nickname,String email,String pwd) {
 		caricaListaDaDB();
-		//da modificare serve considerare amministratore e profilo
 		EntityUtente utente_da_registrare=new EntityUtente();
 		utente_da_registrare.setEmail(email);
 		utente_da_registrare.setPwd(pwd);
@@ -33,6 +33,17 @@ public class EntityPoetUp {
 		}	
 	}
 	
+	public static Integer autenticazione(String email,String pwd) {
+		caricaListaDaDB();
+		EntityUtente utente_da_autenticare=new EntityUtente();
+		utente_da_autenticare.setEmail(email);
+		utente_da_autenticare.setPwd(pwd);
+		if (corrispondenzaUtente(utente_da_autenticare)) {
+			return 0;
+		}
+		return -1;
+	}
+	
 	public static boolean esisteUtente(EntityUtente utente_da_registrare) {
         String email=utente_da_registrare.getEmail();
         for(EntityUtente u : elencoUtenti) {
@@ -42,6 +53,20 @@ public class EntityPoetUp {
         }
         return false;
     }
+	
+	public static boolean corrispondenzaUtente(EntityUtente utente_da_autenticare) {
+		String password = utente_da_autenticare.getPwd();
+		String email=utente_da_autenticare.getEmail();
+        for(EntityUtente u : elencoUtenti) {
+            if(u.getEmail().equals(email) && u.getPwd().equals(password)) {
+            	boolean amministratore = u.isAmministratore();
+            	int id = u.getId();
+            	SessioneUtente.login(id, amministratore);
+                return true;
+            }
+        }
+        return false;
+	}
 	
 	public static void caricaListaDaDB() { //metodo per caricare la lista degli studenti dal DB
 		
@@ -53,6 +78,8 @@ public class EntityPoetUp {
 			EntityUtente utente_temp = new EntityUtente();
 			utente_temp.setEmail(lista_db_utenti.get(i).getEmail());
 			utente_temp.setPwd(lista_db_utenti.get(i).getPwd());
+			utente_temp.setAmministratore(lista_db_utenti.get(i).isAmministratore());
+			utente_temp.setId(lista_db_utenti.get(i).getId());
 			
 			System.out.println(utente_temp);
 			

@@ -17,16 +17,6 @@ public class RegistrationForm extends JFrame {
 
 	private JLabel resultLabel; // Label per mostrare il risultato
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				RegistrationForm frame = new RegistrationForm();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public RegistrationForm() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,7 +84,7 @@ public class RegistrationForm extends JFrame {
 
 		// Etichetta risultato (visibile sotto ai campi)
 		resultLabel = new JLabel("");
-		resultLabel.setBounds(337, 425, 312, 30);
+		resultLabel.setBounds(337, 425, 312, 67);
 		resultLabel.setForeground(new Color(200, 50, 50));
 		resultLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		contentPane.add(resultLabel);
@@ -138,7 +128,7 @@ public class RegistrationForm extends JFrame {
 				//la password deve avere almeno una cifra [0-9], almeno un carattere speciale tra quelli indicati, e una lunghezza tra gli 8 e i 32 caratteri 
 				
 				else if (!pwd.matches("^(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}|\\[\\]:;\"'<>,.?/]).{8,32}$")) {
-					resultLabel.setText("La password deve contenere almeno un numero, un carattere speciale e avere tra 8 e 32 caratteri.");
+					resultLabel.setText("<html>La password deve contenere almeno un <br> numero, un carattere speciale e avere tra 8 e 32 caratteri.<html>");
 					resultLabel.setForeground(Color.RED);
 					return;
 				}
@@ -153,9 +143,22 @@ public class RegistrationForm extends JFrame {
 				
 				else {
 					String esito = ControllerPoetUp.registrazione(nickname,email,pwd);
-					resultLabel.setText(esito);
-					resultLabel.setForeground(new Color(34, 139, 34)); // verde
+					if (esito.equals("Registrazione completata!")) {
+						JOptionPane.showMessageDialog(null, "Registrazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+				 
+						// Chiudi il form corrente
+						dispose();
+				 
+						// Torna alla schermata di login
+						LoginForm login = new LoginForm();
+						login.setVisible(true);
+					} else {
+						resultLabel.setText(esito);
+						resultLabel.setForeground(Color.RED);
+					}
 				}
+				
+				
 
 				
 			}
