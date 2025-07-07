@@ -105,7 +105,7 @@ public class LoginForm extends JFrame {
 				if (autenticato.equals("Utente autenticato")) {
 					resultLabel.setForeground(new Color(34, 139, 34));
 					resultLabel.setText(autenticato);
-					SessioneUtente.login(utente.getId());
+					
 					 
 				    // 2. Apri la Home
 				    HomePage home = new HomePage();

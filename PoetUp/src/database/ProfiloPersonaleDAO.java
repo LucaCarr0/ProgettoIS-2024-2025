@@ -20,9 +20,13 @@ public class ProfiloPersonaleDAO {
 		
 		int ret = 0;
 		
-		String query = "INSERT INTO profili(nome, cognome, immagineProfilo, biografia, nickname, dataNascita) " +
+		/*String query = "INSERT INTO ProfiliPersonali(nome, cognome, immagineProfilo, biografia, nickname, dataNascita, utente) " +
 	               "VALUES ('" + nome + "', '" + cognome + "', '" + immagineProfilo + "', '" + biografia + 
-	               "', '" + nickname + "', '" + dataNascita + "')";		
+	               "', '" + nickname + "', " + "NULL" +  ", '" + id_utente+"')";		*/
+		String query = "INSERT INTO ProfiliPersonali(nome, cognome, immagineProfilo, biografia, nickname, dataNascita, utente) " +
+	               "VALUES (NULL, NULL, NULL, NULL, '" + nickname + "', NULL, " + id_utente + ")";
+
+		
 		try {
 			
 			ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);

@@ -18,7 +18,7 @@ public class UtenteDAO {
 		
 		int ret = 0;
 		
-		String query = "INSERT INTO utenti(email, password, amministratore) VALUES ('" + this.email + "', '" + this.pwd + "', '" + 0 +"')"; //su DB amministratore è TINYINT 0 se è falso 1 se vero
+		String query = "INSERT INTO Utenti(email, password, amministratore) VALUES ('" + this.email + "', '" + this.pwd + "', '" + 0 +"')"; //su DB amministratore è TINYINT 0 se è falso 1 se vero
 		System.out.println(query);
 		try {
 			
@@ -38,7 +38,7 @@ public class UtenteDAO {
 		//creo il la lista di appoggio
 		ArrayList<UtenteDAO> lista_utenti_temp = new ArrayList<>();
 		
-		String query = "SELECT * FROM utenti;";
+		String query = "SELECT * FROM Utenti;";
 		
 		try {
 			

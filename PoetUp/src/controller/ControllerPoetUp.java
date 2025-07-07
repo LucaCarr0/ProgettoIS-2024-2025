@@ -11,8 +11,8 @@ public class ControllerPoetUp {
         // Salva il nuovo utente
         Integer result = EntityPoetUp.registrazione(nickname,email,pwd);
 
-        if (result==0) return "Utente registrato";
-        else return "Registrazione fallita";
+        if (result==0) return "Registrazione completata!";
+        else return "Utente già esistente!";
 	}
 	
 	public static String autenticazione(String email, String pwd) {
