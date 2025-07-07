@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class UtenteDAO {
 	private String email;
 	private String pwd;
+	private boolean amministratore;
 	
 	public UtenteDAO() {
 
@@ -16,11 +17,11 @@ public class UtenteDAO {
 		
 		int ret = 0;
 		
-		String query = "INSERT INTO studenti(email, password) VALUES ('" + this.email + "', '" + this.pwd + "')";
+		String query = "INSERT INTO utenti(email, password, amministratore) VALUES ('" + this.email + "', '" + this.pwd + "', '" + 0 +"')"; //su DB amministratore è TINYINT 0 se è falso 1 se vero
 		System.out.println(query);
 		try {
 			
-			ret = DBConnectionManager.updateQueryReturnGeneratedKey(query);
+			ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
 			
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -44,12 +45,11 @@ public class UtenteDAO {
 			
 				while(rs.next()) { //finche ho un risultato
 				
-				UtenteDAO utente_temp = new UtenteDAO(); //mi creo un nuovo studente
-				//mi vado a prendere i dati, accedendo tramite il nome dell'attributo-colonna
+				UtenteDAO utente_temp = new UtenteDAO(); 
 				
 				utente_temp.setEmail(rs.getString("email"));
 				utente_temp.setPwd(rs.getString("cognome"));
-				lista_utenti_temp.add(utente_temp); //AGGIUNGO lo studente appena creato alla lista che devo ritornare
+				lista_utenti_temp.add(utente_temp); 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -73,6 +73,14 @@ public class UtenteDAO {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public boolean isAmministratore() {
+		return amministratore;
+	}
+
+	public void setAmministratore(boolean amministratore) {
+		this.amministratore = amministratore;
 	}
 	
 	

@@ -10,7 +10,7 @@ public class ProfiloPersonaleDAO {
 	private String cognome;
 	private String immagineProfilo;
 	private String biografia;
-	private Date data_di_nascita;
+	private Date dataNascita;
 	
 	public ProfiloPersonaleDAO(){
 		
@@ -20,11 +20,12 @@ public class ProfiloPersonaleDAO {
 		
 		int ret = 0;
 		
-		String query = "INSERT INTO studenti(email, password) VALUES ('" + this.email + "', '" + this.pwd + "')";
-		System.out.println(query);
+		String query = "INSERT INTO profili(nome, cognome, immagineProfilo, biografia, nickname, dataNascita) " +
+	               "VALUES ('" + nome + "', '" + cognome + "', '" + immagineProfilo + "', '" + biografia + 
+	               "', '" + nickname + "', '" + dataNascita + "')";		
 		try {
 			
-			ret = DBConnectionManager.updateQueryReturnGeneratedKey(query);
+			ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
 			
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -67,10 +68,10 @@ public class ProfiloPersonaleDAO {
 		this.biografia = biografia;
 	}
 	public Date getData_di_nascita() {
-		return data_di_nascita;
+		return dataNascita;
 	}
 	public void setData_di_nascita(Date data_di_nascita) {
-		this.data_di_nascita = data_di_nascita;
+		this.dataNascita = data_di_nascita;
 	} 
 	
 	

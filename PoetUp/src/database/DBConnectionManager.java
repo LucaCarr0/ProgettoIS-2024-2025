@@ -54,7 +54,7 @@ public class DBConnectionManager {
 		return ret;
 	}
 	
-	public static int updateQuery(String query) throws ClassNotFoundException, SQLException {
+	public static int insertQuery(String query) throws ClassNotFoundException, SQLException {
 		
 		Connection conn = getConnection();
 		Statement statement = conn.createStatement();
@@ -63,7 +63,7 @@ public class DBConnectionManager {
 		return ret;
 	}
 	
-	public static Integer updateQueryReturnGeneratedKey(String query) throws ClassNotFoundException, SQLException {
+	public static Integer insertQueryReturnGeneratedKey(String query) throws ClassNotFoundException, SQLException {
 		Integer ret = null;
 		
 		Connection conn = getConnection();

@@ -20,7 +20,9 @@ public class EntityProfiloPersonale {
 	public int scriviSuDB(int id_utente) {
 		ProfiloPersonaleDAO profilo=new ProfiloPersonaleDAO();
 		profilo.setId_utente(id_utente);
-		
+		profilo.setNickname(this.nickname);
+		int res=profilo.SalvaInDB();
+		return res;
 	}
 	
 	public String getNickname() {

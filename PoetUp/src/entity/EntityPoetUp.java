@@ -27,11 +27,10 @@ public class EntityPoetUp {
 			else {
 				
 				//SE REGISTRO CORRETTAMENTE L'UTENTE NE INIZIALIZZO IL PROFILO CON IL NICKNAME
-				EntityProfiloPersonale profilo= new EntityProfiloPersonale();
-				profilo.setNickname(nickname);
-				profilo.
+				utente_da_registrare.inizializzaProfilo(id_utente,nickname);
+				return 0;
 		}
-		
+		}	
 	}
 	
 	public static boolean esisteUtente(EntityUtente utente_da_registrare) {
