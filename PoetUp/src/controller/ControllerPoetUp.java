@@ -1,6 +1,7 @@
 package controller;
 
 import entity.EntityPoetUp;
+import entity.EntityUtente;
 
 public class ControllerPoetUp {
 	
@@ -19,5 +20,12 @@ public class ControllerPoetUp {
 		Integer result = EntityPoetUp.autenticazione(email,pwd);
 		if(result == 0) return "Utente autenticato";
 		else return "Autenticazione fallita";
+	}
+
+	public static String addRaccolta(String titolo, String descrizione) {
+		EntityUtente utente= new EntityUtente();
+		Integer result = utente.addRaccolta(titolo,descrizione);
+		if(result == -1) return "Creazione fallita";
+		else return "Raccolta Creata";
 	}
 }

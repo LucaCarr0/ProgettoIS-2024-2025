@@ -21,7 +21,7 @@ public class EntityPoetUp {
 		if(esisteUtente(utente_da_registrare)) {
 			return -1;
 		} else {
-			int id_utente=utente_da_registrare.scriviSuDB();
+			int id_utente=utente_da_registrare.salvaSuDB();
 			if (id_utente==-1)
 				return -1;
 			else {
@@ -81,7 +81,6 @@ public class EntityPoetUp {
 			utente_temp.setAmministratore(lista_db_utenti.get(i).isAmministratore());
 			utente_temp.setId(lista_db_utenti.get(i).getId());
 			
-			System.out.println(utente_temp);
 			
 			elencoUtenti.add(utente_temp);
 			

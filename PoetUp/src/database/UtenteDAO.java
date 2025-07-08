@@ -14,7 +14,7 @@ public class UtenteDAO {
 
 	}
 	
-	public int SalvaInDB() {
+	public int ScriviSuDB() {
 		
 		int ret = 0;
 		

@@ -58,7 +58,9 @@ public class HomePage extends JFrame {
 
 		// Azioni esempio
 		icon1.addActionListener(e -> JOptionPane.showMessageDialog(this, "Profilo cliccato"));
-		icon2.addActionListener(e -> JOptionPane.showMessageDialog(this, "Impostazioni cliccate"));
+		icon2.addActionListener(e -> {
+		    new RaccolteFrame(); 
+		});
 		icon3.addActionListener(e -> JOptionPane.showMessageDialog(this, "Stat cliccato"));
 
 		menuPanel.add(icon1);
@@ -104,14 +106,5 @@ public class HomePage extends JFrame {
 		return new ImageIcon(image);
 	}
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				HomePage frame = new HomePage();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
+	
 }
