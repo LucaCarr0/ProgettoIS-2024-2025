@@ -147,25 +147,45 @@ public class PoesiaForm extends JFrame {
         String tag = tagField.getText().trim();
         String raccolta = raccoltaField.getText().trim();
 
-        //VALIDAZIONE INPUT
-        
-        if (titolo.isEmpty() || !titolo.matches("^[a-zA-ZÀ-ÿ\\s]{1,25}$")) {
-            showError("Il titolo deve contenere solo lettere e spazi (max 25 caratteri).");
+        // --- CAMPI VUOTI ---
+        if (titolo.isEmpty()) {
+            showError("Il campo Titolo è obbligatorio.");
             return false;
         }
 
-        if (testo.isEmpty() || testo.length() > 500 || !testo.matches("^[\\p{L}\\p{N}\\s\\p{Punct}]+$")) {
-            showError("Il testo deve essere inferiore a 500 caratteri e contenere solo testo e punteggiatura.");
+        if (testo.isEmpty()) {
+            showError("Il campo Testo è obbligatorio.");
             return false;
         }
 
-        if (tag.isEmpty() || !tag.matches("^(#[^\\s#]+)+$")) {
-            showError("Il tag deve contenere uno o più tag concatenati, ognuno iniziando con '#' e senza spazi o doppi '#'.");
+        if (tag.isEmpty()) {
+            showError("Il campo Tag è obbligatorio.");
             return false;
         }
 
-        if (raccolta.isEmpty() || !raccolta.matches("^[a-zA-ZÀ-ÿ0-9 ]+$")) {
-            showError("La raccolta deve contenere solo lettere, numeri e spazi.");
+        if (raccolta.isEmpty()) {
+            showError("Il campo Raccolta è obbligatorio.");
+            return false;
+        }
+
+        // --- VALIDAZIONE FORMATO ---
+        if (!titolo.matches("^[a-zA-ZÀ-ÿ\\s]{1,25}$")) {
+            showError("Il titolo può contenere solo lettere e spazi, massimo 25 caratteri.");
+            return false;
+        }
+
+        if (testo.length() > 500 || !testo.matches("^[\\p{L}\\p{N}\\s,\\.\\!\\?\\:\\;]+$")) {
+            showError("Il testo può contenere massimo 500 caratteri e solo lettere, numeri, spazi e i seguenti simboli: , . ! ? : ;");
+            return false;
+        }
+
+        if (!tag.matches("^(#[^\\s#]+)+$")) {
+            showError("Il campo Tag deve contenere uno o più tag, ognuno iniziando con '#' e senza spazi o simboli '#' consecutivi.");
+            return false;
+        }
+
+        if (!raccolta.matches("^[a-zA-ZÀ-ÿ0-9 ]+$")) {
+            showError("Il campo Raccolta può contenere solo lettere, numeri e spazi.");
             return false;
         }
 
