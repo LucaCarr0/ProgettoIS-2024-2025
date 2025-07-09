@@ -3,7 +3,6 @@ package entity;
 import java.sql.Date;
 
 import database.PoesiaDAO;
-import database.RaccoltaDAO;
 import session.SessioneUtente;
 
 public class EntityPoesia {
@@ -14,15 +13,15 @@ public class EntityPoesia {
 	private int contatoreLike;
 	//private ArrayList<EntityCommenti> commenti;
 	//private ArrayList<EntityApprezzamenti> apprezzamenti;
-	
+
 	public EntityPoesia() {
-		
+
 	}
-	
+
 	public int salvaSuDB(int id_raccolta) {
-		
-		PoesiaDAO poesiaDAO= new PoesiaDAO(); 
-		
+
+		PoesiaDAO poesiaDAO= new PoesiaDAO();
+
 		poesiaDAO.setTitolo(this.titolo);
 		poesiaDAO.setAutore(SessioneUtente.getIdUtente());
 		poesiaDAO.setContatoreLike(this.contatoreLike);
@@ -32,11 +31,11 @@ public class EntityPoesia {
 		poesiaDAO.setTesto(testo);
 		poesiaDAO.setVisibilita(visibilita);
 		int i = poesiaDAO.ScriviSuDB();
-		
+
 		return i;
 	}
-	
-	
+
+
 	public String getTitolo() {
 		return titolo;
 	}
@@ -84,10 +83,10 @@ public class EntityPoesia {
 		this.contatoreLike = contatoreLike;
 	}
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }

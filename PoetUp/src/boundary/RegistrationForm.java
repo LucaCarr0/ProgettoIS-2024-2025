@@ -1,11 +1,21 @@
 package boundary;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 import controller.ControllerPoetUp;
-import javax.swing.*;
 
 public class RegistrationForm extends JFrame {
 
@@ -19,7 +29,7 @@ public class RegistrationForm extends JFrame {
 
 
 	public RegistrationForm() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 550);
 
 		contentPane = new JPanel();
@@ -105,28 +115,29 @@ public class RegistrationForm extends JFrame {
 		panel_1.add(btnRegistrazione);
 
 		btnRegistrazione.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nickname = textField.getText();
 				String email = textField_1.getText();
 				String pwd = new String(passwordField_1.getPassword());
 				String confirmPwd = new String(passwordField.getPassword());
-				
+
 				//VALIDAZIONE INPUT
-				
+
 				if (nickname.isEmpty() || email.isEmpty() || pwd.isEmpty() || confirmPwd.isEmpty()) {
 					resultLabel.setText("Tutti i campi sono obbligatori.");
 					resultLabel.setForeground(Color.RED);
 					return;
 				}
-				
+
 				else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
 					resultLabel.setText("Formato email non valido.");
 					resultLabel.setForeground(Color.RED);
 					return;
 				}
-				
-				//la password deve avere almeno una cifra [0-9], almeno un carattere speciale tra quelli indicati, e una lunghezza tra gli 8 e i 32 caratteri 
-				
+
+				//la password deve avere almeno una cifra [0-9], almeno un carattere speciale tra quelli indicati, e una lunghezza tra gli 8 e i 32 caratteri
+
 				else if (!pwd.matches("^(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-={}|\\[\\]:;\"'<>,.?/]).{8,32}$")) {
 					resultLabel.setText("<html>La password deve contenere almeno un <br> numero, un carattere speciale e avere tra 8 e 32 caratteri.<html>");
 					resultLabel.setForeground(Color.RED);
@@ -138,17 +149,17 @@ public class RegistrationForm extends JFrame {
 					resultLabel.setForeground(Color.RED);
 					return;
 				}
-				
+
 				//UTILIZZO IL CONTROLLER
-				
+
 				else {
 					String esito = ControllerPoetUp.registrazione(nickname,email,pwd);
 					if (esito.equals("Registrazione completata!")) {
 						JOptionPane.showMessageDialog(null, "Registrazione avvenuta con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
-				 
+
 						// Chiudi il form corrente
 						dispose();
-				 
+
 						// Torna alla schermata di login
 						LoginForm login = new LoginForm();
 						login.setVisible(true);
@@ -157,10 +168,10 @@ public class RegistrationForm extends JFrame {
 						resultLabel.setForeground(Color.RED);
 					}
 				}
-				
-				
 
-				
+
+
+
 			}
 		});
 

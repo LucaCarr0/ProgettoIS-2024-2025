@@ -11,12 +11,12 @@ public class EntityProfiloPersonale {
 	private String immagineProfilo;
 	private String biografia;
 	private Date data_di_nascita;
-	
-	
+
+
 	public EntityProfiloPersonale() {
-		
+
 	}
-	
+
 	public int scriviSuDB(int id_utente) {
 		ProfiloPersonaleDAO profilo=new ProfiloPersonaleDAO();
 		profilo.setId_utente(id_utente);
@@ -24,7 +24,7 @@ public class EntityProfiloPersonale {
 		int res=profilo.SalvaInDB();
 		return res;
 	}
-	
+
 	public String getNickname() {
 		return nickname;
 	}
@@ -61,6 +61,6 @@ public class EntityProfiloPersonale {
 	public void setData_di_nascita(Date data_di_nascita) {
 		this.data_di_nascita = data_di_nascita;
 	}
-	
-	
+
+
 }

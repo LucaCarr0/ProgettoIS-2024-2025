@@ -1,11 +1,22 @@
 package boundary;
 
-import javax.swing.*;
-import controller.ControllerPoetUp;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.net.URL;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+
+import controller.ControllerPoetUp;
 
 public class PoesiaForm extends JFrame {
 
@@ -21,7 +32,7 @@ public class PoesiaForm extends JFrame {
 
     public PoesiaForm() {
         setTitle("Pubblica Poesia");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 600, 520);
         setResizable(false);
 

@@ -3,34 +3,33 @@ package entity;
 import java.util.ArrayList;
 
 import database.RaccoltaDAO;
-import database.UtenteDAO;
 
 public class EntityRaccolta {
 	private int id;
 	private String titolo;
 	private String descrizione;
 	private ArrayList<EntityPoesia> poesia;
-	
-	
+
+
 	public EntityRaccolta() {
-		
+
 	}
-	
-	
+
+
 
 	public int salvaSuDB(int id_utente) {
-		
-		RaccoltaDAO raccoltaDAO= new RaccoltaDAO(); 
-		
+
+		RaccoltaDAO raccoltaDAO= new RaccoltaDAO();
+
 		raccoltaDAO.setTitolo(this.titolo);
 		raccoltaDAO.setDescrizione(this.descrizione);
 		raccoltaDAO.setId_utente(id_utente);
 
 		int i = raccoltaDAO.ScriviSuDB();
-		
+
 		return i;
 	}
-	
+
 	public String getTitolo() {
 		return titolo;
 	}
@@ -49,5 +48,5 @@ public class EntityRaccolta {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 }

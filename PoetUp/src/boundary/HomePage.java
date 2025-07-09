@@ -1,8 +1,23 @@
 package boundary;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.RenderingHints;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 public class HomePage extends JFrame {
 
@@ -10,7 +25,7 @@ public class HomePage extends JFrame {
 	private JPanel menuPanel;
 
 	public HomePage() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 550);
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
@@ -57,9 +72,11 @@ public class HomePage extends JFrame {
 		JButton icon3 = createCircleButton("/res/stat.png", 48);
 
 		// Azioni esempio
-		icon1.addActionListener(e -> JOptionPane.showMessageDialog(this, "Profilo cliccato"));
+		icon1.addActionListener(e -> {
+		    new UtenteForm().setVisible(true);
+		});
 		icon2.addActionListener(e -> {
-		    new RaccolteFrame(); 
+		    new RaccolteFrame();
 		});
 		icon3.addActionListener(e -> JOptionPane.showMessageDialog(this, "Stat cliccato"));
 
@@ -70,7 +87,7 @@ public class HomePage extends JFrame {
 		menuButton.addActionListener(e -> {
 			menuPanel.setVisible(!menuPanel.isVisible());
 		});
-		
+
 		addPoetryButton.addActionListener(e -> {
 		    new PoesiaForm().setVisible(true);
 		});
@@ -106,11 +123,11 @@ public class HomePage extends JFrame {
 			System.err.println("Icona non trovata: " + resourcePath);
 			return new ImageIcon(); // icona vuota
 		}
-		
+
 		ImageIcon icon = new ImageIcon(url);
 		Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(image);
 	}
 
-	
+
 }

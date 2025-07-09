@@ -11,36 +11,36 @@ public class ProfiloPersonaleDAO {
 	private String immagineProfilo;
 	private String biografia;
 	private Date dataNascita;
-	
+
 	public ProfiloPersonaleDAO(){
-		
+
 	}
-	
+
 	public int SalvaInDB() {
-		
+
 		int ret = 0;
-		
+
 		/*String query = "INSERT INTO ProfiliPersonali(nome, cognome, immagineProfilo, biografia, nickname, dataNascita, utente) " +
-	               "VALUES ('" + nome + "', '" + cognome + "', '" + immagineProfilo + "', '" + biografia + 
+	               "VALUES ('" + nome + "', '" + cognome + "', '" + immagineProfilo + "', '" + biografia +
 	               "', '" + nickname + "', " + "NULL" +  ", '" + id_utente+"')";		*/
 		String query = "INSERT INTO ProfiliPersonali(nome, cognome, immagineProfilo, biografia, nickname, dataNascita, utente) " +
 	               "VALUES (NULL, NULL, NULL, NULL, '" + nickname + "', NULL, " + id_utente + ")";
 
-		
+
 		try {
-			
+
 			ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
-			
-			
+
+
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			ret = -1; //per segnalare l'errore di scrittura
 		}
-		
+
 		return ret;
 	}
-	
-	
+
+
 	public int getId_utente() {
 		return id_utente;
 	}
@@ -76,7 +76,7 @@ public class ProfiloPersonaleDAO {
 	}
 	public void setData_di_nascita(Date data_di_nascita) {
 		this.dataNascita = data_di_nascita;
-	} 
-	
-	
+	}
+
+
 }

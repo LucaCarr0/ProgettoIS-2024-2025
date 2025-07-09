@@ -15,27 +15,27 @@ public class EntityUtente {
 	private int id;
 	private boolean amministratore;
 	private EntityProfiloPersonale profilo;
-	private static ArrayList<EntityRaccolta> raccolte=new ArrayList<EntityRaccolta>();
-	
-	public EntityUtente(){ 
-		
+	private static ArrayList<EntityRaccolta> raccolte=new ArrayList<>();
+
+	public EntityUtente(){
+
 		this.profilo=new EntityProfiloPersonale();
 	}
-	
+
 	public int salvaSuDB() {
-		
-		UtenteDAO utenteDAO= new UtenteDAO(); 
-		
+
+		UtenteDAO utenteDAO= new UtenteDAO();
+
 		utenteDAO.setEmail(this.email);
 		utenteDAO.setPwd(this.pwd);
 		int i = utenteDAO.ScriviSuDB();
-		
+
 		return i;
 	}
 
-	
+
 	public void inizializzaProfilo(int id_utente, String nickname) {
-		
+
 		//UTENTE È CREATOR DEL PROFILOPERSONALE
 		EntityProfiloPersonale profilo= new EntityProfiloPersonale();
 		profilo.setNickname(nickname);
@@ -46,22 +46,22 @@ public class EntityUtente {
 	}
 
 	public Integer addRaccolta(String titolo, String descrizione) {
-		
+
 		//UTENTE È CREATOR DELLA RACCOLTA
-		
+
 		this.setId(SessioneUtente.getIdUtente());
 		this.caricaRaccoltedaDB();
 		EntityRaccolta raccolta=new EntityRaccolta();
 		raccolta.setTitolo(titolo);
 		raccolta.setDescrizione(descrizione);
-		if(this.esisteRaccolta(raccolta)) {
+		if(EntityUtente.esisteRaccolta(raccolta)) {
 			return -1;
 		} else {
 			int ret = raccolta.salvaSuDB(id);
 			return ret;
 		}
 	}
-	
+
 	public Integer pubblicazionePoesia(String titolo, String testo, String tag, String raccolta,
 			boolean visibilita){
 		this.setId(SessioneUtente.getIdUtente());
@@ -69,7 +69,7 @@ public class EntityUtente {
 		EntityPoesia poesia = new EntityPoesia();
 		poesia.setTitolo(titolo);
 		ArrayList<EntityPoesia> lista_poesie_utente=this.caricaPoesiedaDB();
-		
+
 		if(esistePoesiainUtente(poesia,lista_poesie_utente)) {
 			return -1;
 		}
@@ -78,8 +78,8 @@ public class EntityUtente {
 		if(!esisteRaccolta(raccoltaEntity)) {
 			raccoltaEntity.setId(addRaccolta(raccolta,"raccolta aggiunta dalla pubblicazione di una poesia"));
 		}
-		
-		
+
+
 		poesia.setTag(tag);
 		poesia.setTesto(testo);
 		poesia.setVisibilita(visibilita);
@@ -87,7 +87,7 @@ public class EntityUtente {
 		poesia.setDatapubblicazione(new Date(System.currentTimeMillis()));
 		int ret =poesia.salvaSuDB(raccoltaEntity.getId());
 		return ret;
-		
+
 	}
 
 	private void caricaRaccoltedaDB() {
@@ -95,27 +95,27 @@ public class EntityUtente {
 		RaccoltaDAO raccoltaDAO = new RaccoltaDAO();
 		raccoltaDAO.setId_utente(id);
 		ArrayList<RaccoltaDAO> lista_db_raccolte = raccoltaDAO.getRaccoltedaDB();
-		
+
 		for(int i = 0; i<lista_db_raccolte.size();i++) {
 			EntityRaccolta raccolta_temp = new EntityRaccolta();
 			raccolta_temp.setTitolo(lista_db_raccolte.get(i).getTitolo());
 			raccolta_temp.setDescrizione(lista_db_raccolte.get(i).getDescrizione());
 			raccolta_temp.setId(lista_db_raccolte.get(i).getId());
-			
+
 			raccolte.add(raccolta_temp);
-			
-		
+
+
 		}
 	}
-		
+
 	private ArrayList<EntityPoesia> caricaPoesiedaDB() {
 			// TODO Auto-generated method stub
-			ArrayList<EntityPoesia> lista_poesie_utente = new ArrayList<EntityPoesia>();
+			ArrayList<EntityPoesia> lista_poesie_utente = new ArrayList<>();
 
 			PoesiaDAO poesiaDAO = new PoesiaDAO();
 			poesiaDAO.setAutore(id);
 			ArrayList<PoesiaDAO> lista_db_poesie_utente = poesiaDAO.getPoesieUtentedaDB();
-			
+
 			for(int i = 0; i<lista_db_poesie_utente.size();i++) {
 				EntityPoesia poesia_temp = new EntityPoesia();
 				poesia_temp.setTag(lista_db_poesie_utente.get(i).getTag());
@@ -124,14 +124,14 @@ public class EntityUtente {
 				poesia_temp.setVisibilita(lista_db_poesie_utente.get(i).isVisibilita());
 				poesia_temp.setContatoreLike(lista_db_poesie_utente.get(i).getContatoreLike());
 				poesia_temp.setDatapubblicazione(lista_db_poesie_utente.get(i).getDatapubblicazione());
-				
+
 				lista_poesie_utente.add(poesia_temp);
-				
-			
-			
+
+
+
 		}
 		return lista_poesie_utente;
-	
+
 	}
 	private static boolean esisteRaccolta(EntityRaccolta raccolta) {
         String titolo=raccolta.getTitolo();
@@ -145,7 +145,7 @@ public class EntityUtente {
         }
         return false;
     }
-	
+
 	private boolean esistePoesiainUtente(EntityPoesia poesia,ArrayList<EntityPoesia> lista_poesie_utente) {
 		String titolo=poesia.getTitolo();
         if (lista_poesie_utente!=null) {
@@ -158,10 +158,10 @@ public class EntityUtente {
         }
         return false;
 	}
-		
-	
-	
-	
+
+
+
+
 	public String getEmail() {
 		return email;
 	}
@@ -177,7 +177,7 @@ public class EntityUtente {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

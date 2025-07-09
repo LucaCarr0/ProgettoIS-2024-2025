@@ -9,50 +9,50 @@ public class UtenteDAO {
 	private String pwd;
 	private boolean amministratore;
 	private int id;
-	
+
 	public UtenteDAO() {
 
 	}
-	
+
 	public int ScriviSuDB() {
-		
+
 		int ret = 0;
-		
+
 		String query = "INSERT INTO Utenti(email, password, amministratore) VALUES ('" + this.email + "', '" + this.pwd + "', '" + 0 +"')"; //su DB amministratore è TINYINT 0 se è falso 1 se vero
 		System.out.println(query);
 		try {
-			
+
 			ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
-			
-			
+
+
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			ret = -1; //per segnalare l'errore di scrittura
 		}
-		
+
 		return ret;
 	}
-	
+
 	public ArrayList<UtenteDAO> getListaUtenti(){
-		
+
 		//creo il la lista di appoggio
 		ArrayList<UtenteDAO> lista_utenti_temp = new ArrayList<>();
-		
+
 		String query = "SELECT * FROM Utenti;";
-		
+
 		try {
-			
+
 			ResultSet rs = DBConnectionManager.selectQuery(query);
-			
+
 				while(rs.next()) { //finche ho un risultato
-				
-				UtenteDAO utente_temp = new UtenteDAO(); 
-				
+
+				UtenteDAO utente_temp = new UtenteDAO();
+
 				utente_temp.setEmail(rs.getString("email"));
 				utente_temp.setPwd(rs.getString("password"));
 				utente_temp.setAmministratore(rs.getBoolean("amministratore"));
 				utente_temp.setId(rs.getInt("id"));
-				lista_utenti_temp.add(utente_temp); 
+				lista_utenti_temp.add(utente_temp);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -60,7 +60,7 @@ public class UtenteDAO {
 		}
 		return lista_utenti_temp; //ritorno la lista
 	}
-	
+
 
 	public String getEmail() {
 		return email;
@@ -93,9 +93,9 @@ public class UtenteDAO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
-	
+
+
+
 
 
 }
