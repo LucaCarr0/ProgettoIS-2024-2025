@@ -2,6 +2,7 @@ package controller;
 
 import entity.EntityPoetUp;
 import entity.EntityUtente;
+import facade.FacadeUtenti;
 
 public class ControllerPoetUp {
 	
@@ -23,16 +24,15 @@ public class ControllerPoetUp {
 	}
 
 	public static String addRaccolta(String titolo, String descrizione) {
-		EntityUtente utente= new EntityUtente();
-		Integer result = utente.addRaccolta(titolo,descrizione);
+		
+		Integer result = FacadeUtenti.addRaccolta(titolo,descrizione);
 		if(result == -1) return "Creazione fallita";
 		else return "Raccolta Creata";
 	}
 
 	public static String pubblicazionePoesia(String titolo, String testo, String tag, String raccolta,
 			boolean visibilita) {
-		EntityUtente utente= new EntityUtente();
-		Integer result = utente.pubblicazionePoesia(titolo,testo,tag,raccolta,visibilita);
+		Integer result = FacadeUtenti.pubblicazionePoesia(titolo,testo,tag,raccolta,visibilita);
 		if(result == -1) return "Creazione fallita";
 		else return "Poesia Pubblicata!";
 	}
