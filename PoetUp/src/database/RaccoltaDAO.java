@@ -37,7 +37,7 @@ public class RaccoltaDAO {
 				lista_raccolte_db.add(raccolta_DAO); 
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return lista_raccolte_db; 

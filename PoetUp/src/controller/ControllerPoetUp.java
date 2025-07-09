@@ -28,4 +28,12 @@ public class ControllerPoetUp {
 		if(result == -1) return "Creazione fallita";
 		else return "Raccolta Creata";
 	}
+
+	public static String pubblicazionePoesia(String titolo, String testo, String tag, String raccolta,
+			boolean visibilita) {
+		EntityUtente utente= new EntityUtente();
+		Integer result = utente.pubblicazionePoesia(titolo,testo,tag,raccolta,visibilita);
+		if(result == -1) return "Creazione fallita";
+		else return "Poesia Pubblicata!";
+	}
 }

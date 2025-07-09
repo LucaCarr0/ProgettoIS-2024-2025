@@ -70,6 +70,11 @@ public class HomePage extends JFrame {
 		menuButton.addActionListener(e -> {
 			menuPanel.setVisible(!menuPanel.isVisible());
 		});
+		
+		addPoetryButton.addActionListener(e -> {
+		    new PoesiaForm().setVisible(true);
+		});
+
 	}
 
 	// === Utility per creare un pulsante rotondo con icona ===
@@ -101,6 +106,7 @@ public class HomePage extends JFrame {
 			System.err.println("Icona non trovata: " + resourcePath);
 			return new ImageIcon(); // icona vuota
 		}
+		
 		ImageIcon icon = new ImageIcon(url);
 		Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(image);
