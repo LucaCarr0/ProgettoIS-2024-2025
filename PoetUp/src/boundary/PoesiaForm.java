@@ -122,14 +122,14 @@ public class PoesiaForm extends JFrame {
 
                 String esito = ControllerPoetUp.pubblicazionePoesia(titolo, testo, tag, raccolta, visibilita);
                 if (esito.equals("Poesia Pubblicata!")) {
-                    JOptionPane.showMessageDialog(this, esito);  
+                    JOptionPane.showMessageDialog(this, esito);
                     parentFrame.dispose();         // chiude la vecchia home
                     HomePage nuovaHome = new HomePage();
                     nuovaHome.setLocationRelativeTo(this);
                     nuovaHome.setVisible(true);    // MOSTRA la nuova home
                     this.dispose();                // chiude la poesia form
 
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(this, esito, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
@@ -206,7 +206,7 @@ public class PoesiaForm extends JFrame {
             showError("Il campo Raccolta può contenere solo lettere, numeri e spazi.");
             return false;
         }
-        
+
         return true;
     }
 

@@ -37,7 +37,7 @@ public class RegistrationForm extends JFrame {
 		contentPane.setBackground(new Color(245, 248, 250));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		
+
 		// Pannello laterale con immagine
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(60, 164, 238));

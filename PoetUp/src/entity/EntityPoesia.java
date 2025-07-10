@@ -106,8 +106,8 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 	    }
 	}
 
-	
-	
+
+
 
 
 

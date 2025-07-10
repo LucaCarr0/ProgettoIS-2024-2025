@@ -1,6 +1,7 @@
 package facade;
 
 import entity.EntityUtente;
+import java.sql.Date;
 
 public class FacadeUtenti {
 
@@ -17,4 +18,10 @@ public class FacadeUtenti {
 		Integer result = utente.addRaccolta(titolo,descrizione);
 		return result;
 	}
+	
+	public static Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+		EntityUtente utente= new EntityUtente();
+		Integer result = utente.modificaProfilo(nome, cognome, dataNascita, biografia);
+        return result;
+    }
 }

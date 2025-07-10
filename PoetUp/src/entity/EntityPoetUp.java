@@ -2,7 +2,6 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import database.PoesiaDAO;
 import database.UtenteDAO;
@@ -92,11 +91,11 @@ public class EntityPoetUp {
 
 	public static ArrayList<PoesiaDTO> visualizzaFeed() {
 		// TODO Auto-generated method stub
-		ArrayList<EntityPoesia> lista_poesie_pubbliche = new ArrayList<EntityPoesia>();
+		ArrayList<EntityPoesia> lista_poesie_pubbliche = new ArrayList<>();
 		ArrayList<PoesiaDTO> feed=calcolaFeed(lista_poesie_pubbliche);
 		return feed;
 	}
-	
+
 	private static ArrayList<PoesiaDTO> calcolaFeed(ArrayList<EntityPoesia> lista_entity) {
 		PoesiaDAO poesiaDAO = new PoesiaDAO();
 		ArrayList<PoesiaDAO> lista_poesie_pubbliche = poesiaDAO.caricaPoesiePubblichedaDB();

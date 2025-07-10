@@ -1,20 +1,49 @@
 package boundary;
  
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+ 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import java.sql.Date;
+import controller.ControllerPoetUp;
  
 public class UtenteForm extends JFrame {
  
     private JPanel contentPane;
     private JLabel immagineProfiloLabel;
+    // Campi di classe per accedere ai valori
+    private JTextField campoNome;
+    private JTextField campoCognome;
+    private JTextField campoData;
+    private JTextField campoNickname;
+    private JTextArea bioArea;
  
     public UtenteForm(JFrame HomePage) {
         setTitle("Profilo");
         setBounds(100, 100, 700, 550);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(HomePage);
-        
+ 
         contentPane = new JPanel();
         contentPane.setLayout(null);
         contentPane.setBackground(new Color(0x15202B));
@@ -28,9 +57,9 @@ public class UtenteForm extends JFrame {
         homeButton.setBounds(622, 440, 48, 48);
         contentPane.add(homeButton);
  
-        // Azione sul bottone (esempio: chiude la pagina profilo)
+        // Azione sul bottone
         homeButton.addActionListener(e -> {
-            this.dispose(); // o: new HomePage().setVisible(true);
+            this.dispose();
         });
     }
  
@@ -68,7 +97,17 @@ public class UtenteForm extends JFrame {
         int spacing = 50;
  
         String[] etichette = { "Nome:", "Cognome:", "Data di Nascita:", "Nickname:" };
+        // Inizializza i campi di classe
+        campoNome = new JTextField();
+        campoCognome = new JTextField();
+        campoData = new JTextField();
+        campoNickname = new JTextField();
+        bioArea = new JTextArea();
  
+        // Array dei campi per associarli alle etichette
+        JTextField[] campi = { campoNome, campoCognome, campoData, campoNickname };
+ 
+        // Crea etichette e campi
         for (int i = 0; i < etichette.length; i++) {
             JLabel label = new JLabel(etichette[i]);
             label.setForeground(textColor);
@@ -76,10 +115,30 @@ public class UtenteForm extends JFrame {
             label.setBounds(labelX, startY + i * spacing, 120, 25);
             contentPane.add(label);
  
-            JTextField campo = new JTextField();
-            campo.setBounds(fieldX, startY + i * spacing, 300, 25);
-            contentPane.add(campo);
+            // Usa i campi di classe invece di creare nuovi JTextField
+            campi[i].setBounds(fieldX, startY + i * spacing, 300, 25);
+            contentPane.add(campi[i]);
         }
+ 
+        // Placeholder per il campo data
+        campoData.setText("yyyy-MM-dd");
+        campoData.setForeground(Color.GRAY);
+        campoData.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (campoData.getText().equals("yyyy-MM-dd")) {
+                    campoData.setText("");
+                    campoData.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (campoData.getText().isEmpty()) {
+                    campoData.setText("yyyy-MM-dd");
+                    campoData.setForeground(Color.GRAY);
+                }
+            }
+        });
  
         // Biografia (textarea più grande con scroll)
         JLabel bioLabel = new JLabel("Biografia:");
@@ -88,7 +147,7 @@ public class UtenteForm extends JFrame {
         bioLabel.setBounds(labelX, startY + etichette.length * spacing, 120, 25);
         contentPane.add(bioLabel);
  
-        JTextArea bioArea = new JTextArea();
+        // Usa il campo di classe bioArea
         bioArea.setLineWrap(true);
         bioArea.setWrapStyleWord(true);
         JScrollPane scroll = new JScrollPane(bioArea);
@@ -99,10 +158,48 @@ public class UtenteForm extends JFrame {
         JButton salvaButton = new JButton("Salva");
         salvaButton.setBounds(fieldX, startY + etichette.length * spacing + 150, 100, 30);
         salvaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        salvaButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Funzionalità di salvataggio non ancora implementata.");
-        });
+        salvaButton.addActionListener(e -> salvaProfilo());
         contentPane.add(salvaButton);
+    }
+ 
+    // === Metodo separato per gestire il salvataggio ===
+    private void salvaProfilo() {
+        try {
+            String nome = campoNome.getText().trim();
+            String cognome = campoCognome.getText().trim();
+            String dataNascitaStr = campoData.getText().trim();
+            String nickname = campoNickname.getText().trim();
+            String bio = bioArea.getText().trim();
+ 
+            // Validazione campi obbligatori
+            if (nome.isEmpty() || cognome.isEmpty() || nickname.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Nome, Cognome e Nickname sono obbligatori.");
+                return;
+            }
+ 
+            // Controllo se il campo data è ancora il placeholder
+            if (dataNascitaStr.equals("yyyy-MM-dd") || dataNascitaStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Inserire una data di nascita valida.");
+                return;
+            }
+ 
+            // Regex check per assicurarsi che la data sia nel formato corretto
+            if (!dataNascitaStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                JOptionPane.showMessageDialog(this, "Formato data non valido. Usa yyyy-MM-dd.");
+                return;
+            }
+ 
+            // Conversione diretta con java.sql.Date.valueOf()
+            java.sql.Date dataNascita = java.sql.Date.valueOf(dataNascitaStr);
+ 
+            String messaggio = ControllerPoetUp.modificaProfilo(nome, cognome, dataNascita, bio);
+            JOptionPane.showMessageDialog(this, messaggio);
+ 
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, "Errore: data non valida. Usa il formato yyyy-MM-dd.");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Errore durante il salvataggio: " + ex.getMessage());
+        }
     }
  
     // === Placeholder popup (da implementare) ===
@@ -144,5 +241,3 @@ public class UtenteForm extends JFrame {
         return new ImageIcon(image);
     }
 }
- 
- 

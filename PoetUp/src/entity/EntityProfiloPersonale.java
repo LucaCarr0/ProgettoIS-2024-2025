@@ -8,15 +8,34 @@ public class EntityProfiloPersonale {
 	private String nickname;
 	private String nome;
 	private String cognome;
-	private String immagineProfilo;
 	private String biografia;
 	private Date data_di_nascita;
+	private String immagineProfilo;
 
 
 	public EntityProfiloPersonale() {
 
 	}
 
+	public void aggiornaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+        this.setNome(nome);
+        this.setCognome(cognome);
+        this.setData_di_nascita(dataNascita);
+        this.setBiografia(biografia);
+    }
+	
+	public int aggiornaSuDB(int idUtente) {
+		ProfiloPersonaleDAO profilo=new ProfiloPersonaleDAO();
+		profilo.setNome(this.nome);
+		profilo.setCognome(this.cognome);
+		profilo.setDataNascita(this.data_di_nascita);
+		profilo.setNickname(this.nickname);
+		profilo.setBiografia(this.biografia);
+		profilo.setId_utente(idUtente);
+		int res=profilo.updateProfilo();
+		return res;
+	}
+	
 	public int scriviSuDB(int id_utente) {
 		ProfiloPersonaleDAO profilo=new ProfiloPersonaleDAO();
 		profilo.setId_utente(id_utente);

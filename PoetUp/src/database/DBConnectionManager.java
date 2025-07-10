@@ -11,7 +11,7 @@ public class DBConnectionManager {
 	public static String dbName = "mydb";
 	public static String driver = "com.mysql.cj.jdbc.Driver";
 	public static String userName = "root";
-	public static String password = "admin"; //Lololo89. //Napoli1926$
+	public static String password = "Napoli1926$"; //Lololo89. //admin
 
 
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
@@ -76,6 +76,15 @@ public class DBConnectionManager {
 
 		conn.close();
 
+		return ret;
+	}
+	
+	public static int UpdateQuery(String query) throws ClassNotFoundException, SQLException {
+
+		Connection conn = getConnection();
+		Statement statement = conn.createStatement();
+		int ret = statement.executeUpdate(query);
+		conn.close();
 		return ret;
 	}
 }

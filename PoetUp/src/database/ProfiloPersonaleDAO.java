@@ -3,16 +3,16 @@ package database;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 public class ProfiloPersonaleDAO {
 	private int id_utente;
 	private String nickname;
 	private String nome;
 	private String cognome;
-	private String immagineProfilo;
 	private String biografia;
 	private Date dataNascita;
+	private String immagineProfilo;
 
 	public ProfiloPersonaleDAO(){
 
@@ -42,6 +42,38 @@ public class ProfiloPersonaleDAO {
 		return ret;
 	}
 
+	public int updateProfilo() {
+	    
+		int ret = 0;
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    String dataFormattata = sdf.format(this.dataNascita);
+		
+	    
+	    String query = "UPDATE profilipersonali SET " +
+	               "nome = '" + this.getNome() + "', " +
+	               "cognome = '" + this.getCognome() + "', " +
+	               "dataNascita = '" + dataFormattata + "', " +
+	               "biografia = '" + this.getBiografia() + "' " +
+	               "WHERE utente = " + this.getId_utente();
+
+	    System.out.println(query);
+		try {
+
+			ret = DBConnectionManager.UpdateQuery(query);
+
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			ret = -1; //per segnalare l'errore di scrittura
+		}
+
+		return ret;
+	    
+	}
+	
+
+	
 
 	public int getId_utente() {
 		return id_utente;
@@ -73,7 +105,7 @@ public class ProfiloPersonaleDAO {
 	public void setBiografia(String biografia) {
 		this.biografia = biografia;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -117,7 +149,7 @@ public class ProfiloPersonaleDAO {
 		return profiloTrovato;
 	}
 
-	
+
 
 
 }

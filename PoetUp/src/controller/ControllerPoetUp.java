@@ -1,11 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dto.PoesiaDTO;
 import entity.EntityPoetUp;
 import facade.FacadeUtenti;
+import java.sql.Date;
 
 public class ControllerPoetUp {
 
@@ -57,4 +57,18 @@ public class ControllerPoetUp {
 		ArrayList<PoesiaDTO> feed = EntityPoetUp.visualizzaFeed();
 		return feed;
 	}
+	
+	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+	  
+	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia);
+
+	    if(result == -1) {
+			return "Errore durante la modifica del profilo.";
+		} else {
+			return "Profilo aggiornato con successo!";
+		}
+	    
+	}
+
+	
 }

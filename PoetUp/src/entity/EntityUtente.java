@@ -8,6 +8,7 @@ import database.ProfiloPersonaleDAO;
 import database.RaccoltaDAO;
 import database.UtenteDAO;
 import session.SessioneUtente;
+import dto.ProfiloDTO;
 
 public class EntityUtente {
 
@@ -89,6 +90,17 @@ public class EntityUtente {
 		int ret =poesia.salvaSuDB(raccoltaEntity.getId());
 		return ret;
 
+	}
+	
+	public Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+		//this.setId(SessioneUtente.getIdUtente());
+		EntityProfiloPersonale profiloPersonale = new EntityProfiloPersonale();
+		int idUtente = SessioneUtente.getIdUtente();
+		
+		profiloPersonale.aggiornaProfilo(nome, cognome, dataNascita, biografia);
+		int res = profiloPersonale.aggiornaSuDB(idUtente);
+		
+		return res;
 	}
 
 	private void caricaRaccoltedaDB() {
@@ -202,5 +214,5 @@ public class EntityUtente {
 		return profiloTrovato.getNickname();
 	}
 
-	
+
 }
