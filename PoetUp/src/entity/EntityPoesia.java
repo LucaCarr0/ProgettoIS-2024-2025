@@ -5,9 +5,10 @@ import java.sql.Date;
 import database.PoesiaDAO;
 import session.SessioneUtente;
 
-public class EntityPoesia {
+public class EntityPoesia implements Comparable<EntityPoesia>{
 	private String titolo,testo,tag;
 	private boolean visibilita;
+	private String autore;
 	private int id;
 	private Date datapubblicazione;
 	private int contatoreLike;
@@ -83,7 +84,30 @@ public class EntityPoesia {
 		this.contatoreLike = contatoreLike;
 	}
 
+	public String getAutore() {
+		return autore;
+	}
 
+	public void setAutore(String autore) {
+		this.autore = autore;
+	}
+
+	@Override
+	public int compareTo(EntityPoesia o) {
+	    if (this.datapubblicazione == null && o.datapubblicazione == null) {
+	        return 0;
+	    } else if (this.datapubblicazione == null) {
+	        return -1;
+	    } else if (o.datapubblicazione == null) {
+	        return 1;
+	    } else {
+	    	//uso il compareTo di Date
+	        return this.datapubblicazione.compareTo(o.getDatapubblicazione());
+	    }
+	}
+
+	
+	
 
 
 

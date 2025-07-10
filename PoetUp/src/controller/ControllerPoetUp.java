@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import dto.PoesiaDTO;
 import entity.EntityPoetUp;
 import facade.FacadeUtenti;
 
@@ -46,5 +50,11 @@ public class ControllerPoetUp {
 		} else {
 			return "Poesia Pubblicata!";
 		}
+	}
+
+	public static ArrayList<PoesiaDTO> visualizzaFeed() {
+		// TODO Auto-generated method stub
+		ArrayList<PoesiaDTO> feed = EntityPoetUp.visualizzaFeed();
+		return feed;
 	}
 }

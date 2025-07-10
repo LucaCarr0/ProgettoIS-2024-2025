@@ -1,8 +1,12 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import database.PoesiaDAO;
 import database.UtenteDAO;
+import dto.PoesiaDTO;
 import session.SessioneUtente;
 
 public class EntityPoetUp {
@@ -86,6 +90,54 @@ public class EntityPoetUp {
 		}
 	}
 
+	public static ArrayList<PoesiaDTO> visualizzaFeed() {
+		// TODO Auto-generated method stub
+		ArrayList<EntityPoesia> lista_poesie_pubbliche = new ArrayList<EntityPoesia>();
+		ArrayList<PoesiaDTO> feed=calcolaFeed(lista_poesie_pubbliche);
+		return feed;
+	}
+	
+	private static ArrayList<PoesiaDTO> calcolaFeed(ArrayList<EntityPoesia> lista_entity) {
+		PoesiaDAO poesiaDAO = new PoesiaDAO();
+		ArrayList<PoesiaDAO> lista_poesie_pubbliche = poesiaDAO.caricaPoesiePubblichedaDB();
+		EntityUtente autore=new EntityUtente();
+		for(int i = 0; i<lista_poesie_pubbliche.size();i++) {
+			EntityPoesia poesia_temp = new EntityPoesia();
+
+			//RECUPERO DA DB L'AUTORE DAL SUO ID
+			int id_autore=lista_poesie_pubbliche.get(i).getAutore();
+			autore.setId(id_autore);
+			String nick_autore=autore.getNickdaDB();
+
+			poesia_temp.setTitolo(lista_poesie_pubbliche.get(i).getTitolo());
+			poesia_temp.setAutore(nick_autore);
+			poesia_temp.setDatapubblicazione(lista_poesie_pubbliche.get(i).getDatapubblicazione());
+			poesia_temp.setContatoreLike(lista_poesie_pubbliche.get(i).getContatoreLike());
+
+
+			lista_entity.add(poesia_temp);
+
+		}
+		lista_entity.sort(Collections.reverseOrder());
+		ArrayList<PoesiaDTO> feed=costruisciFeed(lista_entity);
+		return feed;
+	}
+
+	private static ArrayList<PoesiaDTO> costruisciFeed(ArrayList<EntityPoesia> lista_entity) {
+		ArrayList<PoesiaDTO> feed = new ArrayList<>();
+
+	    for (EntityPoesia e : lista_entity) {
+	        PoesiaDTO dto = new PoesiaDTO(
+	            e.getTitolo(),
+	            e.getAutore(),
+	            e.getContatoreLike(),
+	            e.getDatapubblicazione().toString()
+	        );
+	        feed.add(dto);
+	    }
+
+	    return feed;
+	}
 
 
 

@@ -141,6 +141,38 @@ public class PoesiaDAO {
 
 
 
+	public ArrayList<PoesiaDAO> caricaPoesiePubblichedaDB() {
+		ArrayList<PoesiaDAO> lista_poesie_pubbliche = new ArrayList<>();
+		String query = "SELECT * FROM Poesie WHERE visibilita = "+1+";";
+
+		try {
+
+			ResultSet rs = DBConnectionManager.selectQuery(query);
+
+				while(rs.next()) { //finche ho un risultato
+
+				PoesiaDAO poesiaDAO = new PoesiaDAO();
+
+				poesiaDAO.setTitolo(rs.getString("titolo"));
+				poesiaDAO.setAutore(rs.getInt("autore"));
+				poesiaDAO.setContatoreLike(rs.getInt("contatoreLike"));
+				poesiaDAO.setDatapubblicazione(rs.getDate("dataPubblicazione"));
+				poesiaDAO.setRaccolta(rs.getInt("raccolta"));
+				poesiaDAO.setTag(rs.getString("tag"));
+				poesiaDAO.setTesto(rs.getString("body"));
+				poesiaDAO.setVisibilita(rs.getBoolean("visibilita"));
+				lista_poesie_pubbliche.add(poesiaDAO);
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+
+			e.printStackTrace();
+		}
+		return lista_poesie_pubbliche;
+	}
+
+
+
+
 
 
 }

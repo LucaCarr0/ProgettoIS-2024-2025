@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import database.PoesiaDAO;
+import database.ProfiloPersonaleDAO;
 import database.RaccoltaDAO;
 import database.UtenteDAO;
 import session.SessioneUtente;
@@ -194,4 +195,12 @@ public class EntityUtente {
 		this.amministratore = amministratore;
 	}
 
+	public String getNickdaDB() {
+		ProfiloPersonaleDAO profiloDAO=new ProfiloPersonaleDAO();
+		profiloDAO.setId_utente(id);
+		ProfiloPersonaleDAO profiloTrovato=profiloDAO.caricaProfiloUtente();
+		return profiloTrovato.getNickname();
+	}
+
+	
 }

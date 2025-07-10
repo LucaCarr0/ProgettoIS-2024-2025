@@ -1,7 +1,9 @@
 package database;
 
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ProfiloPersonaleDAO {
 	private int id_utente;
@@ -71,12 +73,51 @@ public class ProfiloPersonaleDAO {
 	public void setBiografia(String biografia) {
 		this.biografia = biografia;
 	}
-	public Date getData_di_nascita() {
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Date getDataNascita() {
 		return dataNascita;
 	}
-	public void setData_di_nascita(Date data_di_nascita) {
-		this.dataNascita = data_di_nascita;
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
 	}
+
+	public ProfiloPersonaleDAO caricaProfiloUtente() {
+		ProfiloPersonaleDAO profiloTrovato= new ProfiloPersonaleDAO();
+		String query = "SELECT * FROM ProfiliPersonali WHERE utente = "+id_utente+";";
+
+		try {
+
+			ResultSet rs = DBConnectionManager.selectQuery(query);
+
+				while(rs.next()) { //finche ho un risultato
+
+				profiloTrovato.setNickname(rs.getString("nickname"));
+				profiloTrovato.setNome(rs.getString("nome"));
+				profiloTrovato.setCognome(rs.getString("cognome"));
+				profiloTrovato.setImmagineProfilo(rs.getString("immagineProfilo"));
+				profiloTrovato.setBiografia(rs.getString("biografia"));
+				profiloTrovato.setDataNascita(rs.getDate("dataNascita"));
+
+
+
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+
+			e.printStackTrace();
+		}
+		return profiloTrovato;
+	}
+
+	
 
 
 }
