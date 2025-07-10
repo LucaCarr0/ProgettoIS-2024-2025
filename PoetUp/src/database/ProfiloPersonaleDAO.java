@@ -50,7 +50,7 @@ public class ProfiloPersonaleDAO {
 	    String dataFormattata = sdf.format(this.dataNascita);
 		
 	    
-	    String query = "UPDATE profilipersonali SET " +
+	    String query = "UPDATE ProfiliPersonali SET " +
 	               "nome = '" + this.getNome() + "', " +
 	               "cognome = '" + this.getCognome() + "', " +
 	               "dataNascita = '" + dataFormattata + "', " +

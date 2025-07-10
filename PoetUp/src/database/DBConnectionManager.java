@@ -11,7 +11,7 @@ public class DBConnectionManager {
 	public static String dbName = "mydb";
 	public static String driver = "com.mysql.cj.jdbc.Driver";
 	public static String userName = "root";
-	public static String password = "Napoli1926$"; //Lololo89. //admin
+	public static String password = "Lololo89."; //Lololo89. //admin //Napoli1926$
 
 
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {

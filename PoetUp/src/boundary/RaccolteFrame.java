@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -20,6 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+import controller.ControllerPoetUp;
+import dto.RaccoltaDTO;
 
 public class RaccolteFrame extends JFrame {
 
@@ -61,21 +65,13 @@ public class RaccolteFrame extends JFrame {
         contentPane.add(scrollPane);
 
         // === QUI DEVI RECUPERARE LE RACCOLTE DAL DATABASE ===
-        /*
-        List<Raccolta> raccolte = RaccoltaDAO.getRaccolteByUtente(idUtente);
-        */
+        
+        ArrayList<RaccoltaDTO> raccolte = ControllerPoetUp.getRaccolteByUtente();
+        
 
         // === SIMULAZIONE (da rimuovere) ===
-        List<Raccolta> raccolte = List.of(
-            new Raccolta(1, "Momenti", "Una raccolta di momenti speciali"),
-            new Raccolta(2, "Nostalgia", "Ricordi e malinconie"),
-            new Raccolta(3, "Sorrisi", "Poesie leggere e divertenti"),
-            new Raccolta(1, "Momenti", "Una raccolta di momenti speciali"),
-            new Raccolta(2, "Nostalgia", "Ricordi e malinconie"),
-            new Raccolta(3, "Sorrisi", "Poesie leggere e divertenti")
-        );
-
-        for (Raccolta raccolta : raccolte) {
+        
+        for (RaccoltaDTO raccolta : raccolte) {
             JPanel card = new JPanel();
             card.setLayout(null);
             card.setPreferredSize(new Dimension(680, 80));
@@ -100,7 +96,7 @@ public class RaccolteFrame extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     JOptionPane.showMessageDialog(
                         card,
-                        "Funzione non ancora implementata per: " + raccolta.getTitolo(),
+                        "Funzione non ancora implementata per: " + raccolta.getId(),
                         "Info",
                         JOptionPane.INFORMATION_MESSAGE
                     );
@@ -118,10 +114,6 @@ public class RaccolteFrame extends JFrame {
                 }
             });
 
-
-            card.setAlignmentX(Component.LEFT_ALIGNMENT);
-            listPanel.add(card);
-            listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
 
             JButton modificaBtn = new JButton("Modifica");
@@ -172,22 +164,5 @@ public class RaccolteFrame extends JFrame {
         contentPane.add(addBtn);
 
         setVisible(true);
-    }
-
-    // Classe interna per rappresentare una raccolta (da sostituire con la tua classe reale)
-    class Raccolta {
-        private int id;
-        private String titolo;
-        private String descrizione;
-
-        public Raccolta(int id, String titolo, String descrizione) {
-            this.id = id;
-            this.titolo = titolo;
-            this.descrizione = descrizione;
-        }
-
-        public int getId() { return id; }
-        public String getTitolo() { return titolo; }
-        public String getDescrizione() { return descrizione; }
     }
 }

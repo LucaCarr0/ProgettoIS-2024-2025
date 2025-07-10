@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 
 import dto.PoesiaDTO;
+import dto.ProfiloPersonaleDTO;
+import dto.RaccoltaDTO;
 import entity.EntityPoetUp;
 import facade.FacadeUtenti;
 import java.sql.Date;
@@ -68,6 +70,16 @@ public class ControllerPoetUp {
 			return "Profilo aggiornato con successo!";
 		}
 	    
+	}
+
+	public static ProfiloPersonaleDTO getProfiloUtente() {
+		ProfiloPersonaleDTO profilo = FacadeUtenti.getProfiloUtente();
+		return profilo;
+	}
+
+	public static ArrayList<RaccoltaDTO> getRaccolteByUtente() {
+		ArrayList<RaccoltaDTO> raccolte = FacadeUtenti.getRaccolteByUtente();
+		return raccolte;
 	}
 
 	

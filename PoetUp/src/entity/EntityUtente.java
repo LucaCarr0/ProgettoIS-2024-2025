@@ -8,7 +8,8 @@ import database.ProfiloPersonaleDAO;
 import database.RaccoltaDAO;
 import database.UtenteDAO;
 import session.SessioneUtente;
-import dto.ProfiloDTO;
+import dto.ProfiloPersonaleDTO;
+import dto.RaccoltaDTO;
 
 public class EntityUtente {
 
@@ -214,5 +215,32 @@ public class EntityUtente {
 		return profiloTrovato.getNickname();
 	}
 
+	public ProfiloPersonaleDTO getProfiloUtente() {
+		ProfiloPersonaleDAO profiloDAO=new ProfiloPersonaleDAO();
+		profiloDAO.setId_utente(SessioneUtente.getIdUtente());
+		ProfiloPersonaleDAO profiloTrovato=profiloDAO.caricaProfiloUtente();
+		ProfiloPersonaleDTO profilo =new ProfiloPersonaleDTO(profiloTrovato.getNome(),profiloTrovato.getCognome(),profiloTrovato.getDataNascita(),profiloTrovato.getNickname(),profiloTrovato.getBiografia());
+		
+		return profilo;
+		
+	}
+
+	public ArrayList<RaccoltaDTO> getRaccolteByUtente() {
+		this.raccolte.clear(); //se no al ricaricamento della pagina si accumulano duplicati
+		this.setId(SessioneUtente.getIdUtente());
+		this.caricaRaccoltedaDB();
+		ArrayList<RaccoltaDTO> raccolte_dto=new ArrayList<RaccoltaDTO>();
+		
+		for (EntityRaccolta raccolta:raccolte) {
+			RaccoltaDTO raccolta_temp=new RaccoltaDTO();
+			raccolta_temp.setDescrizione(raccolta.getDescrizione());
+			raccolta_temp.setTitolo(raccolta.getTitolo());
+			raccolta_temp.setId(raccolta.getId());
+
+			raccolte_dto.add(raccolta_temp);
+		}
+		return raccolte_dto;
+	}
+	
 
 }
