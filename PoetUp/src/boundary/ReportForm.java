@@ -196,7 +196,7 @@ public class ReportForm extends JFrame {
             public void focusGained(FocusEvent e) {
                 if (field.getText().equals("gg/mm/aaaa")) {
                     field.setText("");
-                    field.setForeground(Color.BLACK); // 👈 Testo utente visibile
+                    field.setForeground(Color.BLACK); // Testo utente visibile
                 }
             }
 
@@ -206,7 +206,7 @@ public class ReportForm extends JFrame {
                     field.setForeground(Color.LIGHT_GRAY); // placeholder
                     field.setText("gg/mm/aaaa");
                 } else {
-                    field.setForeground(Color.BLACK); // 👈 conferma testo utente in nero
+                    field.setForeground(Color.BLACK); // conferma testo utente in nero
                 }
             }
         });
