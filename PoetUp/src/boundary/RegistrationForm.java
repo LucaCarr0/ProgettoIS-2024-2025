@@ -31,12 +31,13 @@ public class RegistrationForm extends JFrame {
 	public RegistrationForm() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 550);
+		setLocationRelativeTo(null);
 
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(245, 248, 250));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
-
+		
 		// Pannello laterale con immagine
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(60, 164, 238));

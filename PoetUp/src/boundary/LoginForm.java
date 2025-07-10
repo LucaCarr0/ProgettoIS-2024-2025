@@ -43,6 +43,7 @@ public class LoginForm extends JFrame {
 		contentPane.setBackground(new Color(245, 248, 250));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		setLocationRelativeTo(null);
 
 		// Titolo
 		JLabel titleLabel = new JLabel("Accedi a POET UP!");

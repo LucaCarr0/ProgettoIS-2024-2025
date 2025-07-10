@@ -9,11 +9,12 @@ public class UtenteForm extends JFrame {
     private JPanel contentPane;
     private JLabel immagineProfiloLabel;
  
-    public UtenteForm() {
+    public UtenteForm(JFrame HomePage) {
         setTitle("Profilo");
         setBounds(100, 100, 700, 550);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
- 
+        setLocationRelativeTo(HomePage);
+        
         contentPane = new JPanel();
         contentPane.setLayout(null);
         contentPane.setBackground(new Color(0x15202B));

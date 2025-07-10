@@ -21,7 +21,7 @@ public class HomePage extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setBackground(new Color(0x15202B));
 		setContentPane(contentPane);
-
+		setLocationRelativeTo(null);
         
 		Color textColor = new Color(245, 248, 250);
         Color cardColor = Color.cyan;
@@ -64,9 +64,10 @@ public class HomePage extends JFrame {
 		JButton icon2 = createCircleButton("/res/raccolta.png", 48);
 		JButton icon3 = createCircleButton("/res/stat.png", 48);
 
-		icon1.addActionListener(e -> new UtenteForm().setVisible(true));
+		icon1.addActionListener(e -> new UtenteForm(this).setVisible(true));
 		icon2.addActionListener(e -> new RaccolteFrame());
-		icon3.addActionListener(e -> JOptionPane.showMessageDialog(this, "Stat cliccato"));
+		icon3.addActionListener(e -> {
+		    new StatisticheForm(this).setVisible(true);});
 
 		menuPanel.add(icon1);
 		menuPanel.add(icon2);
