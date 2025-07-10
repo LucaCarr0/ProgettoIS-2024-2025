@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import controller.ControllerPoetUp;
 import dto.PoesiaDTO;
+import session.SessioneUtente;
 
 public class HomePage extends JFrame {
 
@@ -54,8 +55,12 @@ public class HomePage extends JFrame {
 
 		// === MENU A TENDINA CON SOLO ICONE ===
 		menuPanel = new JPanel();
-		menuPanel.setLayout(new GridLayout(3, 1, 6, 6));
-		menuPanel.setBounds(622, 284, 48, 144);
+		int numButtons = 3;
+		if (SessioneUtente.isAmministratore()) {
+		    numButtons++;
+		}
+		menuPanel.setLayout(new GridLayout(numButtons, 1, 6, 6));
+		menuPanel.setBounds(622, 236, 48, 192);
 		menuPanel.setBackground(new Color(0x15202B));
 		menuPanel.setVisible(false);
 		contentPane.add(menuPanel);
@@ -63,15 +68,23 @@ public class HomePage extends JFrame {
 		JButton icon1 = createCircleButton("/res/utente.png", 48);
 		JButton icon2 = createCircleButton("/res/raccolta.png", 48);
 		JButton icon3 = createCircleButton("/res/stat.png", 48);
+		JButton icon4 = createCircleButton("/res/report.png", 48);
 
 		icon1.addActionListener(e -> new UtenteForm(this).setVisible(true));
 		icon2.addActionListener(e -> new RaccolteFrame());
 		icon3.addActionListener(e -> {
 		    new StatisticheForm(this).setVisible(true);});
+		icon4.addActionListener(e -> {
+		    new ReportForm(this).setVisible(true);});
 
+		
+		if (SessioneUtente.isAmministratore()) {
+		    menuPanel.add(icon4);
+		}
 		menuPanel.add(icon1);
 		menuPanel.add(icon2);
 		menuPanel.add(icon3);
+		
 
 		menuButton.addActionListener(e -> menuPanel.setVisible(!menuPanel.isVisible()));
 		addPoetryButton.addActionListener(e -> new PoesiaForm(this).setVisible(true));
