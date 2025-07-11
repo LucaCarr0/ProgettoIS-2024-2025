@@ -93,12 +93,12 @@ public class EntityUtente {
 
 	}
 
-	public Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+	public Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia, String immaginePath) {
 		//this.setId(SessioneUtente.getIdUtente());
 		EntityProfiloPersonale profiloPersonale = new EntityProfiloPersonale();
 		int idUtente = SessioneUtente.getIdUtente();
 
-		profiloPersonale.aggiornaProfilo(nome, cognome, dataNascita, biografia);
+		profiloPersonale.aggiornaProfilo(nome, cognome, dataNascita, biografia, immaginePath);
 		int res = profiloPersonale.aggiornaSuDB(idUtente);
 
 		return res;
@@ -219,7 +219,7 @@ public class EntityUtente {
 		ProfiloPersonaleDAO profiloDAO=new ProfiloPersonaleDAO();
 		profiloDAO.setId_utente(SessioneUtente.getIdUtente());
 		ProfiloPersonaleDAO profiloTrovato=profiloDAO.caricaProfiloUtente();
-		ProfiloPersonaleDTO profilo =new ProfiloPersonaleDTO(profiloTrovato.getNome(),profiloTrovato.getCognome(),profiloTrovato.getDataNascita(),profiloTrovato.getNickname(),profiloTrovato.getBiografia());
+		ProfiloPersonaleDTO profilo =new ProfiloPersonaleDTO(profiloTrovato.getNome(),profiloTrovato.getCognome(),profiloTrovato.getDataNascita(),profiloTrovato.getNickname(),profiloTrovato.getBiografia(), profiloTrovato.getImmagineProfilo());
 
 		return profilo;
 

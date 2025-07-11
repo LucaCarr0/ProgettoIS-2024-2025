@@ -54,7 +54,8 @@ public class ProfiloPersonaleDAO {
 	               "nome = '" + this.getNome() + "', " +
 	               "cognome = '" + this.getCognome() + "', " +
 	               "dataNascita = '" + dataFormattata + "', " +
-	               "biografia = '" + this.getBiografia() + "' " +
+	               "biografia = '" + this.getBiografia() + "', " +
+	               "immagineProfilo= '"+ this.getImmagineProfilo() + "'" +
 	               "WHERE utente = " + this.getId_utente();
 
 	    System.out.println(query);

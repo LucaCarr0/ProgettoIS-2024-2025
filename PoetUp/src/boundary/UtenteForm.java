@@ -66,11 +66,14 @@ public class UtenteForm extends JFrame {
     }
 
     private void creaBoxImmagineProfilo() {
-        ImageIcon iconaProfilo = resizeIcon("/res/utente.png", 120, 120);
+    	String pathImg = profilo.getImmagineProfilo(); 
+    	if (pathImg == null || pathImg.isEmpty()) {
+    	    pathImg = "/res/utente.png"; // default
+    	}
+    	ImageIcon iconaProfilo = resizeIcon(pathImg, 120, 120);
         immagineProfiloLabel = new JLabel(iconaProfilo);
         immagineProfiloLabel.setBounds(30, 30, 120, 120);
         immagineProfiloLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        immagineProfiloLabel.setToolTipText("Modifica immagine profilo (da implementare)");
         immagineProfiloLabel.setOpaque(true);
         immagineProfiloLabel.setBackground(new Color(0x1E2A36));
         immagineProfiloLabel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
@@ -171,13 +174,30 @@ public class UtenteForm extends JFrame {
         campoNickname.setEditable(false); // Disabilita modifica nickname
         bioArea.setText(profilo.getBio());
     }
+    
+    private void apriPopupModificaImmagine() {
+        SelettoreImmagineProfilo dialog = new SelettoreImmagineProfilo(this);
+        dialog.setVisible(true);
+
+        String pathSelezionato = dialog.getImmagineSelezionata();
+        if (pathSelezionato != null) {
+            // Aggiorna icona visivamente
+            ImageIcon nuovaIcona = resizeIcon(pathSelezionato, 120, 120);
+            immagineProfiloLabel.setIcon(nuovaIcona);
+
+            // Salva nel DTO o in variabile per invio al DB
+            profilo.setImmagineProfilo(pathSelezionato);  // Assicurati che esista nel DTO
+        }
+    }
+
 
     private void salvaProfilo() {
         String nome = campoNome.getText().trim();
         String cognome = campoCognome.getText().trim();
         String dataNascitaStr = campoData.getText().trim();
         String bio = bioArea.getText().trim();
-
+        String immaginePath = profilo.getImmagineProfilo();
+        // recupera il path selezionato
         if (nome.isEmpty() || cognome.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nome e Cognome sono obbligatori.");
             return;
@@ -201,15 +221,21 @@ public class UtenteForm extends JFrame {
             return;
         }
 
-        String messaggio = ControllerPoetUp.modificaProfilo(nome, cognome, dataNascita, bio);
+        String messaggio = ControllerPoetUp.modificaProfilo(nome, cognome, dataNascita, bio, immaginePath);
         JOptionPane.showMessageDialog(this, messaggio);
         if(messaggio.equals("Profilo aggiornato con successo!")) {
         	this.dispose();
         }
     }
 
-    private void apriPopupModificaImmagine() {
-        JOptionPane.showMessageDialog(this, "Popup modifica immagine da implementare.");
+    private String pathImmagine;
+
+    public String getPathImmagine() {
+        return pathImmagine;
+    }
+
+    public void setPathImmagine(String pathImmagine) {
+        this.pathImmagine = pathImmagine;
     }
 
     private JButton createCircleButton(String iconPath, int size) {

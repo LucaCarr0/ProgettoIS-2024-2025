@@ -23,9 +23,9 @@ public class FacadeUtenti {
 		return result;
 	}
 
-	public static Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+	public static Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia, String immaginePath) {
 		EntityUtente utente= new EntityUtente();
-		Integer result = utente.modificaProfilo(nome, cognome, dataNascita, biografia);
+		Integer result = utente.modificaProfilo(nome, cognome, dataNascita, biografia, immaginePath);
         return result;
     }
 

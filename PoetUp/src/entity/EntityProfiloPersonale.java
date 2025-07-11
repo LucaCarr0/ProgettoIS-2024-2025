@@ -17,11 +17,12 @@ public class EntityProfiloPersonale {
 
 	}
 
-	public void aggiornaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+	public void aggiornaProfilo(String nome, String cognome, Date dataNascita, String biografia, String immaginePath) {
         this.setNome(nome);
         this.setCognome(cognome);
         this.setData_di_nascita(dataNascita);
         this.setBiografia(biografia);
+        this.setImmagineProfilo(immaginePath);
     }
 
 	public int aggiornaSuDB(int idUtente) {
@@ -31,6 +32,7 @@ public class EntityProfiloPersonale {
 		profilo.setDataNascita(this.data_di_nascita);
 		profilo.setNickname(this.nickname);
 		profilo.setBiografia(this.biografia);
+		profilo.setImmagineProfilo(this.immagineProfilo);
 		profilo.setId_utente(idUtente);
 		int res=profilo.updateProfilo();
 		return res;

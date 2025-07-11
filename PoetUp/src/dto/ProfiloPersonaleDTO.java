@@ -8,13 +8,25 @@ public class ProfiloPersonaleDTO {
     private Date dataNascita;
     private String nickname;
     private String bio;
-
-    public ProfiloPersonaleDTO(String nome, String cognome, Date dataNascita, String nickname, String bio) {
+    private String ImmagineProfilo;
+    
+    public ProfiloPersonaleDTO(String nome, String cognome, Date dataNascita, String nickname, String bio, String ImmagineProfilo) {
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
         this.nickname = nickname;
         this.bio = bio;
+        this.ImmagineProfilo = ImmagineProfilo;
+    }
+    
+    
+
+    public String getImmagineProfilo() {
+        return ImmagineProfilo;
+    }
+
+    public void setImmagineProfilo(String ImmagineProfilo) {
+        this.ImmagineProfilo = ImmagineProfilo;
     }
 
 	public String getNome() {

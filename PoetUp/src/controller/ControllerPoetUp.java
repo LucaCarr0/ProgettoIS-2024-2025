@@ -62,9 +62,9 @@ public class ControllerPoetUp {
 		return feed;
 	}
 
-	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
+	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia, String ImmagineProfilo) {
 
-	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia);
+	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia, ImmagineProfilo);
 
 	    if(result == -1) {
 			return "Errore durante la modifica del profilo.";
