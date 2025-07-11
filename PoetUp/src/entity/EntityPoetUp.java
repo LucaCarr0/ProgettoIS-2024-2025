@@ -2,10 +2,15 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import database.PoesiaDAO;
 import database.UtenteDAO;
 import dto.PoesiaDTO;
+import email.EmailConfig;
+import email.EmailMessage;
+import email.EmailService;
+import jakarta.mail.MessagingException;
 import session.SessioneUtente;
 
 public class EntityPoetUp {
@@ -30,6 +35,22 @@ public class EntityPoetUp {
 
 				//SE REGISTRO CORRETTAMENTE L'UTENTE NE INIZIALIZZO IL PROFILO CON IL NICKNAME
 				utente_da_registrare.inizializzaProfilo(id_utente,nickname);
+				EmailConfig config= new EmailConfig("poetup.noreply@gmail.com","lgdwkmxhcskgxeqh");
+				
+				String body= "Ciao "+ nickname+"! Ti sei registrato correttamente.\n"
+						+ "Per modificare il tuo profilo e dirci qualcosa in più su di te ricorda di accedere alla sezione Profilo.\n"
+						+ "Dai libero sfogo alla tua fantasia! \n"
+						+ "A presto \n"
+						+ "Il team di PoetUp";
+				
+				EmailMessage mess=new EmailMessage(List.of(email),"Registrazione PoetUp!",body);
+				EmailService service= new EmailService(config);
+				try {
+					service.sendEmail(mess);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+				
 				return 0;
 		}
 		}
@@ -139,8 +160,8 @@ public class EntityPoetUp {
 	}
 	
 	public static ArrayList<PoesiaDTO> ricercaPoesie(String termineRicerca, String filtro) {
-	    PoesiaDAO poesiaDAO = new PoesiaDAO();
-	    ArrayList<PoesiaDAO> poesieDAO = poesiaDAO.ricercaPoesie(termineRicerca, filtro);
+	    
+	    ArrayList<PoesiaDAO> poesieDAO = filtraRisultati(termineRicerca, filtro);
 	    ArrayList<PoesiaDTO> poesieDTO = new ArrayList<>();
 	    EntityUtente temp = new EntityUtente();
 	    
@@ -160,6 +181,44 @@ public class EntityPoetUp {
 	    }
 	    
 	    return poesieDTO;
+	}
+	
+	public static ArrayList<PoesiaDAO> filtraRisultati(String termineRicerca, String filtro) {
+		PoesiaDAO poesiaDAO = new PoesiaDAO();
+		ArrayList<PoesiaDAO> tutteLePoesie = poesiaDAO.caricaPoesiePubblichedaDB();
+	    ArrayList<PoesiaDAO> risultati = new ArrayList<>();
+
+	    String ricerca = termineRicerca.toLowerCase();
+
+	    for (PoesiaDAO poesia : tutteLePoesie) {
+	        boolean match = false;
+
+	        switch (filtro) {
+	            case "Tag":
+	                match = poesia.getTag() != null && poesia.getTag().toLowerCase().contains(ricerca);
+	                break;
+	            case "Titolo":
+	                match = poesia.getTitolo() != null && poesia.getTitolo().toLowerCase().contains(ricerca);
+	                break;
+	            case "Testo":
+	                match = poesia.getTesto() != null && poesia.getTesto().toLowerCase().contains(ricerca);
+	                break;
+	            default:
+	                match = (poesia.getTitolo() != null && poesia.getTitolo().toLowerCase().contains(ricerca)) ||
+	                        (poesia.getTag() != null && poesia.getTag().toLowerCase().contains(ricerca)) ||
+	                        (poesia.getTesto() != null && poesia.getTesto().toLowerCase().contains(ricerca));
+	                break;
+	        }
+
+	        if (match) {
+	            risultati.add(poesia);
+	        }
+	    }
+
+	    // Ordinamento per data di pubblicazione, dal più recente al meno recente
+	    risultati.sort((p1, p2) -> p2.getDatapubblicazione().compareTo(p1.getDatapubblicazione()));
+
+	    return risultati;
 	}
 
 
