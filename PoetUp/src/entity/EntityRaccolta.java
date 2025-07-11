@@ -68,4 +68,18 @@ public class EntityRaccolta {
 		return res;
 	}
 
+
+	public int eliminaDaDB() {
+		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
+		raccoltaDao.setId(this.id);
+		int res = raccoltaDao.deleteRaccolta();
+		return res;
+	}
+
+
+
+	public void eliminaRaccolta(int id_raccolta) {
+		this.setId(id_raccolta);
+	}
+
 }

@@ -93,5 +93,16 @@ public class ControllerPoetUp {
 		
 	}
 
+	public static String eliminaRaccolta(int id_raccolta) {
+		Integer result = FacadeUtenti.eliminaRaccolta(id_raccolta);
+
+	    if(result == -1) {
+			return "Errore durante l'eliminazione della Raccolta.";
+		} else {
+			return "Raccolta eliminata con successo!";
+		}
+		
+	}
+
 
 }

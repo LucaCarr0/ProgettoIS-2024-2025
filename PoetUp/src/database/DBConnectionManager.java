@@ -87,4 +87,12 @@ public class DBConnectionManager {
 		conn.close();
 		return ret;
 	}
+
+	public static int deleteQuery(String query) throws ClassNotFoundException, SQLException{
+		Connection conn = getConnection();
+		Statement statement = conn.createStatement();
+		int ret = statement.executeUpdate(query);
+		conn.close();
+		return ret;
+	}
 }

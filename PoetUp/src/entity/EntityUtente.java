@@ -252,5 +252,12 @@ public class EntityUtente {
 		return res;
 	}
 
+	public Integer eliminaRaccolta(int id_raccolta) {
+		EntityRaccolta raccolta = new EntityRaccolta();
+		raccolta.eliminaRaccolta(id_raccolta);
+		int res = raccolta.eliminaDaDB();
+		return res;
+	}
+
 
 }

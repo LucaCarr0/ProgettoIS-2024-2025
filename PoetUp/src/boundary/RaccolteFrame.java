@@ -200,19 +200,19 @@ public class RaccolteFrame extends JFrame {
                 modificaFrame.setVisible(true);
             });
 
-
-
-
-
             eliminaBtn.addActionListener(e -> {
                 int conferma = JOptionPane.showConfirmDialog(this, "Eliminare la raccolta '" + raccolta.getTitolo() + "'?", "Conferma", JOptionPane.YES_NO_OPTION);
                 if (conferma == JOptionPane.YES_OPTION) {
-                    // RaccoltaDAO.elimina(raccolta.getId());
-                    JOptionPane.showMessageDialog(this, "Raccolta eliminata.");
-                    this.dispose();
-                    new RaccolteFrame(); // ricarica
+                    String risultato = ControllerPoetUp.eliminaRaccolta(raccolta.getId());
+                    JOptionPane.showMessageDialog(this, risultato);
+
+                    if (risultato.equals("Raccolta eliminata con successo!")) {
+                        this.dispose();
+                        new RaccolteFrame(); // Ricarica finestra aggiornata
+                    }
                 }
             });
+
 
             card.setAlignmentX(Component.LEFT_ALIGNMENT);
             listPanel.add(card);

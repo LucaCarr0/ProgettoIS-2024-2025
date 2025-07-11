@@ -120,6 +120,22 @@ public class RaccoltaDAO {
 	    return ret;
 	}
 
+	public int deleteRaccolta() {
+	    int ret = 0;
+
+	    String query = "DELETE FROM Raccolte WHERE id = " + this.getId();
+
+	    System.out.println(query);
+	    try {
+	        ret = DBConnectionManager.deleteQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; // errore durante l'esecuzione
+	    }
+
+	    return ret;
+	}
+
 
 
 }

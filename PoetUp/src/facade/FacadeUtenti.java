@@ -46,4 +46,10 @@ public class FacadeUtenti {
 		Integer result = utente.modificaRaccolta(titolo, descrizione, id_raccolta);
         return result;
 	}
+
+	public static Integer eliminaRaccolta(int id_raccolta) {
+		EntityUtente utente = new EntityUtente();
+		Integer result = utente.eliminaRaccolta(id_raccolta);
+		return result;
+	}
 }
