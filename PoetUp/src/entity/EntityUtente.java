@@ -7,9 +7,9 @@ import database.PoesiaDAO;
 import database.ProfiloPersonaleDAO;
 import database.RaccoltaDAO;
 import database.UtenteDAO;
-import session.SessioneUtente;
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
+import session.SessioneUtente;
 
 public class EntityUtente {
 
@@ -92,15 +92,15 @@ public class EntityUtente {
 		return ret;
 
 	}
-	
+
 	public Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
 		//this.setId(SessioneUtente.getIdUtente());
 		EntityProfiloPersonale profiloPersonale = new EntityProfiloPersonale();
 		int idUtente = SessioneUtente.getIdUtente();
-		
+
 		profiloPersonale.aggiornaProfilo(nome, cognome, dataNascita, biografia);
 		int res = profiloPersonale.aggiornaSuDB(idUtente);
-		
+
 		return res;
 	}
 
@@ -220,17 +220,17 @@ public class EntityUtente {
 		profiloDAO.setId_utente(SessioneUtente.getIdUtente());
 		ProfiloPersonaleDAO profiloTrovato=profiloDAO.caricaProfiloUtente();
 		ProfiloPersonaleDTO profilo =new ProfiloPersonaleDTO(profiloTrovato.getNome(),profiloTrovato.getCognome(),profiloTrovato.getDataNascita(),profiloTrovato.getNickname(),profiloTrovato.getBiografia());
-		
+
 		return profilo;
-		
+
 	}
 
 	public ArrayList<RaccoltaDTO> getRaccolteByUtente() {
-		this.raccolte.clear(); //se no al ricaricamento della pagina si accumulano duplicati
+		EntityUtente.raccolte.clear(); //se no al ricaricamento della pagina si accumulano duplicati
 		this.setId(SessioneUtente.getIdUtente());
 		this.caricaRaccoltedaDB();
-		ArrayList<RaccoltaDTO> raccolte_dto=new ArrayList<RaccoltaDTO>();
-		
+		ArrayList<RaccoltaDTO> raccolte_dto=new ArrayList<>();
+
 		for (EntityRaccolta raccolta:raccolte) {
 			RaccoltaDTO raccolta_temp=new RaccoltaDTO();
 			raccolta_temp.setDescrizione(raccolta.getDescrizione());
@@ -241,6 +241,16 @@ public class EntityUtente {
 		}
 		return raccolte_dto;
 	}
-	
+
+	public Integer modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
+		EntityRaccolta raccolta = new EntityRaccolta();
+		int idUtente = SessioneUtente.getIdUtente();
+
+		raccolta.aggiornaRaccolta(titolo, descrizione, id_raccolta);
+		int res = raccolta.aggiornaSuDB(idUtente);
+		
+		return res;
+	}
+
 
 }

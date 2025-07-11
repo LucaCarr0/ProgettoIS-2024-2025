@@ -43,13 +43,13 @@ public class ProfiloPersonaleDAO {
 	}
 
 	public int updateProfilo() {
-	    
+
 		int ret = 0;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    String dataFormattata = sdf.format(this.dataNascita);
-		
-	    
+
+
 	    String query = "UPDATE ProfiliPersonali SET " +
 	               "nome = '" + this.getNome() + "', " +
 	               "cognome = '" + this.getCognome() + "', " +
@@ -69,11 +69,11 @@ public class ProfiloPersonaleDAO {
 		}
 
 		return ret;
-	    
-	}
-	
 
-	
+	}
+
+
+
 
 	public int getId_utente() {
 		return id_utente;

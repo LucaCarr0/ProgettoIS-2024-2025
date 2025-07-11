@@ -49,4 +49,23 @@ public class EntityRaccolta {
 		this.id = id;
 	}
 
+
+	public void aggiornaRaccolta(String titolo, String descrizione, int id_raccolta) {
+		this.setTitolo(titolo);
+		this.setDescrizione(descrizione);
+		this.setId(id_raccolta);
+	}
+
+
+
+	public int aggiornaSuDB(int idUtente) {
+		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
+		raccoltaDao.setTitolo(this.titolo);
+		raccoltaDao.setDescrizione(this.descrizione);
+		raccoltaDao.setId_utente(idUtente);
+		raccoltaDao.setId(this.id);
+		int res = raccoltaDao.updateRaccolta();
+		return res;
+	}
+
 }

@@ -23,7 +23,7 @@ public class EntityProfiloPersonale {
         this.setData_di_nascita(dataNascita);
         this.setBiografia(biografia);
     }
-	
+
 	public int aggiornaSuDB(int idUtente) {
 		ProfiloPersonaleDAO profilo=new ProfiloPersonaleDAO();
 		profilo.setNome(this.nome);
@@ -35,7 +35,7 @@ public class EntityProfiloPersonale {
 		int res=profilo.updateProfilo();
 		return res;
 	}
-	
+
 	public int scriviSuDB(int id_utente) {
 		ProfiloPersonaleDAO profilo=new ProfiloPersonaleDAO();
 		profilo.setId_utente(id_utente);

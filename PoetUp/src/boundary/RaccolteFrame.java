@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -65,12 +64,12 @@ public class RaccolteFrame extends JFrame {
         contentPane.add(scrollPane);
 
         // === QUI DEVI RECUPERARE LE RACCOLTE DAL DATABASE ===
-        
+
         ArrayList<RaccoltaDTO> raccolte = ControllerPoetUp.getRaccolteByUtente();
-        
+
 
         // === SIMULAZIONE (da rimuovere) ===
-        
+
         for (RaccoltaDTO raccolta : raccolte) {
             JPanel card = new JPanel();
             card.setLayout(null);
@@ -133,9 +132,77 @@ public class RaccolteFrame extends JFrame {
 
             // Azioni pulsanti
             modificaBtn.addActionListener(e -> {
-                JOptionPane.showMessageDialog(this, "Modifica non ancora implementata per: " + raccolta.getTitolo());
-                // new ModificaRaccoltaForm(raccolta);
+                JFrame modificaFrame = new JFrame("Modifica Raccolta");
+                modificaFrame.setSize(400, 250);
+                modificaFrame.setLocationRelativeTo(this);
+                modificaFrame.setLayout(null);
+
+                JLabel titoloLabel = new JLabel("Titolo:");
+                titoloLabel.setBounds(30, 30, 80, 25);
+                modificaFrame.add(titoloLabel);
+
+                javax.swing.JTextField campoTitoloInput = new javax.swing.JTextField(raccolta.getTitolo());
+                campoTitoloInput.setBounds(120, 30, 220, 25);
+                modificaFrame.add(campoTitoloInput);
+
+                JLabel descLabel = new JLabel("Descrizione:");
+                descLabel.setBounds(30, 70, 80, 25);
+                modificaFrame.add(descLabel);
+
+                javax.swing.JTextArea campoDescrizioneInput = new javax.swing.JTextArea(raccolta.getDescrizione());
+                campoDescrizioneInput.setLineWrap(true);
+                campoDescrizioneInput.setWrapStyleWord(true);
+                JScrollPane scrollDesc = new JScrollPane(campoDescrizioneInput);
+                scrollDesc.setBounds(120, 70, 220, 80);
+                modificaFrame.add(scrollDesc);
+
+                JButton salvaBtn = new JButton("Salva");
+                salvaBtn.setBounds(150, 170, 100, 30);
+                modificaFrame.add(salvaBtn);
+
+                salvaBtn.addActionListener(ev -> {
+                    String titoloInput = campoTitoloInput.getText().trim();
+                    String descrizioneInput = campoDescrizioneInput.getText().trim();
+
+                    // === Controlli sul titolo ===
+                    if (titoloInput.isEmpty()) {
+                        JOptionPane.showMessageDialog(modificaFrame, "Il titolo non può essere vuoto.");
+                        return;
+                    }
+
+                    if (titoloInput.length() > 25) {
+                        JOptionPane.showMessageDialog(modificaFrame, "Il titolo non può superare i 25 caratteri.");
+                        return;
+                    }
+
+                    if (!titoloInput.matches("^[a-zA-Z0-9\\s]+$")) {
+                        JOptionPane.showMessageDialog(modificaFrame, "Il titolo non può contenere caratteri speciali.");
+                        return;
+                    }
+
+                    // === Controllo sulla descrizione ===
+                    if (descrizioneInput.length() > 255) {
+                        JOptionPane.showMessageDialog(modificaFrame, "La descrizione non può superare i 255 caratteri.");
+                        return;
+                    }
+
+                    // Salvataggio
+                    String messaggio = ControllerPoetUp.modificaRaccolta(titoloInput, descrizioneInput, raccolta.getId());
+                    JOptionPane.showMessageDialog(modificaFrame, messaggio);
+
+                    if (messaggio.equals("Raccolta aggiornata con successo!")) {
+                        modificaFrame.dispose();
+                        this.dispose();
+                        new RaccolteFrame(); // Ricarica la finestra aggiornata
+                    }
+                });
+
+                modificaFrame.setVisible(true);
             });
+
+
+
+
 
             eliminaBtn.addActionListener(e -> {
                 int conferma = JOptionPane.showConfirmDialog(this, "Eliminare la raccolta '" + raccolta.getTitolo() + "'?", "Conferma", JOptionPane.YES_NO_OPTION);

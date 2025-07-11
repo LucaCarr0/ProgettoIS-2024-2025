@@ -4,8 +4,8 @@ public class RaccoltaDTO {
 	private String titolo;
 	private String descrizione;
 	private int id;
-	
-	
+
+
 	public RaccoltaDTO(String titolo, String descrizione) {
 		this.titolo = titolo;
 		this.descrizione = descrizione;
@@ -30,6 +30,6 @@ public class RaccoltaDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+
 }

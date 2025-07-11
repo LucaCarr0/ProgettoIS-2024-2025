@@ -101,6 +101,25 @@ public class RaccoltaDAO {
 		this.id = id;
 	}
 
+	public int updateRaccolta() {
+	    int ret = 0;
+
+	    String query = "UPDATE Raccolte SET " +
+	                   "titolo = '" + this.getTitolo() + "', " +
+	                   "descrizione = '" + this.getDescrizione() + "' " +
+	                   "WHERE id = " + this.getId();
+
+	    System.out.println(query);
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; // per segnalare l'errore di scrittura
+	    }
+
+	    return ret;
+	}
+
 
 
 }

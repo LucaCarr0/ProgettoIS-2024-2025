@@ -1,9 +1,30 @@
 package boundary;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import controller.ControllerPoetUp;
 import dto.ProfiloPersonaleDTO;
@@ -99,14 +120,16 @@ public class UtenteForm extends JFrame {
         // Data: gestione placeholder (già compilata nel costruttore)
         campoData.setForeground(Color.BLACK);
         campoData.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent e) {
+            @Override
+			public void focusGained(java.awt.event.FocusEvent e) {
                 if (campoData.getText().equals("yyyy-MM-dd")) {
                     campoData.setText("");
                     campoData.setForeground(Color.BLACK);
                 }
             }
 
-            public void focusLost(java.awt.event.FocusEvent e) {
+            @Override
+			public void focusLost(java.awt.event.FocusEvent e) {
                 if (campoData.getText().isEmpty()) {
                     campoData.setText("yyyy-MM-dd");
                     campoData.setForeground(Color.GRAY);
@@ -137,7 +160,13 @@ public class UtenteForm extends JFrame {
         // === IMPOSTA I VALORI DEL DTO NEI CAMPI ===
         campoNome.setText(profilo.getNome());
         campoCognome.setText(profilo.getCognome());
-        campoData.setText(profilo.getDataNascita().toString()); // yyyy-MM-dd
+        if (profilo.getDataNascita() != null) {
+            campoData.setText(profilo.getDataNascita().toString()); // yyyy-MM-dd
+            campoData.setForeground(Color.BLACK);
+        } else {
+            campoData.setText("yyyy-MM-dd");
+            campoData.setForeground(Color.GRAY);
+        }
         campoNickname.setText(profilo.getNickname());
         campoNickname.setEditable(false); // Disabilita modifica nickname
         bioArea.setText(profilo.getBio());

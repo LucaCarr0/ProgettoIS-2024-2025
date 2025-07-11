@@ -1,10 +1,33 @@
 package boundary;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import controller.ControllerPoetUp;
 import dto.PoesiaDTO;
@@ -23,11 +46,11 @@ public class HomePage extends JFrame {
 		contentPane.setBackground(new Color(0x15202B));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
-        
+
 		Color textColor = new Color(245, 248, 250);
         Color cardColor = Color.cyan;
         Color primaryColor = new Color(60, 164, 238);
-        
+
         Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
 		// === TITOLO ===
 		JLabel titleLabel = new JLabel("POET UP - Home");
@@ -77,14 +100,14 @@ public class HomePage extends JFrame {
 		icon4.addActionListener(e -> {
 		    new ReportForm(this).setVisible(true);});
 
-		
+
 		if (SessioneUtente.isAmministratore()) {
 		    menuPanel.add(icon4);
 		}
 		menuPanel.add(icon1);
 		menuPanel.add(icon2);
 		menuPanel.add(icon3);
-		
+
 
 		menuButton.addActionListener(e -> menuPanel.setVisible(!menuPanel.isVisible()));
 		addPoetryButton.addActionListener(e -> new PoesiaForm(this).setVisible(true));
@@ -93,7 +116,7 @@ public class HomePage extends JFrame {
 		JPanel listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         listPanel.setBackground(new Color(0x15202B));
- 
+
         JScrollPane scrollPane = new JScrollPane(listPanel);
         scrollPane.setBounds(100, 110, 480, 300);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -108,7 +131,7 @@ public class HomePage extends JFrame {
                 new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
                 new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
                 new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD")
-                
+
             );
      */
 
@@ -148,7 +171,7 @@ public class HomePage extends JFrame {
             dataLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
             rightPanel.add(dataLabel);
 
-            JLabel likeLabel = new JLabel("❤ " + poesia.getLike());
+            JLabel likeLabel = new JLabel("\u2665 " + poesia.getLike());
             likeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
             likeLabel.setForeground(new Color(255, 122, 89));
             likeLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -218,6 +241,6 @@ public class HomePage extends JFrame {
 		return new ImageIcon(image);
 	}
 
-	
-	
+
+
 }

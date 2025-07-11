@@ -57,5 +57,5 @@ public class ProfiloPersonaleDTO {
 		this.bio = bio;
 	}
 
-    
+
 }

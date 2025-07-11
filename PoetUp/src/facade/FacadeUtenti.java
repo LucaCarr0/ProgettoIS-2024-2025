@@ -1,11 +1,11 @@
 package facade;
 
-import entity.EntityUtente;
 import java.sql.Date;
 import java.util.ArrayList;
 
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
+import entity.EntityUtente;
 
 public class FacadeUtenti {
 
@@ -22,7 +22,7 @@ public class FacadeUtenti {
 		Integer result = utente.addRaccolta(titolo,descrizione);
 		return result;
 	}
-	
+
 	public static Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
 		EntityUtente utente= new EntityUtente();
 		Integer result = utente.modificaProfilo(nome, cognome, dataNascita, biografia);
@@ -39,5 +39,11 @@ public class FacadeUtenti {
 		EntityUtente utente= new EntityUtente();
 		ArrayList<RaccoltaDTO> raccolte = utente.getRaccolteByUtente();
         return raccolte;
+	}
+
+	public static Integer modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
+		EntityUtente utente= new EntityUtente();
+		Integer result = utente.modificaRaccolta(titolo, descrizione, id_raccolta);
+        return result;
 	}
 }

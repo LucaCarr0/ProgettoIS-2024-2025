@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import dto.PoesiaDTO;
@@ -7,7 +8,6 @@ import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
 import entity.EntityPoetUp;
 import facade.FacadeUtenti;
-import java.sql.Date;
 
 public class ControllerPoetUp {
 
@@ -59,9 +59,9 @@ public class ControllerPoetUp {
 		ArrayList<PoesiaDTO> feed = EntityPoetUp.visualizzaFeed();
 		return feed;
 	}
-	
+
 	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia) {
-	  
+
 	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia);
 
 	    if(result == -1) {
@@ -69,7 +69,7 @@ public class ControllerPoetUp {
 		} else {
 			return "Profilo aggiornato con successo!";
 		}
-	    
+
 	}
 
 	public static ProfiloPersonaleDTO getProfiloUtente() {
@@ -82,5 +82,16 @@ public class ControllerPoetUp {
 		return raccolte;
 	}
 
-	
+	public static String modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
+		Integer result = FacadeUtenti.modificaRaccolta(titolo, descrizione, id_raccolta);
+
+	    if(result == -1) {
+			return "Errore durante la modifica della Raccolta.";
+		} else {
+			return "Raccolta aggiornata con successo!";
+		}
+		
+	}
+
+
 }

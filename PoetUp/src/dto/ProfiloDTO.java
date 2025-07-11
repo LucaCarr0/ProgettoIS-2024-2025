@@ -9,9 +9,9 @@ public class ProfiloDTO {
     private Date dataNascita;
     private String immagine;
     private String biografia;
-    
+
     public ProfiloDTO() {
-    	
+
     }
 
     public ProfiloDTO(String nome, String cognome, Date dataNascita, String immagine, String biografia) {
@@ -41,7 +41,7 @@ public class ProfiloDTO {
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
-    
+
     public void setNickname(String nickname) {
     	this.nickname = nickname;
     }
