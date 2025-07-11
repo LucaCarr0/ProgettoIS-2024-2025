@@ -16,7 +16,7 @@ import controller.ControllerPoetUp;
 
 public class RaccoltaForm extends JFrame {
 
-    public RaccoltaForm(JFrame parentFrame) {
+    public RaccoltaForm(JFrame parentFrame,JFrame home) {
         setTitle("Nuova Raccolta");
         setSize(500, 400);
         setLocationRelativeTo(parentFrame);
@@ -95,7 +95,7 @@ public class RaccoltaForm extends JFrame {
                 JOptionPane.showMessageDialog(this, esito);
                 this.dispose(); // chiudi il form
                 parentFrame.dispose(); // chiudi finestra raccolte vecchia
-                new RaccolteFrame(); // riapri aggiornata
+                new RaccolteFrame(home); // riapri aggiornata
             } else {
                 JOptionPane.showMessageDialog(this,esito, "Errore", JOptionPane.ERROR_MESSAGE);
             }

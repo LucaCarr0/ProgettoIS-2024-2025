@@ -112,7 +112,7 @@ public class EntityPoetUp {
 			poesia_temp.setAutore(nick_autore);
 			poesia_temp.setDatapubblicazione(lista_poesie_pubbliche.get(i).getDatapubblicazione());
 			poesia_temp.setContatoreLike(lista_poesie_pubbliche.get(i).getContatoreLike());
-
+			poesia_temp.setId(lista_poesie_pubbliche.get(i).getId());
 
 			lista_entity.add(poesia_temp);
 
@@ -130,7 +130,8 @@ public class EntityPoetUp {
 	            e.getTitolo(),
 	            e.getAutore(),
 	            e.getContatoreLike(),
-	            e.getDatapubblicazione().toString()
+	            e.getDatapubblicazione().toString(),
+	            e.getId()
 	        );
 	        feed.add(dto);
 	    }

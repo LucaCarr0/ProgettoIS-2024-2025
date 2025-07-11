@@ -16,6 +16,35 @@ public class PoesiaDAO {
 	private int raccolta;
 
 
+	
+	public void caricadaDB() {
+				String query = "SELECT * FROM Poesie WHERE id = "+id+";";
+				
+				try {
+
+					ResultSet rs = DBConnectionManager.selectQuery(query);
+
+						while(rs.next()) { //finche ho un risultato
+
+						
+
+						setTitolo(rs.getString("titolo"));
+						setAutore(rs.getInt("autore"));
+						setContatoreLike(rs.getInt("contatoreLike"));
+						setDatapubblicazione(rs.getDate("dataPubblicazione"));
+						setRaccolta(rs.getInt("raccolta"));
+						setTag(rs.getString("tag"));
+						setTesto(rs.getString("body"));
+						setVisibilita(rs.getBoolean("visibilita"));
+
+					}
+				} catch (ClassNotFoundException | SQLException e) {
+
+					e.printStackTrace();
+				}
+		}
+	
+	
 	public int ScriviSuDB() {
 
 		int ret = 0;
@@ -161,6 +190,7 @@ public class PoesiaDAO {
 				poesiaDAO.setTag(rs.getString("tag"));
 				poesiaDAO.setTesto(rs.getString("body"));
 				poesiaDAO.setVisibilita(rs.getBoolean("visibilita"));
+				poesiaDAO.setId(rs.getInt("id"));
 				lista_poesie_pubbliche.add(poesiaDAO);
 			}
 		} catch (ClassNotFoundException | SQLException e) {

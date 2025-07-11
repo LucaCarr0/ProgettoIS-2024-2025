@@ -3,10 +3,12 @@ package controller;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import dto.PoesiaCompletaDTO;
 import dto.PoesiaDTO;
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
 import entity.EntityPoetUp;
+import facade.FacadePoesie;
 import facade.FacadeUtenti;
 
 public class ControllerPoetUp {
@@ -102,6 +104,12 @@ public class ControllerPoetUp {
 			return "Raccolta eliminata con successo!";
 		}
 		
+	}
+
+	public static PoesiaCompletaDTO visualizzaPoesia(int id_poesia,String autore) {
+		PoesiaCompletaDTO poesia = FacadePoesie.visualizzaPoesia(id_poesia,autore);
+		return poesia;
+
 	}
 
 

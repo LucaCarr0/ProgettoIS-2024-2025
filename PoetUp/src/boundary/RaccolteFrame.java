@@ -26,11 +26,11 @@ import dto.RaccoltaDTO;
 
 public class RaccolteFrame extends JFrame {
 
-    public RaccolteFrame() {
+    public RaccolteFrame(JFrame parentFrame) {
         setTitle("Le tue Raccolte");
         setSize(900, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(parentFrame);
 
         // Colori
         Color primaryColor = new Color(60, 164, 238);
@@ -193,7 +193,7 @@ public class RaccolteFrame extends JFrame {
                     if (messaggio.equals("Raccolta aggiornata con successo!")) {
                         modificaFrame.dispose();
                         this.dispose();
-                        new RaccolteFrame(); // Ricarica la finestra aggiornata
+                        new RaccolteFrame(parentFrame); // Ricarica la finestra aggiornata
                     }
                 });
 
@@ -207,8 +207,13 @@ public class RaccolteFrame extends JFrame {
                     JOptionPane.showMessageDialog(this, risultato);
 
                     if (risultato.equals("Raccolta eliminata con successo!")) {
+                        
+                        parentFrame.dispose();         // chiude la vecchia home
+                        HomePage nuovaHome = new HomePage();
+                        nuovaHome.setLocationRelativeTo(this);
+                        nuovaHome.setVisible(true);    // MOSTRA la nuova home
                         this.dispose();
-                        new RaccolteFrame(); // Ricarica finestra aggiornata
+                        new RaccolteFrame(nuovaHome); // Ricarica finestra aggiornata
                     }
                 }
             });
@@ -227,7 +232,7 @@ public class RaccolteFrame extends JFrame {
         addBtn.setBorderPainted(false);
         addBtn.setBounds(410, 500, 60, 50);
         addBtn.setFocusPainted(false);
-        addBtn.addActionListener(e -> new RaccoltaForm(this));
+        addBtn.addActionListener(e -> new RaccoltaForm(this,parentFrame));
         contentPane.add(addBtn);
 
         setVisible(true);

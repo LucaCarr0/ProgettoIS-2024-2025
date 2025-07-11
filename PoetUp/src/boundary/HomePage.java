@@ -94,7 +94,7 @@ public class HomePage extends JFrame {
 		JButton icon4 = createCircleButton("/res/report.png", 48);
 
 		icon1.addActionListener(e -> new UtenteForm(this).setVisible(true));
-		icon2.addActionListener(e -> new RaccolteFrame());
+		icon2.addActionListener(e -> new RaccolteFrame(this));
 		icon3.addActionListener(e -> {
 		    new StatisticheForm(this).setVisible(true);});
 		icon4.addActionListener(e -> {
@@ -123,21 +123,12 @@ public class HomePage extends JFrame {
         contentPane.add(scrollPane);
 		// === CARICAMENTO POESIE DAL CONTROLLER ===
 		ArrayList<PoesiaDTO> poesie = ControllerPoetUp.visualizzaFeed(); // Sostituisci con il tuo metodo
-        /*
-		List<PoesiaDTO> poesie = List.of(
-                new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
-                new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
-                new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
-                new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
-                new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD"),
-                new PoesiaDTO("titolo","autore",3,"YYYY-MM-DD")
-
-            );
-     */
+        
 
 	// === CARD POESIA CON CLICK ===
         for (int i=0;i<5 && i<poesie.size();i++) {
         	PoesiaDTO poesia = poesie.get(i);
+        	System.out.println("id poesia da interfaccia: "+poesia.getId());
             JPanel card = new JPanel();
             card.setLayout(new BorderLayout());
             card.setMaximumSize(new Dimension(480, 80)); // Stessa larghezza dello scrollPane
@@ -185,12 +176,7 @@ public class HomePage extends JFrame {
             card.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(
-                        card,
-                        "Funzione non ancora implementata per: " + poesia.getTitolo(),
-                        "Info",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
+                	new PoesiaFrame(poesia.getId(),poesia.getAutore());
                 }
 
                 @Override
