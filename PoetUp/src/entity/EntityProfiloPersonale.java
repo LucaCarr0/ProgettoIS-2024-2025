@@ -17,12 +17,12 @@ public class EntityProfiloPersonale {
 
 	}
 
-	public void aggiornaProfilo(String nome, String cognome, Date dataNascita, String biografia, String immaginePath) {
+	public void aggiornaProfilo(String nome, String cognome, Date dataNascita, String biografia, String immagineProfilo) {
         this.setNome(nome);
         this.setCognome(cognome);
         this.setData_di_nascita(dataNascita);
         this.setBiografia(biografia);
-        this.setImmagineProfilo(immaginePath);
+        this.setImmagineProfilo(immagineProfilo);
     }
 
 	public int aggiornaSuDB(int idUtente) {

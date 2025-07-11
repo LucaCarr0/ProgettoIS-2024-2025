@@ -62,9 +62,9 @@ public class ControllerPoetUp {
 		return feed;
 	}
 
-	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia, String ImmagineProfilo) {
+	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia,String immagineProfilo) {
 
-	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia, ImmagineProfilo);
+	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia,immagineProfilo);
 
 	    if(result == -1) {
 			return "Errore durante la modifica del profilo.";
@@ -114,6 +114,11 @@ public class ControllerPoetUp {
 
 	public static ArrayList<PoesiaDTO> ricercaPoesie(String termineRicerca, String filtro) {
 	    return EntityPoetUp.ricercaPoesie(termineRicerca, filtro);
+	}
+
+	public static ArrayList<PoesiaDTO> getPoesieByRaccolta(int raccoltaId) {
+		ArrayList<PoesiaDTO> poesie = FacadePoesie.getPoesieByRaccolta(raccoltaId);
+		return poesie;		
 	}
 
 }

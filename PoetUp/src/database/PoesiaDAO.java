@@ -106,6 +106,37 @@ public class PoesiaDAO {
 				}
 				return lista_poesie_db_utente;
 		}
+	public ArrayList<PoesiaDAO> getPoesieRaccoltadaDB() {
+		//creo il la lista di appoggio
+				ArrayList<PoesiaDAO> lista_poesie_db_utente = new ArrayList<>();
+				System.out.println("raccolta id: "+raccolta);
+				String query = "SELECT * FROM Poesie WHERE raccolta = "+raccolta+";";
+
+				try {
+
+					ResultSet rs = DBConnectionManager.selectQuery(query);
+
+						while(rs.next()) { //finche ho un risultato
+
+						PoesiaDAO poesiaDAO = new PoesiaDAO();
+						
+						poesiaDAO.setId(rs.getInt("id"));
+						poesiaDAO.setTitolo(rs.getString("titolo"));
+						poesiaDAO.setAutore(rs.getInt("autore"));
+						poesiaDAO.setContatoreLike(rs.getInt("contatoreLike"));
+						poesiaDAO.setDatapubblicazione(rs.getDate("dataPubblicazione"));
+						poesiaDAO.setRaccolta(rs.getInt("raccolta"));
+						poesiaDAO.setTag(rs.getString("tag"));
+						poesiaDAO.setTesto(rs.getString("body"));
+						poesiaDAO.setVisibilita(rs.getBoolean("visibilita"));
+						lista_poesie_db_utente.add(poesiaDAO);
+					}
+				} catch (ClassNotFoundException | SQLException e) {
+
+					e.printStackTrace();
+				}
+				return lista_poesie_db_utente;
+		}
 
 
 

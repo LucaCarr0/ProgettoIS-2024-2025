@@ -9,6 +9,7 @@ import database.CommentoDAO;
 import database.PoesiaDAO;
 import dto.CommentoDTO;
 import dto.PoesiaCompletaDTO;
+import dto.PoesiaDTO;
 import session.SessioneUtente;
 
 public class EntityPoesia implements Comparable<EntityPoesia>{
@@ -215,6 +216,8 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		return trovato;
 		
 	}
+
+	
 
 
 

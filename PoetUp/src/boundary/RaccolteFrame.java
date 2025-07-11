@@ -91,14 +91,11 @@ public class RaccolteFrame extends JFrame {
 
             // Azione click sulla card → apre PoesieFrame
             card.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(
-                        card,
-                        "Funzione non ancora implementata per: " + raccolta.getId(),
-                        "Info",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
+            		@Override
+                    public void mouseClicked(MouseEvent e) {
+                        new PoesieRaccoltaFrame(RaccolteFrame.this, raccolta.getId(), raccolta.getTitolo());
+                    
+            
                 }
 
                 @Override

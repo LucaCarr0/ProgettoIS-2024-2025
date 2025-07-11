@@ -29,6 +29,7 @@ public class FacadeUtenti {
         return result;
     }
 
+
 	public static ProfiloPersonaleDTO getProfiloUtente() {
 		EntityUtente utente= new EntityUtente();
 		ProfiloPersonaleDTO profilo = utente.getProfiloUtente();

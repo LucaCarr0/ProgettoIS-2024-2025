@@ -1,14 +1,17 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import database.PoesiaDAO;
 import database.RaccoltaDAO;
+import dto.PoesiaDTO;
 
 public class EntityRaccolta {
 	private int id;
 	private String titolo;
 	private String descrizione;
-	private ArrayList<EntityPoesia> poesia;
+	private ArrayList<EntityPoesia> poesie;
 
 
 	public EntityRaccolta() {
@@ -68,7 +71,45 @@ public class EntityRaccolta {
 		return res;
 	}
 
+	public ArrayList<PoesiaDTO> getPoesieByRaccolta(int id_raccolta) {
+		this.poesie= new ArrayList<EntityPoesia>();
+		PoesiaDAO poesiaDAO = new PoesiaDAO();
+		 this.id=id_raccolta;
+		 poesiaDAO.setRaccolta(id);
+		 ArrayList<PoesiaDAO> lista_poesie=poesiaDAO.getPoesieRaccoltadaDB();
+		 
+		 for (PoesiaDAO poesia_d : lista_poesie) {
+			 EntityPoesia poesia_temp = new EntityPoesia();
+			 EntityUtente autore= new EntityUtente();
 
+				//RECUPERO DA DB L'AUTORE DAL SUO ID
+				int id_autore=poesia_d.getAutore();
+				autore.setId(id_autore);
+				String nick_autore=autore.getNickdaDB();
+
+				poesia_temp.setTitolo(poesia_d.getTitolo());
+				poesia_temp.setAutore(nick_autore);
+				poesia_temp.setDatapubblicazione(poesia_d.getDatapubblicazione());
+				poesia_temp.setContatoreLike(poesia_d.getContatoreLike());
+				poesia_temp.setId(poesia_d.getId());
+				this.poesie.add(poesia_temp);
+		 }
+		 	poesie.sort(Collections.reverseOrder());
+		 	ArrayList<PoesiaDTO> risultato= new ArrayList<PoesiaDTO>();
+		 	for (EntityPoesia e : poesie) {
+		        PoesiaDTO dto = new PoesiaDTO();	
+		        dto.setId(e.getId());
+		        dto.setTitolo(e.getTitolo());
+	            dto.setAutore(e.getAutore());
+	            dto.setLike(e.getContatoreLike());
+	            dto.setData(e.getDatapubblicazione().toString());
+		        risultato.add(dto);
+		    }
+			return risultato;
+		 
+		 //PoesiaDTO(int id, String titolo, String autore, int like, String data, String tag, String testo) 
+	}
+	
 	public int eliminaDaDB() {
 		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
 		raccoltaDao.setId(this.id);
