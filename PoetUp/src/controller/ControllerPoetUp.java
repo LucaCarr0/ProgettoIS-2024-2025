@@ -112,5 +112,8 @@ public class ControllerPoetUp {
 
 	}
 
+	public static ArrayList<PoesiaDTO> ricercaPoesie(String termineRicerca, String filtro) {
+	    return EntityPoetUp.ricercaPoesie(termineRicerca, filtro);
+	}
 
 }

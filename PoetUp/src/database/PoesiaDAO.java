@@ -75,6 +75,69 @@ public class PoesiaDAO {
 
 		return ret;
 	}
+	
+	public ArrayList<PoesiaDAO> getAllPoesieVisibili() {
+	    ArrayList<PoesiaDAO> poesie = new ArrayList<>();
+	    String query = "SELECT * FROM Poesie WHERE visibilita = 1";
+
+	    try {
+	        ResultSet rs = DBConnectionManager.selectQuery(query);
+	        while (rs.next()) {
+	            PoesiaDAO poesia = new PoesiaDAO();
+	            poesia.setId(rs.getInt("id"));
+	            poesia.setTitolo(rs.getString("titolo"));
+	            poesia.setAutore(rs.getInt("autore"));
+	            poesia.setContatoreLike(rs.getInt("contatoreLike"));
+	            poesia.setDatapubblicazione(rs.getDate("dataPubblicazione"));
+	            poesia.setRaccolta(rs.getInt("raccolta"));
+	            poesia.setTag(rs.getString("tag"));
+	            poesia.setTesto(rs.getString("body"));
+	            poesia.setVisibilita(rs.getBoolean("visibilita"));
+	            poesie.add(poesia);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return poesie;
+	}
+
+	public ArrayList<PoesiaDAO> ricercaPoesie(String termineRicerca, String filtro) {
+	    ArrayList<PoesiaDAO> tutteLePoesie = getAllPoesieVisibili();
+	    ArrayList<PoesiaDAO> risultati = new ArrayList<>();
+
+	    String ricerca = termineRicerca.toLowerCase();
+
+	    for (PoesiaDAO poesia : tutteLePoesie) {
+	        boolean match = false;
+
+	        switch (filtro) {
+	            case "Tag":
+	                match = poesia.getTag() != null && poesia.getTag().toLowerCase().contains(ricerca);
+	                break;
+	            case "Titolo":
+	                match = poesia.getTitolo() != null && poesia.getTitolo().toLowerCase().contains(ricerca);
+	                break;
+	            case "Testo":
+	                match = poesia.getTesto() != null && poesia.getTesto().toLowerCase().contains(ricerca);
+	                break;
+	            default:
+	                match = (poesia.getTitolo() != null && poesia.getTitolo().toLowerCase().contains(ricerca)) ||
+	                        (poesia.getTag() != null && poesia.getTag().toLowerCase().contains(ricerca)) ||
+	                        (poesia.getTesto() != null && poesia.getTesto().toLowerCase().contains(ricerca));
+	                break;
+	        }
+
+	        if (match) {
+	            risultati.add(poesia);
+	        }
+	    }
+
+	    // Ordinamento per data di pubblicazione, dal più recente al meno recente
+	    risultati.sort((p1, p2) -> p2.getDatapubblicazione().compareTo(p1.getDatapubblicazione()));
+
+	    return risultati;
+	}
 
 
 

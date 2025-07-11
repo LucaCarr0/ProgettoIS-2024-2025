@@ -125,18 +125,41 @@ public class EntityPoetUp {
 	private static ArrayList<PoesiaDTO> costruisciFeed(ArrayList<EntityPoesia> lista_entity) {
 		ArrayList<PoesiaDTO> feed = new ArrayList<>();
 
-	    for (EntityPoesia e : lista_entity) {
-	        PoesiaDTO dto = new PoesiaDTO(
-	            e.getTitolo(),
-	            e.getAutore(),
-	            e.getContatoreLike(),
-	            e.getDatapubblicazione().toString(),
-	            e.getId()
-	        );
+		for (EntityPoesia e : lista_entity) {
+	        PoesiaDTO dto = new PoesiaDTO();	
+	        dto.setId(e.getId());
+	        dto.setTitolo(e.getTitolo());
+            dto.setAutore(e.getAutore());
+            dto.setLike(e.getContatoreLike());
+            dto.setData(e.getDatapubblicazione().toString());
 	        feed.add(dto);
 	    }
 
 	    return feed;
+	}
+	
+	public static ArrayList<PoesiaDTO> ricercaPoesie(String termineRicerca, String filtro) {
+	    PoesiaDAO poesiaDAO = new PoesiaDAO();
+	    ArrayList<PoesiaDAO> poesieDAO = poesiaDAO.ricercaPoesie(termineRicerca, filtro);
+	    ArrayList<PoesiaDTO> poesieDTO = new ArrayList<>();
+	    EntityUtente temp = new EntityUtente();
+	    
+	    for (PoesiaDAO dao : poesieDAO) {
+	       
+	    	temp.setId(dao.getAutore());
+	    	String nickAutore = temp.getNickdaDB();
+	        
+	        PoesiaDTO dto = new PoesiaDTO();
+	        	dto.setId(dao.getId());
+	            dto.setTitolo(dao.getTitolo());
+	            dto.setAutore(nickAutore);
+	            dto.setLike(dao.getContatoreLike());
+	            dto.setData(dao.getDatapubblicazione().toString());
+	        
+	        poesieDTO.add(dto);
+	    }
+	    
+	    return poesieDTO;
 	}
 
 

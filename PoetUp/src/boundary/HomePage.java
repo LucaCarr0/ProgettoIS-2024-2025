@@ -64,6 +64,10 @@ public class HomePage extends JFrame {
 		JButton searchButton = createCircleButton("/res/ricerca.png", 48);
 		searchButton.setBounds(30, 440, 48, 48);
 		contentPane.add(searchButton);
+		searchButton.addActionListener(e -> {
+		    new RicercaForm(this);
+		    setVisible(false);
+		});
 
 		// === PULSANTE AGGIUNGI POESIA ===
 		JButton addPoetryButton = createCircleButton("/res/piuma.png", 64);
