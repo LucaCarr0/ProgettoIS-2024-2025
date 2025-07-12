@@ -5,17 +5,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
 import controller.ControllerPoetUp;
 
 public class PoesiaForm extends JFrame {
@@ -26,11 +19,20 @@ public class PoesiaForm extends JFrame {
     private JTextField tagField;
     private JTextField raccoltaField;
 
-    private boolean visibilita = true; // true = pubblica, false = privata
+    private boolean visibilita = true;
     private JButton lockButton;
     private boolean locked = false;
 
     public PoesiaForm(JFrame parentFrame) {
+        
+        Theme theme = ThemeManager.getTheme();
+        Color backgroundColor = theme.getPalette().get(2);
+        Color contrastColor = theme.getPalette().get(3);
+        Color secondaryContrast = theme.getPalette().get(3);
+        Color textColor = theme.getPalette().get(4);
+        Color buttonPrimary = theme.getPalette().get(5);
+        Color buttonSecondary = theme.getPalette().get(5);
+
         setTitle("Pubblica Poesia");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 600, 520);
@@ -39,28 +41,27 @@ public class PoesiaForm extends JFrame {
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        contentPane.setBackground(new Color(0x1E2A38));  // sfondo principale
+        contentPane.setBackground(backgroundColor);
         setContentPane(contentPane);
 
-        // Pannelli laterali contrastati
         JPanel leftPanel = new JPanel();
-        leftPanel.setBackground(new Color(0x243447));
+        leftPanel.setBackground(contrastColor);
         leftPanel.setBounds(0, 0, 40, 520);
         contentPane.add(leftPanel);
 
         JPanel rightPanel = new JPanel();
-        rightPanel.setBackground(new Color(0x2A3C4F));
+        rightPanel.setBackground(contrastColor);
         rightPanel.setBounds(560, 0, 40, 520);
         contentPane.add(rightPanel);
 
         JLabel titleLabel = new JLabel("Pubblica una poesia");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(textColor);
         titleLabel.setBounds(180, 20, 300, 30);
         contentPane.add(titleLabel);
 
         JLabel lblTitolo = new JLabel("Titolo:");
-        lblTitolo.setForeground(Color.WHITE);
+        lblTitolo.setForeground(textColor);
         lblTitolo.setBounds(70, 70, 100, 20);
         contentPane.add(lblTitolo);
 
@@ -69,7 +70,7 @@ public class PoesiaForm extends JFrame {
         contentPane.add(titoloField);
 
         JLabel lblTesto = new JLabel("Testo:");
-        lblTesto.setForeground(Color.WHITE);
+        lblTesto.setForeground(textColor);
         lblTesto.setBounds(70, 130, 100, 20);
         contentPane.add(lblTesto);
 
@@ -81,7 +82,7 @@ public class PoesiaForm extends JFrame {
         contentPane.add(scrollPane);
 
         JLabel lblTag = new JLabel("Tag:");
-        lblTag.setForeground(Color.WHITE);
+        lblTag.setForeground(textColor);
         lblTag.setBounds(70, 285, 100, 20);
         contentPane.add(lblTag);
 
@@ -90,7 +91,7 @@ public class PoesiaForm extends JFrame {
         contentPane.add(tagField);
 
         JLabel lblRaccolta = new JLabel("Raccolta:");
-        lblRaccolta.setForeground(Color.WHITE);
+        lblRaccolta.setForeground(textColor);
         lblRaccolta.setBounds(70, 345, 100, 20);
         contentPane.add(lblRaccolta);
 
@@ -98,18 +99,16 @@ public class PoesiaForm extends JFrame {
         raccoltaField.setBounds(70, 365, 460, 28);
         contentPane.add(raccoltaField);
 
-        // Bottone "Annulla"
         JButton annullaButton = new JButton("Annulla");
-        annullaButton.setBackground(new Color(0x6C757D));
-        annullaButton.setForeground(Color.WHITE);
+        annullaButton.setBackground(buttonSecondary);
+        annullaButton.setForeground(textColor);
         annullaButton.setBounds(240, 420, 130, 32);
         contentPane.add(annullaButton);
         annullaButton.addActionListener(e -> dispose());
 
-        // Bottone "Pubblica"
         JButton pubblicaButton = new JButton("Pubblica");
-        pubblicaButton.setBackground(new Color(0x3A506B));
-        pubblicaButton.setForeground(Color.WHITE);
+        pubblicaButton.setBackground(buttonPrimary);
+        pubblicaButton.setForeground(textColor);
         pubblicaButton.setBounds(390, 420, 140, 32);
         contentPane.add(pubblicaButton);
 
@@ -123,20 +122,17 @@ public class PoesiaForm extends JFrame {
                 String esito = ControllerPoetUp.pubblicazionePoesia(titolo, testo, tag, raccolta, visibilita);
                 if (esito.equals("Poesia Pubblicata!")) {
                     JOptionPane.showMessageDialog(this, esito);
-                    parentFrame.dispose();         // chiude la vecchia home
+                    parentFrame.dispose();
                     HomePage nuovaHome = new HomePage();
                     nuovaHome.setLocationRelativeTo(this);
-                    nuovaHome.setVisible(true);    // MOSTRA la nuova home
-                    this.dispose();                // chiude la poesia form
-
-
+                    nuovaHome.setVisible(true);
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, esito, "Errore", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
-        // Bottone lucchetto (visibilità)
         lockButton = createIconButton("/res/lockAperto.png");
         lockButton.setBounds(70, 420, 32, 32);
         lockButton.setToolTipText("Rendi privata");
@@ -165,7 +161,6 @@ public class PoesiaForm extends JFrame {
         String tag = tagField.getText().trim();
         String raccolta = raccoltaField.getText().trim();
 
-        // --- CAMPI VUOTI ---
         if (titolo.isEmpty()) {
             showError("Il campo Titolo è obbligatorio.");
             return false;
@@ -186,7 +181,6 @@ public class PoesiaForm extends JFrame {
             return false;
         }
 
-        // --- VALIDAZIONE FORMATO ---
         if (!titolo.matches("^[a-zA-ZÀ-ÿ\\s]{1,25}$")) {
             showError("Il titolo può contenere solo lettere e spazi, massimo 25 caratteri.");
             return false;

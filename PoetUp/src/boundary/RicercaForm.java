@@ -1,35 +1,14 @@
 package boundary;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
 import controller.ControllerPoetUp;
 import dto.PoesiaDTO;
 
@@ -40,17 +19,24 @@ public class RicercaForm extends JFrame {
     private JPanel resultsPanel;
     private JScrollPane scrollPane;
     private HomePage parentFrame;
-    private String currentFilter = ""; // Filtro attualmente selezionato
+    private String currentFilter = "";
 
-    // Colori del tema
-    private Color backgroundColor = new Color(0x15202B);
-    private Color textColor = new Color(245, 248, 250);
-    private Color cardColor = Color.cyan;
-    private Color primaryColor = new Color(60, 164, 238);
+    private Theme theme;
+    private Color backgroundColor;
+    private Color textColor;
+    private Color cardColor;
+    private Color primaryColor;
     private Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
 
     public RicercaForm(HomePage parent) {
         this.parentFrame = parent;
+        this.theme = ThemeManager.getTheme();
+        // Carica i colori dalla palette del tema
+        this.textColor = theme.getPalette().get(0);    // esempio: colore testo
+        this.primaryColor = theme.getPalette().get(1); // esempio: colore primario
+        this.backgroundColor = theme.getPalette().get(2); // backgroundPrimary
+        this.cardColor = theme.getPalette().get(4);      // colore card
+
         initializeComponents();
         setupLayout();
         setVisible(true);
@@ -68,7 +54,6 @@ public class RicercaForm extends JFrame {
     }
 
     private void setupLayout() {
-        // === TITOLO ===
         JLabel titleLabel = new JLabel("POET UP - Ricerca");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
         titleLabel.setForeground(textColor);
@@ -76,7 +61,6 @@ public class RicercaForm extends JFrame {
         titleLabel.setBounds(200, 20, 300, 40);
         contentPane.add(titleLabel);
 
-        // === CAMPO DI RICERCA ===
         searchField = new JTextField();
         searchField.setBounds(100, 80, 380, 35);
         searchField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -88,13 +72,11 @@ public class RicercaForm extends JFrame {
         searchField.addActionListener(e -> performSearch());
         contentPane.add(searchField);
 
-        // === PULSANTE RICERCA ===
         JButton searchButton = createStyledButton("Cerca");
         searchButton.setBounds(490, 80, 80, 35);
         searchButton.addActionListener(e -> performSearch());
         contentPane.add(searchButton);
 
-        // === FILTRI ===
         JPanel filterPanel = new JPanel();
         filterPanel.setLayout(new GridLayout(1, 3, 10, 0));
         filterPanel.setBounds(100, 130, 470, 35);
@@ -109,7 +91,6 @@ public class RicercaForm extends JFrame {
         filterPanel.add(filterByText);
         contentPane.add(filterPanel);
 
-        // === PANEL RISULTATI ===
         resultsPanel = new JPanel();
         resultsPanel.setLayout(new BoxLayout(resultsPanel, BoxLayout.Y_AXIS));
         resultsPanel.setBackground(backgroundColor);
@@ -120,8 +101,7 @@ public class RicercaForm extends JFrame {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         contentPane.add(scrollPane);
 
-        // === PULSANTE INDIETRO ===
-        JButton backButton = createCircleButton("/res/home.png", 48); // Assumo che esista questa icona
+        JButton backButton = createCircleButton("/res/home.png", 48);
         backButton.setBounds(30, 440, 48, 48);
         backButton.setToolTipText("Torna alla home");
         backButton.addActionListener(e -> {
@@ -130,7 +110,6 @@ public class RicercaForm extends JFrame {
         });
         contentPane.add(backButton);
 
-        // === MESSAGGIO INIZIALE ===
         showInitialMessage();
     }
 
@@ -168,15 +147,12 @@ public class RicercaForm extends JFrame {
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         button.addActionListener(e -> {
-            // Aggiorna il filtro corrente
             if (currentFilter.equals(text)) {
-                // Se è già selezionato, deseleziona
                 currentFilter = "";
                 button.setBackground(new Color(0x1E2732));
                 button.setForeground(textColor);
             } else {
-                // Deseleziona tutti gli altri filtri
-                Component[] components = button.getParent().getComponents();
+                Component[] components = ((JPanel) button.getParent()).getComponents();
                 for (Component comp : components) {
                     if (comp instanceof JButton && comp != button) {
                         comp.setBackground(new Color(0x1E2732));
@@ -184,13 +160,11 @@ public class RicercaForm extends JFrame {
                     }
                 }
 
-                // Seleziona questo filtro
                 currentFilter = text;
                 button.setBackground(primaryColor);
                 button.setForeground(Color.WHITE);
             }
 
-            // Rieffettua la ricerca con il nuovo filtro
             if (!searchField.getText().trim().isEmpty()) {
                 performSearch();
             }
@@ -209,10 +183,8 @@ public class RicercaForm extends JFrame {
             return;
         }
 
-        // Pulisci i risultati precedenti
         resultsPanel.removeAll();
 
-        // Simula la ricerca tramite controller
         ArrayList<PoesiaDTO> risultati = cercaPoesie(searchTerm);
 
         if (risultati.isEmpty()) {
@@ -221,14 +193,12 @@ public class RicercaForm extends JFrame {
             displayResults(risultati);
         }
 
-        // Aggiorna la visualizzazione
         resultsPanel.revalidate();
         resultsPanel.repaint();
     }
 
     private ArrayList<PoesiaDTO> cercaPoesie(String searchTerm) {
         try {
-            // Usa il controller per la ricerca
             return ControllerPoetUp.ricercaPoesie(searchTerm, currentFilter);
         } catch (Exception e) {
             e.printStackTrace();
@@ -245,13 +215,11 @@ public class RicercaForm extends JFrame {
     }
 
     private JPanel createPoetryCard(PoesiaDTO poesia) {
-        JPanel card = new JPanel();
-        card.setLayout(new BorderLayout());
+        JPanel card = new JPanel(new BorderLayout());
         card.setMaximumSize(new Dimension(480, 80));
         card.setBackground(cardColor);
         card.setBorder(BorderFactory.createLineBorder(primaryColor, 1));
 
-        // Panel sinistro
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         leftPanel.setBackground(cardColor);
@@ -259,13 +227,14 @@ public class RicercaForm extends JFrame {
 
         JLabel titolo = new JLabel(poesia.getTitolo());
         titolo.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        titolo.setForeground(textColor);
         leftPanel.add(titolo);
 
         JLabel autore = new JLabel("<html><i>" + poesia.getAutore() + "</i></html>");
         autore.setFont(cardFont);
+        autore.setForeground(textColor);
         leftPanel.add(autore);
 
-        // Panel destro
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
         rightPanel.setBackground(cardColor);
@@ -288,18 +257,16 @@ public class RicercaForm extends JFrame {
         card.add(leftPanel, BorderLayout.CENTER);
         card.add(rightPanel, BorderLayout.EAST);
 
-        // Mouse events
         card.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Apri la visualizzazione dettagliata della poesia
                 new PoesiaFrame(poesia.getId(), poesia.getAutore()).setVisible(true);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                card.setBackground(new Color(245, 245, 255));
+                card.setBackground(textColor.brighter());
             }
 
             @Override
@@ -336,35 +303,17 @@ public class RicercaForm extends JFrame {
         resultsPanel.add(messageLabel);
     }
 
-    // Utility methods (stessi della HomePage)
-    private JButton createCircleButton(String iconPath, int size) {
+    private JButton createCircleButton(String resourcePath, int size) {
         JButton button = new JButton();
         button.setPreferredSize(new Dimension(size, size));
         button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
         button.setFocusPainted(false);
-        button.setOpaque(false);
-        button.setIcon(resizeIcon(iconPath, size - 8, size - 8));
+        button.setBorderPainted(false);
 
-        button.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
-            @Override
-            public void paint(Graphics g, JComponent c) {
-                Graphics2D g2 = (Graphics2D) g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                super.paint(g, c);
-            }
-        });
+        ImageIcon icon = new ImageIcon(getClass().getResource(resourcePath));
+        Image img = icon.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
+        button.setIcon(new ImageIcon(img));
+
         return button;
-    }
-
-    private ImageIcon resizeIcon(String resourcePath, int width, int height) {
-        java.net.URL url = getClass().getResource(resourcePath);
-        if (url == null) {
-            System.err.println("Icona non trovata: " + resourcePath);
-            return new ImageIcon();
-        }
-        ImageIcon icon = new ImageIcon(url);
-        Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(image);
     }
 }
