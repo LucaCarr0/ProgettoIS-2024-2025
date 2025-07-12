@@ -9,7 +9,6 @@ import database.CommentoDAO;
 import database.PoesiaDAO;
 import dto.CommentoDTO;
 import dto.PoesiaCompletaDTO;
-import dto.PoesiaDTO;
 import session.SessioneUtente;
 
 public class EntityPoesia implements Comparable<EntityPoesia>{
@@ -115,11 +114,11 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 
 	public PoesiaCompletaDTO visualizzaPoesia(int id_poesia, String autore) {
 	    System.out.println(">>> Inizio visualizzaPoesia per ID: " + id_poesia + " | Autore: " + autore);
-
+	    System.out.println("prima set" + this.id);
 	    this.setId(id_poesia);
 	    this.setAutore(autore);
-
-	    this.commenti = new ArrayList<EntityCommento>();
+	    System.out.println("dopo set " + this.id);
+	    this.commenti = new ArrayList<>();
 	    CommentoDAO commento = new CommentoDAO();
 	    commento.setId_poesia(id_poesia);
 
@@ -146,7 +145,7 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 	    System.out.println("Contatore Like: " + contatoreLike);
 	    System.out.println("Visibilità: " + (visibilita ? "pubblica" : "privata"));
 
-	    ArrayList<CommentoDTO> ultimiCommenti = new ArrayList<CommentoDTO>();
+	    ArrayList<CommentoDTO> ultimiCommenti = new ArrayList<>();
 	    for (int i = 0; i < 3 && i < this.commenti.size(); i++) {
 	        EntityUtente utente_temp = new EntityUtente();
 	        utente_temp.setId(this.commenti.get(i).getId_autore());
@@ -164,12 +163,12 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 	    }
 
 	    String stato = visibilita ? "pubblica" : "privata";
-
+	    System.out.println("prima di esiste app" + this.id);
 	    boolean alreadyLiked = esisteApprezzamentoUtente(SessioneUtente.getIdUtente(), this.id);
 	    System.out.println(">>> L'utente ha già apprezzato questa poesia? " + alreadyLiked);
 
 	    PoesiaCompletaDTO poesia = new PoesiaCompletaDTO(
-	            titolo, autore, testo, tag, contatoreLike, stato,
+	            id, titolo, autore, testo, tag, contatoreLike, stato,
 	            ultimiCommenti, alreadyLiked
 	    );
 
@@ -181,7 +180,7 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 
 	private void costruisciUltimiCommenti(ArrayList<CommentoDAO> lista_commentiDAO) {
 		for (CommentoDAO commento_i : lista_commentiDAO) {
-			
+
 			EntityCommento commento_temp=new EntityCommento();
 			commento_temp.setTesto(commento_i.getTesto());
 			commento_temp.setDataPubblicazione(commento_i.getDataPubblicazione());
@@ -191,14 +190,15 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		}
 		this.commenti.sort(Collections.reverseOrder());
 
-		
+
 	}
-	
+
 	private boolean esisteApprezzamentoUtente(int id_utente,int id_poesia) {
-		
-		this.apprezzamenti = new ArrayList<EntityApprezzamento>();
+
+		this.apprezzamenti = new ArrayList<>();
 		boolean trovato=false;
 		ApprezzamentoDAO like=new ApprezzamentoDAO();
+		like.setId_poesia(id_poesia);
 		ArrayList<ApprezzamentoDAO>apprezzamentiPoesiaDTO= like.caricaLikePoesia();
 
 		for(ApprezzamentoDAO a : apprezzamentiPoesiaDTO) {
@@ -211,19 +211,63 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 			if(a.getId_autore()==(id_utente) && a.getId_poesia()==(id_poesia)) {
 				trovato=true;
 			}
-			
+
 		}
 		return trovato;
-		
+
 	}
 
+
+	public boolean like(boolean liked, int idPoesia) {
+		boolean like_stato = false;
+		int idUtente = SessioneUtente.getIdUtente();
+		this.setId(idPoesia);
+		
+		
+		EntityApprezzamento Like = new EntityApprezzamento();
+		
+		if (liked==false) {
+			//aggiunge al DB
+			System.out.println(liked);
+			Like.setId_autore(idUtente);
+			Like.setId_poesia(idPoesia);
+			int res_query1 = Like.salvaSuDB(this.getId());
+			
+			if (res_query1 != -1) {
+				this.aggiungiApprezzamento(Like, this.getId());
+				like_stato = true;
+			} 
+			
+		} else {
+			//rimuove da DB
+			System.out.println(liked);
+			Like.setId_autore(idUtente);
+			Like.setId_poesia(idPoesia);
+			int res_query2 = Like.eliminaDaDB();
+			if (res_query2 != -1) {
+				this.rimuoviApprezzamento(Like, this.getId());
+				like_stato = false;
+			} 
+			
+		} 
+		
+		return like_stato;
+	}
 	
+		
+	private int rimuoviApprezzamento(EntityApprezzamento like, int idPoesia2) {
+		PoesiaDAO poesiaDao = new PoesiaDAO();
+		poesiaDao.setId(idPoesia2);
+		int ret = poesiaDao.aggiornaSuDB_rimozione();
+		return ret;
+	}
 
-
-
-
-
-
-
+	private int aggiungiApprezzamento(EntityApprezzamento apprezzamento, int idPoesia) {
+		PoesiaDAO poesiaDao = new PoesiaDAO();
+		poesiaDao.setId(idPoesia);
+		int ret = poesiaDao.aggiornaSuDB_aggiunta();
+		return ret;
+	}
+	
 
 }

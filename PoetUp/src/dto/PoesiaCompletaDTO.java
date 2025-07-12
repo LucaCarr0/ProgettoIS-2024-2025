@@ -3,7 +3,8 @@ package dto;
 import java.util.ArrayList;
 
 public class PoesiaCompletaDTO {
-    private String titolo;
+    private int id;
+	private String titolo;
     private String autore;
     private String testo;
     private String tag;
@@ -11,12 +12,12 @@ public class PoesiaCompletaDTO {
     private String stato;
     private ArrayList<CommentoDTO> ultimiCommenti;
     private boolean alreadyLiked;
-    
-    
-    
-	public PoesiaCompletaDTO(String titolo, String autore, String testo, String tag, int contatoreLike, String stato,
+
+
+
+	public PoesiaCompletaDTO(int id, String titolo, String autore, String testo, String tag, int contatoreLike, String stato,
 			ArrayList<CommentoDTO> ultimiCommenti, boolean alreadyLiked) {
-		super();
+		this.id = id;
 		this.titolo = titolo;
 		this.autore = autore;
 		this.testo = testo;
@@ -74,7 +75,13 @@ public class PoesiaCompletaDTO {
 	public void setUltimiCommenti(ArrayList<CommentoDTO> ultimiCommenti) {
 		this.ultimiCommenti = ultimiCommenti;
 	}
-    
-    
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 }
 

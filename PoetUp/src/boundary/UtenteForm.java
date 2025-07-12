@@ -66,7 +66,7 @@ public class UtenteForm extends JFrame {
     }
 
     private void creaBoxImmagineProfilo() {
-    	String pathImg = profilo.getImmagineProfilo(); 
+    	String pathImg = profilo.getImmagineProfilo();
     	if (pathImg == null || pathImg.isEmpty()) {
     	    pathImg = "/res/utente.png"; // default
     	}
@@ -174,7 +174,7 @@ public class UtenteForm extends JFrame {
         campoNickname.setEditable(false); // Disabilita modifica nickname
         bioArea.setText(profilo.getBio());
     }
-    
+
     private void apriPopupModificaImmagine() {
         SelettoreImmagineProfilo dialog = new SelettoreImmagineProfilo(this);
         dialog.setVisible(true);

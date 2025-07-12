@@ -7,12 +7,12 @@ public class EntityCommento implements Comparable<EntityCommento>{
 	private int id_poesia;
 	private int id_autore;
 	private Date dataPubblicazione;
-	
-	
+
+
 	public EntityCommento() {
-		
+
 	}
-	
+
 	public int getId_poesia() {
 		return id_poesia;
 	}
@@ -53,6 +53,6 @@ public class EntityCommento implements Comparable<EntityCommento>{
 	        return this.dataPubblicazione.compareTo(o.getDataPubblicazione());
 	    }
 	}
-	
-	
+
+
 }

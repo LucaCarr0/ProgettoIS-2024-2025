@@ -72,12 +72,12 @@ public class EntityRaccolta {
 	}
 
 	public ArrayList<PoesiaDTO> getPoesieByRaccolta(int id_raccolta) {
-		this.poesie= new ArrayList<EntityPoesia>();
+		this.poesie= new ArrayList<>();
 		PoesiaDAO poesiaDAO = new PoesiaDAO();
 		 this.id=id_raccolta;
 		 poesiaDAO.setRaccolta(id);
 		 ArrayList<PoesiaDAO> lista_poesie=poesiaDAO.getPoesieRaccoltadaDB();
-		 
+
 		 for (PoesiaDAO poesia_d : lista_poesie) {
 			 EntityPoesia poesia_temp = new EntityPoesia();
 			 EntityUtente autore= new EntityUtente();
@@ -95,9 +95,9 @@ public class EntityRaccolta {
 				this.poesie.add(poesia_temp);
 		 }
 		 	poesie.sort(Collections.reverseOrder());
-		 	ArrayList<PoesiaDTO> risultato= new ArrayList<PoesiaDTO>();
+		 	ArrayList<PoesiaDTO> risultato= new ArrayList<>();
 		 	for (EntityPoesia e : poesie) {
-		        PoesiaDTO dto = new PoesiaDTO();	
+		        PoesiaDTO dto = new PoesiaDTO();
 		        dto.setId(e.getId());
 		        dto.setTitolo(e.getTitolo());
 	            dto.setAutore(e.getAutore());
@@ -106,10 +106,10 @@ public class EntityRaccolta {
 		        risultato.add(dto);
 		    }
 			return risultato;
-		 
-		 //PoesiaDTO(int id, String titolo, String autore, int like, String data, String tag, String testo) 
+
+		 //PoesiaDTO(int id, String titolo, String autore, int like, String data, String tag, String testo)
 	}
-	
+
 	public int eliminaDaDB() {
 		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
 		raccoltaDao.setId(this.id);

@@ -5,12 +5,12 @@ public class PoesiaDTO {
     private String autore;
     private int like;
     private String data;
-    private String tag;        
-    private String testo;    
+    private String tag;
+    private String testo;
     private int id;
 
     public PoesiaDTO() {}
-    
+
     public PoesiaDTO(int id, String titolo, String autore, int like, String data, String tag, String testo) {
         this.id = id;
         this.titolo = titolo;

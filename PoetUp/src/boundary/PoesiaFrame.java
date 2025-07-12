@@ -1,19 +1,35 @@
 package boundary;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+
 import controller.ControllerPoetUp;
 import dto.CommentoDTO;
 import dto.PoesiaCompletaDTO;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PoesiaFrame extends JFrame {
 
     public PoesiaFrame(int id_poesia,String autore) {
         // === Recupero dati ===
         PoesiaCompletaDTO poesia = ControllerPoetUp.visualizzaPoesia(id_poesia,autore);
+        System.out.println(poesia.isAlreadyLiked());
 
         if (poesia == null) {
             JOptionPane.showMessageDialog(this, "Errore nel caricamento della poesia.", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -24,7 +40,7 @@ public class PoesiaFrame extends JFrame {
         setTitle(poesia.getTitolo());
         setSize(700, 600);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true); // copre la finestra precedente
 
         // Colori
@@ -100,14 +116,81 @@ public class PoesiaFrame extends JFrame {
         JPanel likePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         likePanel.setBackground(bgColor);
 
-        JLabel cuore = new JLabel("❤️");
+     // Cuore e likeCount dichiarati fuori per poter aggiornare dall'evento
+     // Stato iniziale del cuore (può essere calcolato in base a dati del DTO se disponibili)
+     // Stato iniziale del cuore: vuoto (♡)
+     // Stato iniziale: verifica se like esiste già per questa poesia
+     // Stato locale mutabile del like
+        final boolean[] liked = {poesia.isAlreadyLiked()};
+        System.out.println("INIT: liked = " + liked[0]);
+
+        JLabel cuore = new JLabel(liked[0] ? "\u2665" : "\u2661"); // ♥ pieno o ♡ vuoto
         cuore.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-        JLabel likeCount = new JLabel(String.valueOf(poesia.getContatoreLike()));
+        cuore.setForeground(liked[0] ? likeColor : Color.GRAY);
+        cuore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        // Contatore like da DTO
+        int[] conteggio = {poesia.getContatoreLike()};
+        JLabel likeCount = new JLabel(String.valueOf(conteggio[0]));
         likeCount.setFont(new Font("Segoe UI", Font.BOLD, 16));
         likeCount.setForeground(likeColor);
 
+        // Evento click sul cuore
+        cuore.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                System.out.println("CLICK: liked prima = " + liked[0]);
+
+                boolean successo = ControllerPoetUp.like(liked[0], poesia.getId());
+
+                if (successo) {
+                    // Inverti lo stato
+                    liked[0] = !liked[0];
+                    poesia.setAlreadyLiked(liked[0]);
+
+                    if (liked[0]) {
+                        cuore.setText("\u2665"); // ♥ pieno
+                        cuore.setForeground(likeColor);
+                        conteggio[0]++;
+                    } else {
+                        cuore.setText("\u2661"); // ♡ vuoto
+                        cuore.setForeground(Color.GRAY);
+                        if (conteggio[0] > 0) conteggio[0]--;
+                    }
+
+                    likeCount.setText(String.valueOf(conteggio[0]));
+
+                } else {
+                    // Se errore → forzo stato a "like rimosso"
+                    liked[0] = false;
+                    poesia.setAlreadyLiked(false);
+
+                    cuore.setText("\u2661"); // ♡ vuoto
+                    cuore.setForeground(Color.GRAY);
+                    if (conteggio[0] > 0) conteggio[0]--;
+                    likeCount.setText(String.valueOf(conteggio[0]));
+
+                    System.out.println("ERRORE: like fallito → stato forzato a liked = false");
+
+                }
+            }
+        });
+
         likePanel.add(cuore);
         likePanel.add(likeCount);
+
+
+
+
+
+        
+        System.out.println(poesia.getId());
+
+        likePanel.add(cuore);
+        likePanel.add(likeCount);
+
+
+
 
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(likePanel);

@@ -92,7 +92,7 @@ public class ControllerPoetUp {
 		} else {
 			return "Raccolta aggiornata con successo!";
 		}
-		
+
 	}
 
 	public static String eliminaRaccolta(int id_raccolta) {
@@ -103,7 +103,7 @@ public class ControllerPoetUp {
 		} else {
 			return "Raccolta eliminata con successo!";
 		}
-		
+
 	}
 
 	public static PoesiaCompletaDTO visualizzaPoesia(int id_poesia,String autore) {
@@ -118,7 +118,14 @@ public class ControllerPoetUp {
 
 	public static ArrayList<PoesiaDTO> getPoesieByRaccolta(int raccoltaId) {
 		ArrayList<PoesiaDTO> poesie = FacadePoesie.getPoesieByRaccolta(raccoltaId);
-		return poesie;		
+		return poesie;
 	}
+	
+	public static boolean like(boolean liked, int idPoesia) {
+		boolean like = FacadePoesie.like(liked, idPoesia);
+		System.out.println(idPoesia);
+		return like;
+	}
+	
 
 }

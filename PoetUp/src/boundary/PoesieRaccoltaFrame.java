@@ -1,13 +1,26 @@
 package boundary;
 
-import controller.ControllerPoetUp;
-import dto.PoesiaDTO;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+
+import controller.ControllerPoetUp;
+import dto.PoesiaDTO;
 
 public class PoesieRaccoltaFrame extends JFrame {
 
@@ -46,18 +59,17 @@ public class PoesieRaccoltaFrame extends JFrame {
         scrollPane.setBounds(100, 60, 700, 420);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         contentPane.add(scrollPane);
-        
+
         // Caricamento poesie della raccolta
         System.out.println("id raccolta: "+raccoltaId);
-        
+
         ArrayList<PoesiaDTO> poesie = ControllerPoetUp.getPoesieByRaccolta(raccoltaId);
         System.out.println(poesie);
-        for (int i=0;i<poesie.size();i++) {
-        	System.out.println(poesie.get(i).getTitolo());
+        for (PoesiaDTO element : poesie) {
+        	System.out.println(element.getTitolo());
         }
-        
-        for (int i=0;i<poesie.size();i++) {
-        	PoesiaDTO poesia = poesie.get(i);
+
+        for (PoesiaDTO poesia : poesie) {
         	System.out.println("id poesia da interfaccia: "+poesia.getId());
             JPanel card = new JPanel();
             card.setLayout(new BorderLayout());
@@ -124,12 +136,12 @@ public class PoesieRaccoltaFrame extends JFrame {
             listPanel.add(card);
             listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         }
-	
+
 
         setVisible(true);
     }
-	
 
-   
-    
+
+
+
 }

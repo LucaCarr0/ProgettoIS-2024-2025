@@ -11,15 +11,15 @@ public class CommentoDAO {
 	private int id_autore;
 	private Date dataPubblicazione;
 	private int id;
-	
+
 	public CommentoDAO() {
-		
+
 	}
-	
-	
+
+
 	public ArrayList<CommentoDAO> caricadaDB() {
-		
-		ArrayList<CommentoDAO> lista_commenti=new ArrayList<CommentoDAO>();
+
+		ArrayList<CommentoDAO> lista_commenti=new ArrayList<>();
 		String query = "SELECT * FROM Commenti WHERE poesia = "+this.id_poesia+";";
 
 		try {
@@ -27,9 +27,9 @@ public class CommentoDAO {
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
 				while(rs.next()) { //finche ho un risultato
-				
-				CommentoDAO commento_temp=new CommentoDAO();	
-				
+
+				CommentoDAO commento_temp=new CommentoDAO();
+
 				 commento_temp.setId(rs.getInt("id"));
 		         commento_temp.setTesto(rs.getString("testo"));
 		         commento_temp.setDataPubblicazione(rs.getDate("data"));
@@ -46,10 +46,10 @@ public class CommentoDAO {
 		return lista_commenti;
 	}
 
-	
-	
-	
-	
+
+
+
+
 	public String getTesto() {
 		return testo;
 	}
@@ -80,6 +80,6 @@ public class CommentoDAO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+
 }

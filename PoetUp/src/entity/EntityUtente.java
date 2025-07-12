@@ -248,7 +248,7 @@ public class EntityUtente {
 
 		raccolta.aggiornaRaccolta(titolo, descrizione, id_raccolta);
 		int res = raccolta.aggiornaSuDB(idUtente);
-		
+
 		return res;
 	}
 

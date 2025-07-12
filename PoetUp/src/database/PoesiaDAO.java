@@ -16,17 +16,17 @@ public class PoesiaDAO {
 	private int raccolta;
 
 
-	
+
 	public void caricadaDB() {
 				String query = "SELECT * FROM Poesie WHERE id = "+id+";";
-				
+
 				try {
 
 					ResultSet rs = DBConnectionManager.selectQuery(query);
 
 						while(rs.next()) { //finche ho un risultato
 
-						
+
 
 						setTitolo(rs.getString("titolo"));
 						setAutore(rs.getInt("autore"));
@@ -43,8 +43,8 @@ public class PoesiaDAO {
 					e.printStackTrace();
 				}
 		}
-	
-	
+
+
 	public int ScriviSuDB() {
 
 		int ret = 0;
@@ -75,8 +75,8 @@ public class PoesiaDAO {
 
 		return ret;
 	}
-	
-	
+
+
 	public ArrayList<PoesiaDAO> getPoesieUtentedaDB() {
 		//creo il la lista di appoggio
 				ArrayList<PoesiaDAO> lista_poesie_db_utente = new ArrayList<>();
@@ -119,7 +119,7 @@ public class PoesiaDAO {
 						while(rs.next()) { //finche ho un risultato
 
 						PoesiaDAO poesiaDAO = new PoesiaDAO();
-						
+
 						poesiaDAO.setId(rs.getInt("id"));
 						poesiaDAO.setTitolo(rs.getString("titolo"));
 						poesiaDAO.setAutore(rs.getInt("autore"));
@@ -171,7 +171,7 @@ public class PoesiaDAO {
 		return lista_poesie_pubbliche;
 	}
 
-	
+
 
 	public String getTitolo() {
 		return titolo;
@@ -229,11 +229,42 @@ public class PoesiaDAO {
 	}
 
 
+	public int aggiornaSuDB_aggiunta() {
+	    int ret = 0;
 
+	    String query = "UPDATE Poesie SET contatoreLike = contatoreLike + 1 " +
+	                   "WHERE id = " + this.getId();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1;
+	    }
+
+	    return ret;
+	}
 
 	
+	public int aggiornaSuDB_rimozione() {
+	    int ret = 0;
 
+	    String query = "UPDATE Poesie SET contatoreLike = contatoreLike - 1 " +
+	                   "WHERE id = " + this.getId();
 
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1;
+	    }
+
+	    return ret;
+	}
 
 
 

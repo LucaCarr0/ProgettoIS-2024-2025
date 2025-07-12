@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import dto.PoesiaCompletaDTO;
 import dto.PoesiaDTO;
-import dto.ProfiloPersonaleDTO;
 import entity.EntityPoesia;
 import entity.EntityRaccolta;
-import entity.EntityUtente;
 
 public class FacadePoesie {
 
@@ -22,5 +20,13 @@ public class FacadePoesie {
 		ArrayList<PoesiaDTO> poesie = raccolta.getPoesieByRaccolta(id_raccolta);
 		return poesie;
 	}
+
+	public static boolean like(boolean liked, int idPoesia) {
+		EntityPoesia poesia = new EntityPoesia();
+		boolean like = poesia.like(liked, idPoesia);
+		return like;
+	}
+	
+	
 
 }

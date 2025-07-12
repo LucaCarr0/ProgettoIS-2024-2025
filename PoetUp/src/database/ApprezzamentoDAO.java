@@ -8,12 +8,12 @@ public class ApprezzamentoDAO {
 	private int id_utente;
 	private int id;
 	private int id_poesia;
-	
-	
+
+
 	public ArrayList<ApprezzamentoDAO> caricaLikePoesia() {
 		ArrayList<ApprezzamentoDAO> apprezzamentiPoesia = new ArrayList<>();
 		String query = "SELECT * FROM Apprezzamenti WHERE poesia = "+id_poesia+";";
-
+		System.out.println(query);
 		try {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
@@ -23,7 +23,7 @@ public class ApprezzamentoDAO {
 				ApprezzamentoDAO apprezzamento = new ApprezzamentoDAO();
 
 				apprezzamento.setId_poesia(rs.getInt("poesia"));
-				apprezzamento.setId_utente(rs.getInt("utente"));
+				apprezzamento.setId_utente(rs.getInt("autore"));
 				apprezzamento.setId(rs.getInt("id"));
 				apprezzamentiPoesia.add(apprezzamento);
 			}
@@ -63,5 +63,42 @@ public class ApprezzamentoDAO {
 	public void setId_poesia(int id_poesia) {
 		this.id_poesia = id_poesia;
 	}
-	
+
+
+	public int ScriviSuDB() {
+	    int ret = 0;
+
+	    String query = "INSERT INTO Apprezzamenti(autore, poesia) VALUES (" + this.id_utente + ", " + this.id_poesia + ")";
+	    
+	    try {
+	        ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; // segnala errore di scrittura
+	    }
+
+	    return ret;
+	}
+
+
+	public int eliminaDaDB() {
+		int ret = 0;
+
+	    String query = "DELETE FROM Apprezzamenti WHERE autore = " + this.getId_utente() + " AND poesia = " + this.getId_poesia();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; // errore durante eliminazione
+	    }
+
+	    return ret;
+	}
+
+
+
+
 }

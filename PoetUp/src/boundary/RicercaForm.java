@@ -11,8 +11,6 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -31,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
 
 import controller.ControllerPoetUp;
 import dto.PoesiaDTO;
@@ -63,7 +60,7 @@ public class RicercaForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 700, 550);
         setLocationRelativeTo(parentFrame);
-        
+
         contentPane = new JPanel();
         contentPane.setLayout(null);
         contentPane.setBackground(backgroundColor);
@@ -145,19 +142,19 @@ public class RicercaForm extends JFrame {
         button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
+
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 button.setBackground(primaryColor.darker());
             }
-            
+
             @Override
             public void mouseExited(MouseEvent e) {
                 button.setBackground(primaryColor);
             }
         });
-        
+
         return button;
     }
 
@@ -169,7 +166,7 @@ public class RicercaForm extends JFrame {
         button.setBorder(BorderFactory.createLineBorder(primaryColor, 1));
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        
+
         button.addActionListener(e -> {
             // Aggiorna il filtro corrente
             if (currentFilter.equals(text)) {
@@ -179,51 +176,51 @@ public class RicercaForm extends JFrame {
                 button.setForeground(textColor);
             } else {
                 // Deseleziona tutti gli altri filtri
-                Component[] components = ((JPanel) button.getParent()).getComponents();
+                Component[] components = button.getParent().getComponents();
                 for (Component comp : components) {
                     if (comp instanceof JButton && comp != button) {
                         comp.setBackground(new Color(0x1E2732));
                         ((JButton) comp).setForeground(textColor);
                     }
                 }
-                
+
                 // Seleziona questo filtro
                 currentFilter = text;
                 button.setBackground(primaryColor);
                 button.setForeground(Color.WHITE);
             }
-            
+
             // Rieffettua la ricerca con il nuovo filtro
             if (!searchField.getText().trim().isEmpty()) {
                 performSearch();
             }
         });
-        
+
         return button;
     }
 
     private void performSearch() {
         String searchTerm = searchField.getText().trim();
-        
+
         if (searchTerm.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "Inserisci un termine di ricerca", 
+            JOptionPane.showMessageDialog(this,
+                "Inserisci un termine di ricerca",
                 "Attenzione", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         // Pulisci i risultati precedenti
         resultsPanel.removeAll();
-        
+
         // Simula la ricerca tramite controller
         ArrayList<PoesiaDTO> risultati = cercaPoesie(searchTerm);
-        
+
         if (risultati.isEmpty()) {
             showNoResultsMessage();
         } else {
             displayResults(risultati);
         }
-        
+
         // Aggiorna la visualizzazione
         resultsPanel.revalidate();
         resultsPanel.repaint();
@@ -323,7 +320,7 @@ public class RicercaForm extends JFrame {
         messageLabel.setForeground(Color.GRAY);
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
+
         resultsPanel.add(Box.createVerticalStrut(50));
         resultsPanel.add(messageLabel);
     }
@@ -334,7 +331,7 @@ public class RicercaForm extends JFrame {
         messageLabel.setForeground(Color.GRAY);
         messageLabel.setHorizontalAlignment(SwingConstants.CENTER);
         messageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
+
         resultsPanel.add(Box.createVerticalStrut(50));
         resultsPanel.add(messageLabel);
     }

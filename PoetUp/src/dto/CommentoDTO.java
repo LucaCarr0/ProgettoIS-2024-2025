@@ -3,8 +3,8 @@ package dto;
 public class CommentoDTO {
 	private String autore;
 	private String testo;
-	private String data; 
-	
+	private String data;
+
 	public String getAutore() {
 		return autore;
 	}
@@ -23,5 +23,5 @@ public class CommentoDTO {
 	public void setData(String data) {
 		this.data = data;
 	}
-	
+
 }

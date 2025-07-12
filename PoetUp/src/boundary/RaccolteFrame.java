@@ -94,8 +94,8 @@ public class RaccolteFrame extends JFrame {
             		@Override
                     public void mouseClicked(MouseEvent e) {
                         new PoesieRaccoltaFrame(RaccolteFrame.this, raccolta.getId(), raccolta.getTitolo());
-                    
-            
+
+
                 }
 
                 @Override
@@ -204,7 +204,7 @@ public class RaccolteFrame extends JFrame {
                     JOptionPane.showMessageDialog(this, risultato);
 
                     if (risultato.equals("Raccolta eliminata con successo!")) {
-                        
+
                         parentFrame.dispose();         // chiude la vecchia home
                         HomePage nuovaHome = new HomePage();
                         nuovaHome.setLocationRelativeTo(this);
