@@ -21,23 +21,30 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
 import controller.ControllerPoetUp;
 import dto.RaccoltaDTO;
 
 public class RaccolteFrame extends JFrame {
+	
+	private Theme theme;
 
     public RaccolteFrame(JFrame parentFrame) {
+    	
+    	this.theme = ThemeManager.getTheme();
+    	
         setTitle("Le tue Raccolte");
         setSize(900, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parentFrame);
 
         // Colori
-        Color primaryColor = new Color(60, 164, 238);
-        Color accentColor = new Color(255, 122, 89);
-        Color bgColor = new Color(235, 243, 255);
-        Color cardColor = new Color(255, 255, 255);
-        Color textColor = new Color(44, 62, 80);
+        Color primaryColor = theme.getTextSecondary();
+        Color accentColor = theme.getBorderColor();
+        Color bgColor = theme.getHighlightColor();
+        Color cardColor = theme.getTextSecondary();
+        Color textColor = theme.getAccentColor();
 
         Font titleFont = new Font("Segoe UI", Font.BOLD, 24);
         Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
@@ -66,9 +73,6 @@ public class RaccolteFrame extends JFrame {
         // === QUI DEVI RECUPERARE LE RACCOLTE DAL DATABASE ===
 
         ArrayList<RaccoltaDTO> raccolte = ControllerPoetUp.getRaccolteByUtente();
-
-
-        // === SIMULAZIONE (da rimuovere) ===
 
         for (RaccoltaDTO raccolta : raccolte) {
             JPanel card = new JPanel();

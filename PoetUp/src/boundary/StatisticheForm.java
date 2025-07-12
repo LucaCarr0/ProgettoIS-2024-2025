@@ -1,158 +1,93 @@
 package boundary;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.RenderingHints;
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-
-import dto.StatisticheDTO;
-import facade.FacadeUtenti;
+import java.awt.*;
+import javax.swing.*;
 
 public class StatisticheForm extends JFrame {
-    
-    private StatisticheDTO statistiche;
 
+	private Theme theme;
+	
     public StatisticheForm(JFrame HomePage) {
-        // Carica le statistiche reali
-        caricaStatistiche();
         
-        setTitle("Statistiche");
+    	this.theme = ThemeManager.getTheme(); 
+    	
+    	setTitle("Statistiche");
         setSize(700, 550);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(HomePage);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(new Color(0x15202B));
+        mainPanel.setBackground(theme.getBackgroundPrimary());
         setContentPane(mainPanel);
 
         // === Left Panel (Poesia) ===
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout(10, 10));
         leftPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 15));
-        leftPanel.setBackground(new Color(0x15202B));
+        leftPanel.setBackground(theme.getBackgroundPrimary());
         mainPanel.add(leftPanel, BorderLayout.CENTER);
 
         JLabel heading = new JLabel("Poesia più apprezzata", SwingConstants.CENTER);
         heading.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        heading.setForeground(Color.WHITE);
+        heading.setForeground(theme.getTextPrimary());
         leftPanel.add(heading, BorderLayout.NORTH);
 
         JPanel poesiaWrapper = new JPanel(new GridBagLayout());
-        poesiaWrapper.setBackground(new Color(0x1E2A38));
-        poesiaWrapper.setBorder(BorderFactory.createLineBorder(new Color(0x445566), 1));
+        poesiaWrapper.setBackground(theme.getBackgroundSecondary());
+        poesiaWrapper.setBorder(BorderFactory.createLineBorder(theme.getBorderColor(), 1));
         poesiaWrapper.setPreferredSize(new Dimension(360, 250));
 
-        // Crea il pannello per titolo e testo
-        JPanel poesiaContent = new JPanel();
-        poesiaContent.setLayout(new BoxLayout(poesiaContent, BoxLayout.Y_AXIS));
-        poesiaContent.setBackground(new Color(0x1E2A38));
-        poesiaContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Titolo della poesia
-        JLabel titoloLabel = new JLabel(statistiche.getTitoloPoesiaPiuApprezzata());
-        titoloLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        titoloLabel.setForeground(Color.CYAN);
-        titoloLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        poesiaContent.add(titoloLabel);
-        
-        poesiaContent.add(Box.createVerticalStrut(10));
-
-        // Testo della poesia
-        JTextArea poesiaArea = new JTextArea(statistiche.getTestoPoesiaPiuApprezzata());
+        JTextArea poesiaArea = new JTextArea("Qui va il testo della poesia più apprezzata...");
         poesiaArea.setWrapStyleWord(true);
         poesiaArea.setLineWrap(true);
         poesiaArea.setEditable(false);
-        poesiaArea.setFont(new Font("Serif", Font.ITALIC, 14));
-        poesiaArea.setBackground(new Color(0x1E2A38));
-        poesiaArea.setForeground(Color.WHITE);
-        poesiaArea.setOpaque(false);
-        poesiaContent.add(poesiaArea);
-        
-        poesiaContent.add(Box.createVerticalStrut(10));
-        
-        // Numero di like
-        JLabel likeLabel = new JLabel("♥ " + statistiche.getLikePoesiaPiuApprezzata() + " apprezzamenti");
-        likeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        likeLabel.setForeground(Color.PINK);
-        likeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        poesiaContent.add(likeLabel);
+        poesiaArea.setFont(new Font("Serif", Font.ITALIC, 16));
+        poesiaArea.setMargin(new Insets(10, 10, 10, 10));
+        poesiaArea.setBackground(theme.getBackgroundSecondary());
+        poesiaArea.setForeground(theme.getTextPrimary());
 
-        poesiaWrapper.add(poesiaContent, new GridBagConstraints());
+        poesiaWrapper.add(poesiaArea, new GridBagConstraints());
         leftPanel.add(poesiaWrapper, BorderLayout.CENTER);
 
         // === Right Panel (Stat) ===
         JPanel rightPanel = new JPanel(new GridBagLayout());
         rightPanel.setPreferredSize(new Dimension(260, 0));
-        rightPanel.setBackground(new Color(0x15202B));
+        rightPanel.setBackground(theme.getBackgroundPrimary());
         rightPanel.setBorder(BorderFactory.createEmptyBorder(30, 15, 30, 30));
         mainPanel.add(rightPanel, BorderLayout.EAST);
 
         JPanel statBox = new JPanel(new GridLayout(2, 1, 20, 20));
-        statBox.setBackground(new Color(0x15202B));
+        statBox.setBackground(theme.getBackgroundPrimary());
         statBox.setOpaque(false);
 
-        // Usa le statistiche reali
-        statBox.add(createIconStatPanel("/res/like.png", String.valueOf(statistiche.getTotaleApprezzamenti()), "Totale apprezzamenti"));
-        statBox.add(createIconStatPanel("/res/commento.png", String.valueOf(statistiche.getTotaleCommenti()), "Totale commenti"));
+        statBox.add(createIconStatPanel("/res/like.png", "123", "Totale apprezzamenti", theme));
+        statBox.add(createIconStatPanel("/res/commento.png", "45", "Totale commenti", theme));
         rightPanel.add(statBox);
 
         // === Bottom Home Button ===
         JButton homeButton = createCircleButton("/res/home.png", 48);
         JPanel bottomRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
-        bottomRightPanel.setBackground(new Color(0x15202B));
+        bottomRightPanel.setBackground(theme.getBackgroundPrimary());
         bottomRightPanel.add(homeButton);
         mainPanel.add(bottomRightPanel, BorderLayout.SOUTH);
 
         homeButton.addActionListener(e -> dispose());
     }
-    
-    private void caricaStatistiche() {
-        try {
-            statistiche = FacadeUtenti.getStatistiche();
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Valori di fallback in caso di errore
-            statistiche = new StatisticheDTO(0, 0, "Errore nel caricamento", "Impossibile caricare le statistiche", 0);
-        }
-    }
 
-    private JPanel createIconStatPanel(String iconPath, String value, String labelText) {
+    private JPanel createIconStatPanel(String iconPath, String value, String labelText, Theme theme) {
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(240, 110));
-        panel.setBackground(new Color(0x1E2A38));
-        panel.setBorder(BorderFactory.createLineBorder(new Color(0x445566), 1));
+        panel.setBackground(theme.getBackgroundSecondary());
+        panel.setBorder(BorderFactory.createLineBorder(theme.getBorderColor(), 1));
         panel.setLayout(new BorderLayout());
 
-        // Icona a sinistra
         JLabel iconLabel = new JLabel(resizeIcon(iconPath, 40, 40));
         iconLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.add(iconLabel, BorderLayout.WEST);
 
-        // Pannello Testo
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
         textPanel.setOpaque(false);
@@ -160,16 +95,15 @@ public class StatisticheForm extends JFrame {
 
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        label.setForeground(Color.LIGHT_GRAY);
+        label.setForeground(theme.getTextSecondary());
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // Wrapper per centrare il numero
         JPanel numberWrapper = new JPanel(new GridBagLayout());
         numberWrapper.setOpaque(false);
 
         JLabel number = new JLabel(value);
         number.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        number.setForeground(Color.WHITE);
+        number.setForeground(theme.getTextPrimary());
 
         numberWrapper.add(number);
 

@@ -27,12 +27,19 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
+
 public class ReportForm extends JFrame {
 
     private JPanel contentPane;
     private JTextArea reportArea;
+    private Theme theme;
 
     public ReportForm(JFrame parent) {
+        
+        this.theme = ThemeManager.getTheme();
+        
         setTitle("Report");
         setBounds(100, 100, 700, 550);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -40,7 +47,7 @@ public class ReportForm extends JFrame {
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        contentPane.setBackground(new Color(0x15202B));
+        contentPane.setBackground(theme.getBackgroundPrimary());
         setContentPane(contentPane);
 
         creaIntestazione();
@@ -52,7 +59,7 @@ public class ReportForm extends JFrame {
     private void creaIntestazione() {
         JLabel titleLabel = new JLabel("Genera Report");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setForeground(theme.getTextPrimary());
         titleLabel.setBounds(240, 20, 300, 40);
         contentPane.add(titleLabel);
     }
@@ -62,43 +69,31 @@ public class ReportForm extends JFrame {
         int fieldHeight = 25;
         int yPos = 80;
 
-        // Larghezza totale della riga "Da [campo] a [campo] [button]"
-        int totalWidth = 30    // "Da"
-                + 5
-                + fieldWidth
-                + 20   // spazio tra primo campo e "a"
-                + 15   // "a"
-                + 5
-                + fieldWidth
-                + 20   // spazio tra secondo campo e bottone
-                + 150; // larghezza bottone
-
-        int startX = (700 - totalWidth) / 2; // finestra 700px larghezza
+        int totalWidth = 30 + 5 + fieldWidth + 20 + 15 + 5 + fieldWidth + 20 + 150;
+        int startX = (700 - totalWidth) / 2;
 
         JLabel daLabel = new JLabel("Da");
         daLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        daLabel.setForeground(Color.WHITE);
+        daLabel.setForeground(theme.getTextPrimary());
         daLabel.setBounds(startX, yPos, 30, fieldHeight);
         contentPane.add(daLabel);
 
         JTextField dataInizioField = new JTextField();
         dataInizioField.setBounds(startX + 30 + 5, yPos, fieldWidth, fieldHeight);
-        // Imposta testo e colore iniziali per placeholder
-        dataInizioField.setForeground(Color.LIGHT_GRAY);
+        dataInizioField.setForeground(theme.getTextSecondary());
         dataInizioField.setText("yyyy-mm-dd");
         addPlaceholderBehavior(dataInizioField);
         contentPane.add(dataInizioField);
 
-
         JLabel aLabel = new JLabel("a");
         aLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        aLabel.setForeground(Color.WHITE);
+        aLabel.setForeground(theme.getTextPrimary());
         aLabel.setBounds(startX + 30 + 5 + fieldWidth + 20, yPos, 15, fieldHeight);
         contentPane.add(aLabel);
 
         JTextField dataFineField = new JTextField();
         dataFineField.setBounds(startX + 30 + 5 + fieldWidth + 20 + 15 + 5, yPos, fieldWidth, fieldHeight);
-        dataFineField.setForeground(Color.LIGHT_GRAY);
+        dataFineField.setForeground(theme.getTextSecondary());
         dataFineField.setText("yyyy-mm-dd");
         addPlaceholderBehavior(dataFineField);
         contentPane.add(dataFineField);
@@ -112,7 +107,6 @@ public class ReportForm extends JFrame {
             String inizio = dataInizioField.getText().trim();
             String fine = dataFineField.getText().trim();
 
-            // Verifica formato yyyy-MM-dd e caratteri ammessi
             if (!inizio.matches("\\d{4}-\\d{2}-\\d{2}") || !fine.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 JOptionPane.showMessageDialog(this, "Il formato deve essere yyyy-MM-dd, con solo numeri e trattini.", "Errore", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -127,7 +121,6 @@ public class ReportForm extends JFrame {
                     .withResolverStyle(java.time.format.ResolverStyle.STRICT);
 
             try {
-                // Validazione iniziale con LocalDate per sicurezza
                 LocalDate dataInizioLD = LocalDate.parse(inizio, formatter);
                 LocalDate dataFineLD = LocalDate.parse(fine, formatter);
                 LocalDate oggi = LocalDate.now();
@@ -142,19 +135,15 @@ public class ReportForm extends JFrame {
                     return;
                 }
 
-                // Conversione in java.sql.Date (se ti serve per query SQL)
                 java.sql.Date dataInizioSQL = java.sql.Date.valueOf(dataInizioLD);
                 java.sql.Date dataFineSQL = java.sql.Date.valueOf(dataFineLD);
 
-                // Esempio di uso: stampa nel report
                 reportArea.setText("Report generato da " + dataInizioSQL + " a " + dataFineSQL + ":\n\n- Voce 1\n- Voce 2\n- Voce 3");
 
             } catch (DateTimeParseException ex) {
                 JOptionPane.showMessageDialog(this, "Data non valida. Controlla giorno, mese e anno.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
 
-
-            // Tutto ok, genera il report
             reportArea.setText("Report generato da " + inizio + " a " + fine + ":\n\n- Voce 1\n- Voce 2\n- Voce 3");
         });
     }
@@ -162,10 +151,10 @@ public class ReportForm extends JFrame {
     private void creaAreaReport() {
         reportArea = new JTextArea();
         reportArea.setEditable(false);
-        reportArea.setBackground(new Color(0x1E2A36));
-        reportArea.setForeground(Color.WHITE);
+        reportArea.setBackground(theme.getBackgroundSecondary());
+        reportArea.setForeground(theme.getTextPrimary());
         reportArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        reportArea.setBorder(new LineBorder(Color.GRAY, 1));
+        reportArea.setBorder(new LineBorder(theme.getBorderColor(), 1));
         reportArea.setLineWrap(true);
         reportArea.setWrapStyleWord(true);
 
@@ -213,30 +202,30 @@ public class ReportForm extends JFrame {
         Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(image);
     }
+
     private void addPlaceholderBehavior(JTextField field) {
         field.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 if (field.getText().equals("yyyy-mm-dd")) {
                     field.setText("");
-                    field.setForeground(Color.BLACK); // Testo utente visibile
+                    field.setForeground(theme.getTextPrimary());
                 }
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 if (field.getText().isEmpty()) {
-                    field.setForeground(Color.LIGHT_GRAY); // placeholder
+                    field.setForeground(theme.getTextSecondary());
                     field.setText("yyyy-mm-dd");
                 } else {
-                    field.setForeground(Color.BLACK); // conferma testo utente in nero
+                    field.setForeground(theme.getTextPrimary());
                 }
             }
         });
 
-        // Imposta subito colore corretto se il campo non è placeholder
         if (!field.getText().equals("yyyy-mm-dd")) {
-            field.setForeground(Color.BLACK);
+            field.setForeground(theme.getTextPrimary());
         }
     }
 }
