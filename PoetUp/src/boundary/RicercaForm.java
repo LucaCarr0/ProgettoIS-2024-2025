@@ -260,7 +260,7 @@ public class RicercaForm extends JFrame {
         card.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new PoesiaFrame(poesia.getId(), poesia.getAutore()).setVisible(true);
+                new PoesiaFrame(RicercaForm.this,poesia.getId(), poesia.getAutore()).setVisible(true);
             }
 
             @Override

@@ -11,7 +11,7 @@ public class DBConnectionManager {
 	public static String dbName = "mydb";
 	public static String driver = "com.mysql.cj.jdbc.Driver";
 	public static String userName = "root";
-	public static String password = "admin"; //Lololo89. //admin //Napoli1926$
+	public static String password = "Lololo89."; //Lololo89. //admin //Napoli1926$
 
 
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
@@ -48,7 +48,6 @@ public class DBConnectionManager {
 
 		//eseguo la query che ho fornito come input
 		ResultSet ret = statment.executeQuery(query); //"SELECT * from STUDENTI where .... "
-
 
 		//ci ritorna il result set
 		return ret;

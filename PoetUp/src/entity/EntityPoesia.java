@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -267,6 +268,21 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		poesiaDao.setId(idPoesia);
 		int ret = poesiaDao.aggiornaSuDB_aggiunta();
 		return ret;
+	}
+
+	public int commenta(String testo, int idPoesia) {
+		
+		id=idPoesia;
+		EntityCommento commento= new EntityCommento();
+		Date dataOdierna = Date.valueOf(LocalDate.now());
+		
+		commento.setDataPubblicazione(dataOdierna);
+		commento.setId_autore(SessioneUtente.getIdUtente());
+		commento.setId_poesia(id);
+		commento.setTesto(testo);
+		int id_comm=commento.salvasuDB();
+		return id_comm;
+		
 	}
 	
 

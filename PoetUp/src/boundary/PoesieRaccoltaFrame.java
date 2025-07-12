@@ -118,7 +118,7 @@ public class PoesieRaccoltaFrame extends JFrame {
             card.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                	new PoesiaFrame(poesia.getId(),poesia.getAutore());
+                	new PoesiaFrame(PoesieRaccoltaFrame.this,poesia.getId(),poesia.getAutore());
                 }
 
                 @Override

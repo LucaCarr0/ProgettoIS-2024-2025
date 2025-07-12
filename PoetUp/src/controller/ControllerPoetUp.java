@@ -132,6 +132,11 @@ public class ControllerPoetUp {
 	    StatisticheDTO statistiche = FacadeUtenti.getStatistiche();
 	    return statistiche;
 	}
+
+	public static boolean commenta(int idPoesia, String testo) {
+		if (FacadePoesie.commenta(idPoesia,testo)==-1) return false;
+		else return true;
+	}
 	
 
 }

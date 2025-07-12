@@ -2,6 +2,8 @@ package entity;
 
 import java.sql.Date;
 
+import database.CommentoDAO;
+
 public class EntityCommento implements Comparable<EntityCommento>{
 	private String testo;
 	private int id_poesia;
@@ -52,6 +54,17 @@ public class EntityCommento implements Comparable<EntityCommento>{
 	    	//uso il compareTo di Date
 	        return this.dataPubblicazione.compareTo(o.getDataPubblicazione());
 	    }
+	}
+
+	public int salvasuDB() {
+		
+		CommentoDAO commento= new CommentoDAO();
+		commento.setDataPubblicazione(this.dataPubblicazione);
+		commento.setId_autore(this.id_autore);
+		commento.setId_poesia(this.id_poesia);
+		commento.setTesto(this.testo);
+		return commento.ScriviSuDB();
+		
 	}
 
 

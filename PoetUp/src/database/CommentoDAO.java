@@ -47,7 +47,24 @@ public class CommentoDAO {
 	}
 
 
+	public int ScriviSuDB() {
+	    int ret = 0;
 
+	    String testoEsc = this.testo.replace("'", "''");
+	    String query = "INSERT INTO Commenti(autore, poesia, testo, data) VALUES ("
+	        + this.id_autore + ", "
+	        + this.id_poesia + ", '"
+	        + testoEsc + "', '"
+	        + this.dataPubblicazione + "')";	    
+	    try {
+	        ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; // segnala errore di scrittura
+	    }
+
+	    return ret;
+	}
 
 
 	public String getTesto() {

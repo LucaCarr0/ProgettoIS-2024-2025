@@ -1,86 +1,128 @@
 package boundary;
 
-import boundary.theme.Theme;
-import boundary.theme.ThemeManager;
-
 import java.awt.*;
 import javax.swing.*;
 
-public class StatisticheForm extends JFrame {
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
+import dto.StatisticheDTO;
+import facade.FacadeUtenti;
 
-	private Theme theme;
-	
+public class StatisticheForm extends JFrame {
+    private Theme theme;
+    private StatisticheDTO statistiche;
+
     public StatisticheForm(JFrame HomePage) {
-        
-    	this.theme = ThemeManager.getTheme(); 
-    	
-    	setTitle("Statistiche");
+        caricaStatistiche();
+        this.theme = ThemeManager.getTheme();
+
+        setTitle("Statistiche");
         setSize(700, 550);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(HomePage);
 
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel();
         mainPanel.setBackground(theme.getBackgroundPrimary());
         setContentPane(mainPanel);
+        mainPanel.setLayout(null);
 
         // === Left Panel (Poesia) ===
         JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new BorderLayout(10, 10));
+        leftPanel.setBounds(0, 0, 440, 523);
         leftPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 15));
         leftPanel.setBackground(theme.getBackgroundPrimary());
-        mainPanel.add(leftPanel, BorderLayout.CENTER);
+        mainPanel.add(leftPanel);
+        leftPanel.setLayout(null);
 
         JLabel heading = new JLabel("Poesia più apprezzata", SwingConstants.CENTER);
+        heading.setBounds(30, 30, 395, 27);
         heading.setFont(new Font("Segoe UI", Font.BOLD, 22));
         heading.setForeground(theme.getTextPrimary());
-        leftPanel.add(heading, BorderLayout.NORTH);
+        leftPanel.add(heading);
 
-        JPanel poesiaWrapper = new JPanel(new GridBagLayout());
+        JPanel poesiaWrapper = new JPanel();
+        poesiaWrapper.setBounds(30, 94, 395, 348);
         poesiaWrapper.setBackground(theme.getBackgroundSecondary());
         poesiaWrapper.setBorder(BorderFactory.createLineBorder(theme.getBorderColor(), 1));
         poesiaWrapper.setPreferredSize(new Dimension(360, 250));
+        poesiaWrapper.setLayout(null);
 
-        JTextArea poesiaArea = new JTextArea("Qui va il testo della poesia più apprezzata...");
+        JPanel poesiaContent = new JPanel();
+        poesiaContent.setBounds(37, 69, 319, 185);
+        poesiaContent.setLayout(new BoxLayout(poesiaContent, BoxLayout.Y_AXIS));
+        poesiaContent.setBackground(theme.getBackgroundSecondary());
+        poesiaContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel titoloLabel = new JLabel(statistiche.getTitoloPoesiaPiuApprezzata());
+        titoloLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        titoloLabel.setForeground(theme.getAccentColor());
+        titoloLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        poesiaContent.add(titoloLabel);
+        poesiaContent.add(Box.createVerticalStrut(10));
+
+        JTextArea poesiaArea = new JTextArea(statistiche.getTestoPoesiaPiuApprezzata());
         poesiaArea.setWrapStyleWord(true);
         poesiaArea.setLineWrap(true);
         poesiaArea.setEditable(false);
-        poesiaArea.setFont(new Font("Serif", Font.ITALIC, 16));
-        poesiaArea.setMargin(new Insets(10, 10, 10, 10));
-        poesiaArea.setBackground(theme.getBackgroundSecondary());
+        poesiaArea.setFont(new Font("Serif", Font.ITALIC, 14));
         poesiaArea.setForeground(theme.getTextPrimary());
+        poesiaArea.setBackground(theme.getBackgroundSecondary());
+        poesiaArea.setOpaque(false);
+        poesiaContent.add(poesiaArea);
 
-        poesiaWrapper.add(poesiaArea, new GridBagConstraints());
-        leftPanel.add(poesiaWrapper, BorderLayout.CENTER);
+        poesiaContent.add(Box.createVerticalStrut(10));
+
+        JLabel likeLabel = new JLabel("♥ " + statistiche.getLikePoesiaPiuApprezzata() + " apprezzamenti");
+        likeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        likeLabel.setForeground(theme.getHighlightColor());
+        likeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        poesiaContent.add(likeLabel);
+        poesiaWrapper.add(poesiaContent);
+        leftPanel.add(poesiaWrapper);
 
         // === Right Panel (Stat) ===
-        JPanel rightPanel = new JPanel(new GridBagLayout());
+        JPanel rightPanel = new JPanel();
+        rightPanel.setBounds(440, 0, 260, 445);
         rightPanel.setPreferredSize(new Dimension(260, 0));
-        rightPanel.setBackground(theme.getBackgroundPrimary());
+        rightPanel.setBackground(theme.getBackgroundSecondary());
         rightPanel.setBorder(BorderFactory.createEmptyBorder(30, 15, 30, 30));
-        mainPanel.add(rightPanel, BorderLayout.EAST);
+        mainPanel.add(rightPanel);
+        rightPanel.setLayout(null);
 
-        JPanel statBox = new JPanel(new GridLayout(2, 1, 20, 20));
-        statBox.setBackground(theme.getBackgroundPrimary());
+        JPanel statBox = new JPanel(new GridLayout(2, 1, 50, 20));
+        statBox.setBounds(22, 162, 210, 194);
+        statBox.setBackground(theme.getBackgroundSecondary());
         statBox.setOpaque(false);
 
-        statBox.add(createIconStatPanel("/res/like.png", "123", "Totale apprezzamenti", theme));
-        statBox.add(createIconStatPanel("/res/commento.png", "45", "Totale commenti", theme));
+        statBox.add(createIconStatPanel("/res/like.png", String.valueOf(statistiche.getTotaleApprezzamenti()), "Totale apprezzamenti"));
+        statBox.add(createIconStatPanel("/res/commento.png", String.valueOf(statistiche.getTotaleCommenti()), "Totale commenti"));
         rightPanel.add(statBox);
 
         // === Bottom Home Button ===
         JButton homeButton = createCircleButton("/res/home.png", 48);
         JPanel bottomRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
-        bottomRightPanel.setBackground(theme.getBackgroundPrimary());
+        bottomRightPanel.setBounds(0, 445, 700, 68);
+        bottomRightPanel.setBackground(theme.getBackgroundSecondary());
         bottomRightPanel.add(homeButton);
-        mainPanel.add(bottomRightPanel, BorderLayout.SOUTH);
+        
+        mainPanel.add(bottomRightPanel);
 
         homeButton.addActionListener(e -> dispose());
     }
 
-    private JPanel createIconStatPanel(String iconPath, String value, String labelText, Theme theme) {
+    private void caricaStatistiche() {
+        try {
+            statistiche = FacadeUtenti.getStatistiche();
+        } catch (Exception e) {
+            e.printStackTrace();
+            statistiche = new StatisticheDTO(0, 0, "Errore nel caricamento", "Impossibile caricare le statistiche", 0);
+        }
+    }
+
+    private JPanel createIconStatPanel(String iconPath, String value, String labelText) {
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(240, 110));
-        panel.setBackground(theme.getBackgroundSecondary());
+        panel.setBackground(theme.getBackgroundTertiary());
         panel.setBorder(BorderFactory.createLineBorder(theme.getBorderColor(), 1));
         panel.setLayout(new BorderLayout());
 
@@ -140,7 +182,7 @@ public class StatisticheForm extends JFrame {
         java.net.URL url = getClass().getResource(resourcePath);
         if (url == null) {
             System.err.println("Icona non trovata: " + resourcePath);
-            return new ImageIcon(); // fallback
+            return new ImageIcon();
         }
         Image img = new ImageIcon(url).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(img);

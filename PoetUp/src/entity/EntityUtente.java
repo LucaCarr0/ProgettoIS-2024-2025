@@ -42,7 +42,7 @@ public class EntityUtente {
 	public void inizializzaProfilo(int id_utente, String nickname) {
 
 		//UTENTE È CREATOR DEL PROFILOPERSONALE
-		EntityProfiloPersonale profilo= new EntityProfiloPersonale();
+		profilo= new EntityProfiloPersonale();
 		profilo.setNickname(nickname);
 		int res=profilo.scriviSuDB(id_utente);
 		if (res==-1) {
@@ -187,6 +187,13 @@ public class EntityUtente {
 
  private void calcolaStatistiche(ArrayList<PoesiaDAO> poesie, StatisticheDTO stat) {
         int totaleApprezzamenti = 0;
+        if (poesie.isEmpty()) {
+            stat.setTotaleApprezzamenti(0);
+            stat.setTitoloPoesiaPiuApprezzata("Nessuna poesia trovata.");
+            stat.setTestoPoesiaPiuApprezzata("");
+            stat.setLikePoesiaPiuApprezzata(0);
+            return;
+        }
         PoesiaDAO poesiaPiuApprezzata = poesie.get(0);
         for (PoesiaDAO poesia : poesie) {
             totaleApprezzamenti += poesia.getContatoreLike();

@@ -26,6 +26,12 @@ public class FacadePoesie {
 		boolean like = poesia.like(liked, idPoesia);
 		return like;
 	}
+
+	public static int commenta(int idPoesia, String testo) {
+		EntityPoesia poesia = new EntityPoesia();
+		int ritorno = poesia.commenta(testo, idPoesia);
+		return ritorno;
+	}
 	
 	
 

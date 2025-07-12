@@ -91,6 +91,7 @@ public class PoesiaDAO {
 						PoesiaDAO poesiaDAO = new PoesiaDAO();
 
 						poesiaDAO.setTitolo(rs.getString("titolo"));
+						poesiaDAO.setId(rs.getInt("id"));
 						poesiaDAO.setAutore(rs.getInt("autore"));
 						poesiaDAO.setContatoreLike(rs.getInt("contatoreLike"));
 						poesiaDAO.setDatapubblicazione(rs.getDate("dataPubblicazione"));

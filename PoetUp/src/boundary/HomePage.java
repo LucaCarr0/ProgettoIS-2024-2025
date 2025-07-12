@@ -256,7 +256,7 @@ public class HomePage extends JFrame {
 	        card.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
-	                new PoesiaFrame(poesia.getId(), poesia.getAutore());
+	                new PoesiaFrame(HomePage.this,poesia.getId(), poesia.getAutore());
 	            }
 
 	            @Override

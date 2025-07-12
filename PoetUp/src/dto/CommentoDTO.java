@@ -4,7 +4,14 @@ public class CommentoDTO {
 	private String autore;
 	private String testo;
 	private String data;
-
+	public CommentoDTO() {
+		
+	}
+	public CommentoDTO(String autore, String testo, String data) {
+		this.autore = autore;
+		this.testo = testo;
+		this.data = data;
+	}
 	public String getAutore() {
 		return autore;
 	}
