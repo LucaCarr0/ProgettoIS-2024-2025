@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
+import dto.StatisticheDTO;
 import entity.EntityUtente;
 
 public class FacadeUtenti {
@@ -52,5 +53,11 @@ public class FacadeUtenti {
 		EntityUtente utente = new EntityUtente();
 		Integer result = utente.eliminaRaccolta(id_raccolta);
 		return result;
+	}
+	
+	public static StatisticheDTO getStatistiche() {
+		EntityUtente utente= new EntityUtente();
+	    StatisticheDTO statistiche = utente.getStatistiche();
+	    return statistiche;
 	}
 }

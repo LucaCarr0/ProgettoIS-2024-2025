@@ -29,9 +29,17 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import dto.StatisticheDTO;
+import facade.FacadeUtenti;
+
 public class StatisticheForm extends JFrame {
+    
+    private StatisticheDTO statistiche;
 
     public StatisticheForm(JFrame HomePage) {
+        // Carica le statistiche reali
+        caricaStatistiche();
+        
         setTitle("Statistiche");
         setSize(700, 550);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -44,7 +52,7 @@ public class StatisticheForm extends JFrame {
         // === Left Panel (Poesia) ===
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout(10, 10));
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 15)); // left: 30
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 15));
         leftPanel.setBackground(new Color(0x15202B));
         mainPanel.add(leftPanel, BorderLayout.CENTER);
 
@@ -56,33 +64,60 @@ public class StatisticheForm extends JFrame {
         JPanel poesiaWrapper = new JPanel(new GridBagLayout());
         poesiaWrapper.setBackground(new Color(0x1E2A38));
         poesiaWrapper.setBorder(BorderFactory.createLineBorder(new Color(0x445566), 1));
-        poesiaWrapper.setPreferredSize(new Dimension(360, 250)); // Ridotto leggermente
+        poesiaWrapper.setPreferredSize(new Dimension(360, 250));
 
-        JTextArea poesiaArea = new JTextArea("Qui va il testo della poesia più apprezzata...");
+        // Crea il pannello per titolo e testo
+        JPanel poesiaContent = new JPanel();
+        poesiaContent.setLayout(new BoxLayout(poesiaContent, BoxLayout.Y_AXIS));
+        poesiaContent.setBackground(new Color(0x1E2A38));
+        poesiaContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Titolo della poesia
+        JLabel titoloLabel = new JLabel(statistiche.getTitoloPoesiaPiuApprezzata());
+        titoloLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        titoloLabel.setForeground(Color.CYAN);
+        titoloLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        poesiaContent.add(titoloLabel);
+        
+        poesiaContent.add(Box.createVerticalStrut(10));
+
+        // Testo della poesia
+        JTextArea poesiaArea = new JTextArea(statistiche.getTestoPoesiaPiuApprezzata());
         poesiaArea.setWrapStyleWord(true);
         poesiaArea.setLineWrap(true);
         poesiaArea.setEditable(false);
-        poesiaArea.setFont(new Font("Serif", Font.ITALIC, 16));
-        poesiaArea.setMargin(new Insets(10, 10, 10, 10));
+        poesiaArea.setFont(new Font("Serif", Font.ITALIC, 14));
         poesiaArea.setBackground(new Color(0x1E2A38));
         poesiaArea.setForeground(Color.WHITE);
+        poesiaArea.setOpaque(false);
+        poesiaContent.add(poesiaArea);
+        
+        poesiaContent.add(Box.createVerticalStrut(10));
+        
+        // Numero di like
+        JLabel likeLabel = new JLabel("♥ " + statistiche.getLikePoesiaPiuApprezzata() + " apprezzamenti");
+        likeLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        likeLabel.setForeground(Color.PINK);
+        likeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        poesiaContent.add(likeLabel);
 
-        poesiaWrapper.add(poesiaArea, new GridBagConstraints());
+        poesiaWrapper.add(poesiaContent, new GridBagConstraints());
         leftPanel.add(poesiaWrapper, BorderLayout.CENTER);
 
         // === Right Panel (Stat) ===
         JPanel rightPanel = new JPanel(new GridBagLayout());
         rightPanel.setPreferredSize(new Dimension(260, 0));
         rightPanel.setBackground(new Color(0x15202B));
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(30, 15, 30, 30)); // right: 30 (simmetrico con sinistra)
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(30, 15, 30, 30));
         mainPanel.add(rightPanel, BorderLayout.EAST);
 
         JPanel statBox = new JPanel(new GridLayout(2, 1, 20, 20));
         statBox.setBackground(new Color(0x15202B));
         statBox.setOpaque(false);
 
-        statBox.add(createIconStatPanel("/res/like.png", "123", "Totale apprezzamenti"));
-        statBox.add(createIconStatPanel("/res/commento.png", "45", "Totale commenti"));
+        // Usa le statistiche reali
+        statBox.add(createIconStatPanel("/res/like.png", String.valueOf(statistiche.getTotaleApprezzamenti()), "Totale apprezzamenti"));
+        statBox.add(createIconStatPanel("/res/commento.png", String.valueOf(statistiche.getTotaleCommenti()), "Totale commenti"));
         rightPanel.add(statBox);
 
         // === Bottom Home Button ===
@@ -93,6 +128,16 @@ public class StatisticheForm extends JFrame {
         mainPanel.add(bottomRightPanel, BorderLayout.SOUTH);
 
         homeButton.addActionListener(e -> dispose());
+    }
+    
+    private void caricaStatistiche() {
+        try {
+            statistiche = FacadeUtenti.getStatistiche();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Valori di fallback in caso di errore
+            statistiche = new StatisticheDTO(0, 0, "Errore nel caricamento", "Impossibile caricare le statistiche", 0);
+        }
     }
 
     private JPanel createIconStatPanel(String iconPath, String value, String labelText) {

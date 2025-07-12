@@ -7,6 +7,7 @@ import dto.PoesiaCompletaDTO;
 import dto.PoesiaDTO;
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
+import dto.StatisticheDTO;
 import entity.EntityPoetUp;
 import facade.FacadePoesie;
 import facade.FacadeUtenti;
@@ -125,6 +126,11 @@ public class ControllerPoetUp {
 		boolean like = FacadePoesie.like(liked, idPoesia);
 		System.out.println(idPoesia);
 		return like;
+	}
+	
+	public static StatisticheDTO getStatistiche() {
+	    StatisticheDTO statistiche = FacadeUtenti.getStatistiche();
+	    return statistiche;
 	}
 	
 

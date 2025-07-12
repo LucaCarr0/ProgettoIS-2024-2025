@@ -3,12 +3,14 @@ package entity;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import database.CommentoDAO;
 import database.PoesiaDAO;
 import database.ProfiloPersonaleDAO;
 import database.RaccoltaDAO;
 import database.UtenteDAO;
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
+import dto.StatisticheDTO;
 import session.SessioneUtente;
 
 public class EntityUtente {
@@ -172,6 +174,47 @@ public class EntityUtente {
         }
         return false;
 	}
+	
+	public StatisticheDTO getStatistiche() {
+		StatisticheDTO statistiche = new StatisticheDTO();
+        PoesiaDAO poesiaDAO = new PoesiaDAO();
+        poesiaDAO.setAutore(SessioneUtente.getIdUtente());
+        ArrayList<PoesiaDAO> poesieUtente = poesiaDAO.getPoesieUtentedaDB();      
+        calcolaStatistiche(poesieUtente, statistiche);        
+        caricaCommenti(poesieUtente, statistiche);
+        return statistiche;
+}
+
+ private void calcolaStatistiche(ArrayList<PoesiaDAO> poesie, StatisticheDTO stat) {
+        int totaleApprezzamenti = 0;
+        PoesiaDAO poesiaPiuApprezzata = poesie.get(0);
+        for (PoesiaDAO poesia : poesie) {
+            totaleApprezzamenti += poesia.getContatoreLike();
+            if (poesia.getContatoreLike() > poesiaPiuApprezzata.getContatoreLike()) {
+                poesiaPiuApprezzata = poesia;
+            }
+        }
+        
+        stat.setTotaleApprezzamenti(totaleApprezzamenti);
+        stat.setTitoloPoesiaPiuApprezzata(poesiaPiuApprezzata.getTitolo());
+        stat.setTestoPoesiaPiuApprezzata(poesiaPiuApprezzata.getTesto());
+        stat.setLikePoesiaPiuApprezzata(poesiaPiuApprezzata.getContatoreLike());
+    }
+
+    private void caricaCommenti(ArrayList<PoesiaDAO> poesie, StatisticheDTO stat) {
+        if (poesie.isEmpty()) {
+            stat.setTotaleCommenti(0);
+            return;
+        }
+        int totaleCommenti = 0;
+        for (PoesiaDAO poesia : poesie) {
+            CommentoDAO commentoDAO = new CommentoDAO();
+            commentoDAO.setId_poesia(poesia.getId());
+            ArrayList<CommentoDAO> commentiPoesia = commentoDAO.caricadaDB();
+            totaleCommenti += commentiPoesia.size();
+        }
+        stat.setTotaleCommenti(totaleCommenti);
+    }
 
 
 
