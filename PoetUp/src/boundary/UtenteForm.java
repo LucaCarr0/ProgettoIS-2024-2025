@@ -26,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
 import controller.ControllerPoetUp;
 import dto.ProfiloPersonaleDTO;
 
@@ -34,17 +36,19 @@ public class UtenteForm extends JFrame {
     private JPanel contentPane;
     private JLabel immagineProfiloLabel;
 
-    // Campi di classe
     private JTextField campoNome;
     private JTextField campoCognome;
     private JTextField campoData;
     private JTextField campoNickname;
     private JTextArea bioArea;
+    private Theme theme;
 
-    private ProfiloPersonaleDTO profilo; // DTO con i dati esistenti
+    private ProfiloPersonaleDTO profilo;
 
     public UtenteForm(JFrame HomePage) {
         this.profilo = ControllerPoetUp.getProfiloUtente();
+
+        this.theme = ThemeManager.getTheme();
 
         setTitle("Profilo");
         setBounds(100, 100, 700, 550);
@@ -53,7 +57,8 @@ public class UtenteForm extends JFrame {
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        contentPane.setBackground(new Color(0x15202B));
+        // Sfondo con metodo dedicato
+        contentPane.setBackground(theme.getBackgroundPrimary());
         setContentPane(contentPane);
 
         creaBoxImmagineProfilo();
@@ -66,17 +71,18 @@ public class UtenteForm extends JFrame {
     }
 
     private void creaBoxImmagineProfilo() {
-    	String pathImg = profilo.getImmagineProfilo();
-    	if (pathImg == null || pathImg.isEmpty()) {
-    	    pathImg = "/res/utente.png"; // default
-    	}
-    	ImageIcon iconaProfilo = resizeIcon(pathImg, 120, 120);
+        String pathImg = profilo.getImmagineProfilo();
+        if (pathImg == null || pathImg.isEmpty()) {
+            pathImg = "/res/utente.png";
+        }
+        ImageIcon iconaProfilo = resizeIcon(pathImg, 120, 120);
         immagineProfiloLabel = new JLabel(iconaProfilo);
         immagineProfiloLabel.setBounds(30, 30, 120, 120);
         immagineProfiloLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         immagineProfiloLabel.setOpaque(true);
-        immagineProfiloLabel.setBackground(new Color(0x1E2A36));
-        immagineProfiloLabel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+        // Colore sfondo e bordo da theme con metodi dedicati
+        immagineProfiloLabel.setBackground(theme.getBackgroundSecondary());
+        immagineProfiloLabel.setBorder(BorderFactory.createLineBorder(theme.getBackgroundTertiary(), 1));
         immagineProfiloLabel.setHorizontalAlignment(SwingConstants.CENTER);
         immagineProfiloLabel.setVerticalAlignment(SwingConstants.CENTER);
 
@@ -92,7 +98,7 @@ public class UtenteForm extends JFrame {
 
     private void creaCampiProfilo() {
         Font labelFont = new Font("Segoe UI", Font.PLAIN, 14);
-        Color textColor = Color.WHITE;
+        Color textColor = theme.getTextPrimary();
 
         int labelX = 170;
         int fieldX = 290;
@@ -120,22 +126,22 @@ public class UtenteForm extends JFrame {
             contentPane.add(campi[i]);
         }
 
-        // Data: gestione placeholder (già compilata nel costruttore)
-        campoData.setForeground(Color.BLACK);
+        // Placeholder campoData
+        campoData.setForeground(theme.getBackgroundTertiary());
         campoData.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
-			public void focusGained(java.awt.event.FocusEvent e) {
+            public void focusGained(java.awt.event.FocusEvent e) {
                 if (campoData.getText().equals("yyyy-MM-dd")) {
                     campoData.setText("");
-                    campoData.setForeground(Color.BLACK);
+                    campoData.setForeground(theme.getBackgroundPrimary());
                 }
             }
 
             @Override
-			public void focusLost(java.awt.event.FocusEvent e) {
+            public void focusLost(java.awt.event.FocusEvent e) {
                 if (campoData.getText().isEmpty()) {
                     campoData.setText("yyyy-MM-dd");
-                    campoData.setForeground(Color.GRAY);
+                    campoData.setForeground(theme.getBackgroundTertiary());
                 }
             }
         });
@@ -160,18 +166,18 @@ public class UtenteForm extends JFrame {
         salvaButton.addActionListener(e -> salvaProfilo());
         contentPane.add(salvaButton);
 
-        // === IMPOSTA I VALORI DEL DTO NEI CAMPI ===
+        // Imposta valori dal DTO
         campoNome.setText(profilo.getNome());
         campoCognome.setText(profilo.getCognome());
         if (profilo.getDataNascita() != null) {
-            campoData.setText(profilo.getDataNascita().toString()); // yyyy-MM-dd
+            campoData.setText(profilo.getDataNascita().toString());
             campoData.setForeground(Color.BLACK);
         } else {
             campoData.setText("yyyy-MM-dd");
-            campoData.setForeground(Color.GRAY);
+            campoData.setForeground(Color.BLACK);
         }
         campoNickname.setText(profilo.getNickname());
-        campoNickname.setEditable(false); // Disabilita modifica nickname
+        campoNickname.setEditable(false);
         bioArea.setText(profilo.getBio());
     }
 
@@ -181,15 +187,11 @@ public class UtenteForm extends JFrame {
 
         String pathSelezionato = dialog.getImmagineSelezionata();
         if (pathSelezionato != null) {
-            // Aggiorna icona visivamente
             ImageIcon nuovaIcona = resizeIcon(pathSelezionato, 120, 120);
             immagineProfiloLabel.setIcon(nuovaIcona);
-
-            // Salva nel DTO o in variabile per invio al DB
-            profilo.setImmagineProfilo(pathSelezionato);  // Assicurati che esista nel DTO
+            profilo.setImmagineProfilo(pathSelezionato);
         }
     }
-
 
     private void salvaProfilo() {
         String nome = campoNome.getText().trim();
@@ -197,7 +199,7 @@ public class UtenteForm extends JFrame {
         String dataNascitaStr = campoData.getText().trim();
         String bio = bioArea.getText().trim();
         String immaginePath = profilo.getImmagineProfilo();
-        // recupera il path selezionato
+
         if (nome.isEmpty() || cognome.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nome e Cognome sono obbligatori.");
             return;
@@ -223,8 +225,8 @@ public class UtenteForm extends JFrame {
 
         String messaggio = ControllerPoetUp.modificaProfilo(nome, cognome, dataNascita, bio, immaginePath);
         JOptionPane.showMessageDialog(this, messaggio);
-        if(messaggio.equals("Profilo aggiornato con successo!")) {
-        	this.dispose();
+        if (messaggio.equals("Profilo aggiornato con successo!")) {
+            this.dispose();
         }
     }
 
