@@ -4,12 +4,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import database.ApprezzamentoDAO;
 import database.CommentoDAO;
 import database.PoesiaDAO;
+import database.UtenteDAO;
 import dto.CommentoDTO;
 import dto.PoesiaCompletaDTO;
+import email.EmailConfig;
+import email.EmailMessage;
+import email.EmailService;
+import jakarta.mail.MessagingException;
 import session.SessioneUtente;
 
 public class EntityPoesia implements Comparable<EntityPoesia>{
@@ -274,6 +280,11 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		
 		id=idPoesia;
 		EntityCommento commento= new EntityCommento();
+		UtenteDAO u_temp = new UtenteDAO();
+		EntityUtente uEntity_temp = new EntityUtente();
+		PoesiaDAO p_temp = new PoesiaDAO();
+
+		
 		Date dataOdierna = Date.valueOf(LocalDate.now());
 		
 		commento.setDataPubblicazione(dataOdierna);
@@ -281,6 +292,39 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		commento.setId_poesia(id);
 		commento.setTesto(testo);
 		int id_comm=commento.salvasuDB();
+		
+		//Recupero nick autore commento
+		uEntity_temp.setId(SessioneUtente.getIdUtente());
+		String nickAutore = uEntity_temp.getNickdaDB();
+		
+		// Recupero autore poesia
+		p_temp.setId(idPoesia);
+		p_temp.caricadaDB();
+		int autorePoesia = p_temp.getAutore();
+		
+		// Recupero email autore poesia
+		u_temp.setId(autorePoesia);
+		String rec_email = u_temp.ottieniEmail();
+		//System.out.println("Email del ricevente: "+ rec_email); 
+		
+		EmailConfig config= new EmailConfig("poetup.noreply@gmail.com","lgdwkmxhcskgxeqh");
+
+		String body= "Hai ricevuto un commento da " + nickAutore + ".\n" 
+				+ "'" + testo + "'" 
+				+ "\nA presto \n"
+				+ "Il team di PoetUp";
+		
+		//System.out.println("Corpo della mail: " + body);
+
+		EmailMessage mess=new EmailMessage(List.of(rec_email),"Nuovo commento ricevuto!",body);
+		EmailService service= new EmailService(config);
+		try {
+			service.sendEmail(mess);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
+		
 		return id_comm;
 		
 	}
