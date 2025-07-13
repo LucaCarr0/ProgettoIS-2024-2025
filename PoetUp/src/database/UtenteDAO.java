@@ -94,8 +94,28 @@ public class UtenteDAO {
 		this.id = id;
 	}
 
+	public String ottieniEmail() {
+	    
+		int utenteId = this.id;
+		//System.out.println("[OTTIENI EMAIL] ID DELL UTENTE DA CUI PRENDERE LA MAIL: " + utenteId);
+	    String query = "SELECT email FROM utenti U WHERE U.id = " + utenteId;
+	    String result = "-1";
 
+	    try {
+	        ResultSet rs = DBConnectionManager.selectQuery(query);
 
+	        if (rs.next()) {  
+	        	result = rs.getString("email");
+	        }
+
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return result;
+	}
+
+	
 
 
 }
