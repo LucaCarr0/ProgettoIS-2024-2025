@@ -20,13 +20,15 @@ USE `mydb`;
 --
 -- Table structure for table `Report`
 --
-
 DROP TABLE IF EXISTS `Report`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
+
 CREATE TABLE `Report` (
   `id` int NOT NULL AUTO_INCREMENT,
   `data` date NOT NULL,
+  `dataInizio` date NOT NULL,
+  `dataFine` date NOT NULL,
   `numPoesiePubblicate` int DEFAULT NULL,
   `leadUtenti` varchar(255) DEFAULT NULL,
   `leadTag` varchar(255) DEFAULT NULL,
@@ -36,6 +38,7 @@ CREATE TABLE `Report` (
   KEY `FK_report_utente_idx` (`autore`),
   CONSTRAINT `FK_report_utente` FOREIGN KEY (`autore`) REFERENCES `Utenti` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
