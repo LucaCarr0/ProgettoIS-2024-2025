@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
 import dto.StatisticheDTO;
+import entity.EntityAmministratore;
 import entity.EntityUtente;
 
 public class FacadeUtenti {
@@ -59,5 +60,11 @@ public class FacadeUtenti {
 		EntityUtente utente= new EntityUtente();
 	    StatisticheDTO statistiche = utente.getStatistiche();
 	    return statistiche;
+	}
+
+	public static String generaReport(Date dataInizio, Date dataFine) {
+		EntityAmministratore admin=new EntityAmministratore();
+		String report= admin.generaReport(dataInizio,dataFine);
+		return report;
 	}
 }

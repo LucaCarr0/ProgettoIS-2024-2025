@@ -221,6 +221,14 @@ public class EntityPoetUp {
 	    return risultati;
 	}
 
+	public static ArrayList<EntityUtente> getElencoUtenti() {
+		return elencoUtenti;
+	}
+
+	public static void setElencoUtenti(ArrayList<EntityUtente> elencoUtenti) {
+		EntityPoetUp.elencoUtenti = elencoUtenti;
+	}
+
 
 
 

@@ -29,6 +29,7 @@ import javax.swing.border.LineBorder;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
+import controller.ControllerPoetUp;
 
 public class ReportForm extends JFrame {
 
@@ -135,16 +136,16 @@ public class ReportForm extends JFrame {
                     return;
                 }
 
-                java.sql.Date dataInizioSQL = java.sql.Date.valueOf(dataInizioLD);
-                java.sql.Date dataFineSQL = java.sql.Date.valueOf(dataFineLD);
+                java.sql.Date dataInizio = java.sql.Date.valueOf(dataInizioLD);
+                java.sql.Date dataFine = java.sql.Date.valueOf(dataFineLD);
 
-                reportArea.setText("Report generato da " + dataInizioSQL + " a " + dataFineSQL + ":\n\n- Voce 1\n- Voce 2\n- Voce 3");
+                reportArea.setText(ControllerPoetUp.generaReport(dataInizio,dataFine));
 
             } catch (DateTimeParseException ex) {
                 JOptionPane.showMessageDialog(this, "Data non valida. Controlla giorno, mese e anno.", "Errore", JOptionPane.ERROR_MESSAGE);
             }
 
-            reportArea.setText("Report generato da " + inizio + " a " + fine + ":\n\n- Voce 1\n- Voce 2\n- Voce 3");
+            
         });
     }
 

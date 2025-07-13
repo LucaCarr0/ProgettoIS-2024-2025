@@ -137,6 +137,11 @@ public class ControllerPoetUp {
 		if (FacadePoesie.commenta(idPoesia,testo)==-1) return false;
 		else return true;
 	}
+
+	public static String generaReport(Date dataInizio, Date dataFine) {
+		String report=FacadeUtenti.generaReport(dataInizio,dataFine);
+		return report;
+	}
 	
 
 }

@@ -20,7 +20,7 @@ public class EntityUtente {
 	private int id;
 	private boolean amministratore;
 	private EntityProfiloPersonale profilo;
-	private static ArrayList<EntityRaccolta> raccolte=new ArrayList<>();
+	protected static ArrayList<EntityRaccolta> raccolte=new ArrayList<>();
 
 	public EntityUtente(){
 
@@ -106,7 +106,7 @@ public class EntityUtente {
 		return res;
 	}
 
-	private void caricaRaccoltedaDB() {
+	protected void caricaRaccoltedaDB() {
 		// TODO Auto-generated method stub
 		RaccoltaDAO raccoltaDAO = new RaccoltaDAO();
 		raccoltaDAO.setId_utente(id);
@@ -225,6 +225,22 @@ public class EntityUtente {
 
 
 
+
+	public EntityProfiloPersonale getProfilo() {
+		return profilo;
+	}
+
+	public void setProfilo(EntityProfiloPersonale profilo) {
+		this.profilo = profilo;
+	}
+
+	public static ArrayList<EntityRaccolta> getRaccolte() {
+		return raccolte;
+	}
+
+	public static void setRaccolte(ArrayList<EntityRaccolta> raccolte) {
+		EntityUtente.raccolte = raccolte;
+	}
 
 	public String getEmail() {
 		return email;
