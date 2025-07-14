@@ -14,7 +14,9 @@ public class EntityAmministratore extends EntityUtente{
 	
 	public String generaReport(Date dataInizio, Date dataFine) {
 		EntityReport report=new EntityReport();
-	    EntityPoetUp.setElencoUtenti(new ArrayList<EntityUtente>());
+	    report.setDatainizio(dataInizio);
+	    report.setDatafine(dataFine);
+		EntityPoetUp.setElencoUtenti(new ArrayList<EntityUtente>());
 	    EntityPoetUp.caricaListaDaDB();
 	    ArrayList<EntityUtente> utenti = EntityPoetUp.getElencoUtenti(); 
 	    ArrayList<EntityPoesia> poesieDB = new ArrayList<>();
@@ -32,6 +34,7 @@ public class EntityAmministratore extends EntityUtente{
 	    ArrayList<String> autore_tag=calcoloTageAutore(poesieDB,dataInizio,dataFine);
 	    report.setLeadAutori(autore_tag.get(0));
 	    report.setLeadTag(autore_tag.get(1));
+	    
 	    
 	    // Trova poesie con più like e calcolo contatorePoesie
 	    calcolaTopPoesie(poesieDB,dataInizio,dataFine,report);
