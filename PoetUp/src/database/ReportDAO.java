@@ -8,10 +8,12 @@ public class ReportDAO {
 	private String leadAutori;
 	private String leadTag;
 	private Date data;
+	private Date datainizio;
+	private Date datafine;
 	private int nPoesiePubblicate;
 	private int id;
 	private int autore;
-	
+	 
 	
 	
 	public ReportDAO() {
@@ -22,8 +24,15 @@ public class ReportDAO {
 	
 			int ret = 0;
 
-			String query = "INSERT INTO Report(data, numPoesiePubblicate, leadUtenti, leadTag, leadPoesie, autore) VALUES ('" + this.data + "', '" + this.nPoesiePubblicate + "', '" + this.leadAutori + "', '" + this.leadTag+ "', '" + this.leadPoesie+ "', '" + this.autore+"')";
-			System.out.println(query);
+			String query = "INSERT INTO Report(data, numPoesiePubblicate, leadUtenti, leadTag, leadPoesie, autore, datainizio, datafine) VALUES ('" 
+				    + this.data + "', " 
+				    + this.nPoesiePubblicate + ", '" 
+				    + this.leadAutori + "', '" 
+				    + this.leadTag + "', '" 
+				    +  this.leadPoesie.replace("'", "''") + "', '"  //i titolo di poesie accettano apostrofi
+				    + this.autore + "', '" 
+				    + this.datainizio + "', '" 
+				    + this.datafine + "')";			System.out.println(query);
 			try {
 
 				ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
@@ -81,6 +90,22 @@ public class ReportDAO {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Date getDatafine() {
+		return datafine;
+	}
+
+	public void setDatafine(Date datafine) {
+		this.datafine = datafine;
+	}
+
+	public Date getDatainizio() {
+		return datainizio;
+	}
+
+	public void setDatainizio(Date datainizio) {
+		this.datainizio = datainizio;
 	}
 	
 	
