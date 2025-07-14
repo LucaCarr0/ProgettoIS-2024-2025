@@ -46,6 +46,8 @@ public class UtenteForm extends JFrame {
     private ProfiloPersonaleDTO profilo;
 
     public UtenteForm(JFrame HomePage) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
         this.profilo = ControllerPoetUp.getProfiloUtente();
 
         this.theme = ThemeManager.getTheme();

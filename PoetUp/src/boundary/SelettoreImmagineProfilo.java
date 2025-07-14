@@ -70,7 +70,8 @@ public class SelettoreImmagineProfilo extends JDialog {
         List<String> paths = new ArrayList<>();
         String[] nomi = {
             "pfp1.jpg", "pfp2.jpg", "pfp3.jpg", "pfp4.jpg", "pfp5.jpg",
-            "pfp6.jpg", "pfp7.jpg", "pfp8.jpg", "pfp9.jpg", "pfp10.jpg"
+            "pfp6.jpg", "pfp7.jpg", "pfp8.jpg", "pfp9.jpg", "pfp10.jpg",
+            "pfp11.jpg", "pfp12.jpg"
         };
 
         for (String nome : nomi) {

@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -43,6 +44,8 @@ public class HomePage extends JFrame {
 
 
 	public HomePage() {
+		Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 550);
 		contentPane = new JPanel();
@@ -57,14 +60,14 @@ public class HomePage extends JFrame {
 		// 4 = secondary background / cards
 
 		Color textColor = theme.getPalette().get(0);       // prima usavi Color(245, 248, 250)
-		Color primaryColor = theme.getPalette().get(1);    // prima usavi Color(60, 164, 238)
-		Color cardColor = theme.getPalette().get(4);       // sostituisce Color.cyan
+		//Color primaryColor = theme.getPalette().get(1);    // prima usavi Color(60, 164, 238)
+		//Color cardColor = theme.getPalette().get(4);       // sostituisce Color.cyan
 
 		contentPane.setBackground(theme.getPalette().get(2)); // backgroundPrimary
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 
-		Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
+		//Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
 
 		JLabel titleLabel = new JLabel("POET UP - Home");
 		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
@@ -72,6 +75,48 @@ public class HomePage extends JFrame {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(200, 40, 300, 40);
 		contentPane.add(titleLabel);
+		// ≡ Pannello in alto a destra per il Logout
+		JPanel logoutPanel = new JPanel();
+		logoutPanel.setLayout(new BoxLayout(logoutPanel, BoxLayout.X_AXIS));
+		logoutPanel.setBackground(theme.getPalette().get(2));
+		logoutPanel.setBounds(580, 20, 100, 30);  // posizionato all'incrocio dei pali
+
+		JButton logoutButton = new JButton("Logout");
+		logoutButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		logoutButton.setFocusPainted(false);
+		logoutButton.setBackground(theme.getPalette().get(3));
+		logoutButton.setForeground(theme.getPalette().get(5));
+		logoutButton.addActionListener(e -> {
+		    int conf = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler uscire?", 
+		                                              "Conferma Logout", JOptionPane.YES_NO_OPTION);
+		    if (conf == JOptionPane.YES_OPTION) {
+		        ControllerPoetUp.logout();
+		        new LoginForm().setVisible(true);
+		        dispose();
+		    }
+		});
+
+		logoutPanel.add(Box.createHorizontalGlue());
+		logoutPanel.add(logoutButton);
+
+		contentPane.add(logoutPanel);
+		// Pannello con pulsanti di controllo
+		JPanel topButtonsPanel = new JPanel();
+		topButtonsPanel.setLayout(new BoxLayout(topButtonsPanel, BoxLayout.X_AXIS));
+		topButtonsPanel.setBackground(theme.getPalette().get(2));
+		topButtonsPanel.setBounds(100, 70, 480, 30);
+
+		JButton reloadButton = new JButton("Ricarica");
+		reloadButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		reloadButton.setFocusPainted(false);
+		reloadButton.setBackground(theme.getPalette().get(3));
+		reloadButton.setForeground(theme.getPalette().get(5));
+		reloadButton.addActionListener(e -> popolaFeed());
+
+		topButtonsPanel.add(reloadButton);
+		topButtonsPanel.add(Box.createHorizontalStrut(10)); // spazio tra i pulsanti
+		
+		contentPane.add(topButtonsPanel);
 
 		JButton searchButton = createCircleButton("/res/ricerca.png", 48);
 		searchButton.setBounds(30, 440, 48, 48);

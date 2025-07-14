@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +33,8 @@ public class RaccolteFrame extends JFrame {
 	private Theme theme;
 
     public RaccolteFrame(JFrame parentFrame) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
     	
     	this.theme = ThemeManager.getTheme();
     	
@@ -241,8 +245,5 @@ public class RaccolteFrame extends JFrame {
         
     }
     
-    public void aggiornaLista() {
-        this.dispose();
-        new RaccolteFrame(null); // oppure puoi passare parentFrame se vuoi ripristinare il riferimento
-    }
+    
 }

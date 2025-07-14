@@ -352,18 +352,18 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 	}
 
 	public Integer spostaPoesia(String titolo_raccolta, int idPoesia) {
-		
+		int res=-1;
 		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
 		raccoltaDao.setTitolo(titolo_raccolta);
 		int idRaccolta_dest = raccoltaDao.getIdRaccolta();
 		System.out.println(idRaccolta_dest + "idPoesia: " + this.getId());
-		
+		if(idRaccolta_dest!=-1) {
 		PoesiaDAO poesiaDao = new PoesiaDAO();
 		poesiaDao.setId(idPoesia);
 		poesiaDao.setRaccolta(idRaccolta_dest);
 		
-		int res = poesiaDao.aggiornaSuDB_raccolta();
-		
+		res = poesiaDao.aggiornaSuDB_raccolta();
+		}
 		return res;
 	}
 

@@ -6,7 +6,6 @@ import dto.PoesiaCompletaDTO;
 import dto.PoesiaDTO;
 import entity.EntityPoesia;
 import entity.EntityRaccolta;
-import entity.EntityUtente;
 
 public class FacadePoesie {
 

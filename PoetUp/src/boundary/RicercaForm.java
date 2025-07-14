@@ -29,6 +29,8 @@ public class RicercaForm extends JFrame {
     private Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
 
     public RicercaForm(HomePage parent) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
         this.parentFrame = parent;
         this.theme = ThemeManager.getTheme();
         // Carica i colori dalla palette del tema

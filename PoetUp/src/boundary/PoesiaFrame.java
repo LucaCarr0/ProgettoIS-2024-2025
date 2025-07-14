@@ -15,6 +15,8 @@ public class PoesiaFrame extends JFrame {
     private String autore;
 
     public PoesiaFrame(JFrame parentFrame, int id_poesia, String autore) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
         this.id_poesia = id_poesia;
         this.autore = autore;
 
@@ -82,26 +84,22 @@ public class PoesiaFrame extends JFrame {
                     if (conferma == JOptionPane.YES_OPTION) {
                         String esito = ControllerPoetUp.eliminaPoesia(id_poesia);
                         JOptionPane.showMessageDialog(this, esito);
-                        if (parentFrame instanceof HomePage) {
-                            ((HomePage) parentFrame).popolaFeed();
-                        } else if (parentFrame instanceof RaccolteFrame) {
-                            ((RaccolteFrame) parentFrame).aggiornaLista(); // Deve esistere
+                        PoesieRaccoltaFrame parent= (PoesieRaccoltaFrame) parentFrame; // Deve esistere
+                        parent.aggiornaLista();
                         }
                         dispose();
                     }
-                } else if (scelta.equals("Sposta in un'altra raccolta")) {
+                 else if (scelta.equals("Sposta in un'altra raccolta")) {
                     String titolo = JOptionPane.showInputDialog(this, "Inserisci il titolo della raccolta di destinazione:");
                     if (titolo != null && !titolo.trim().isEmpty()) {
                         String esito = ControllerPoetUp.spostaPoesia(titolo.trim(), id_poesia);
                         JOptionPane.showMessageDialog(this, esito);
-                        if (parentFrame instanceof RaccolteFrame) {
-                            ((RaccolteFrame) parentFrame).aggiornaLista(); // Deve esistere
-                        } else if (parentFrame instanceof HomePage) {
-                            ((HomePage) parentFrame).popolaFeed();
+                        PoesieRaccoltaFrame parent= (PoesieRaccoltaFrame) parentFrame; // Deve esistere
+                        parent.aggiornaLista();
                         }
                     }
                 }
-            });
+            );
         }
         
 

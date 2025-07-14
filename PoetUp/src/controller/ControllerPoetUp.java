@@ -162,6 +162,10 @@ public class ControllerPoetUp {
 			return "Poesia spostata con successo!";
 		}
 	}
+
+	public static void logout() {
+		EntityPoetUp.logout();
+	}
 	
 
 }

@@ -98,7 +98,7 @@ public class UtenteDAO {
 	    
 		int utenteId = this.id;
 		//System.out.println("[OTTIENI EMAIL] ID DELL UTENTE DA CUI PRENDERE LA MAIL: " + utenteId);
-	    String query = "SELECT email FROM utenti U WHERE U.id = " + utenteId;
+	    String query = "SELECT email FROM Utenti U WHERE U.id = " + utenteId;
 	    String result = "-1";
 
 	    try {

@@ -13,6 +13,8 @@ public class StatisticheForm extends JFrame {
     private StatisticheDTO statistiche;
 
     public StatisticheForm(JFrame HomePage) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
         caricaStatistiche();
         this.theme = ThemeManager.getTheme();
 

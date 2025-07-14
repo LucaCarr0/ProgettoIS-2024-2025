@@ -1,7 +1,9 @@
 package boundary;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +19,8 @@ import controller.ControllerPoetUp;
 public class RaccoltaForm extends JFrame {
 
     public RaccoltaForm(JFrame parentFrame,JFrame home) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
         setTitle("Nuova Raccolta");
         setSize(500, 400);
         setLocationRelativeTo(parentFrame);

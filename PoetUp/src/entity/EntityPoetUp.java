@@ -229,6 +229,10 @@ public class EntityPoetUp {
 		EntityPoetUp.elencoUtenti = elencoUtenti;
 	}
 
+	public static void logout() {
+		SessioneUtente.logout();
+	}
+
 
 
 

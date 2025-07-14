@@ -51,11 +51,12 @@ public class PoesiaDAO {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    String dataFormattata = sdf.format(this.datapubblicazione);
-
+	    String titoloSQL = this.titolo.replace("'", "''");
+	    String testoSQL = this.testo.replace("'", "''");
 	    // Costruzione query SQL
 	    String query = "INSERT INTO Poesie (titolo, body, tag, visibilita, dataPubblicazione, contatoreLike, autore, raccolta) VALUES ('"
-	                 + this.titolo + "', '"
-	                 + this.testo + "', '"
+	                 + titoloSQL + "', '"
+	                 + testoSQL + "', '"
 	                 + this.tag + "', "
 	                 + (this.visibilita ? 1 : 0) + ", '" // è un tinyint su MYSQL
 	                 + dataFormattata + "', "

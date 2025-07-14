@@ -24,6 +24,8 @@ public class PoesiaForm extends JFrame {
     private boolean locked = false;
 
     public PoesiaForm(JFrame parentFrame) {
+    	Image iconframe = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(iconframe);
         
         Theme theme = ThemeManager.getTheme();
         Color backgroundColor = theme.getPalette().get(2);
@@ -181,12 +183,12 @@ public class PoesiaForm extends JFrame {
             return false;
         }
 
-        if (!titolo.matches("^[a-zA-ZÀ-ÿ\\s]{1,25}$")) {
+        if (!titolo.matches("^[a-zA-ZÀ-ÿ\\s']{1,25}$")) {
             showError("Il titolo può contenere solo lettere e spazi, massimo 25 caratteri.");
             return false;
         }
 
-        if (testo.length() > 500 || !testo.matches("^[\\p{L}\\p{N}\\s,\\.\\!\\?\\:\\;]+$")) {
+        if (testo.length() > 500 || !testo.matches("^[\\p{L}\\p{N}\\s,\\.\\!\\?\\:\\;\\']+$")) {
             showError("Il testo può contenere massimo 500 caratteri e solo lettere, numeri, spazi e i seguenti simboli: , . ! ? : ;");
             return false;
         }

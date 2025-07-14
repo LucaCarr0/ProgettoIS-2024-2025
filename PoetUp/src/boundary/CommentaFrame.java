@@ -7,6 +7,8 @@ import controller.ControllerPoetUp;
 public class CommentaFrame extends JFrame {
 
     public CommentaFrame(JFrame parentFrame, int idPoesia, String autore) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
         setTitle("Aggiungi commento");
         setSize(400, 250);
         setLocationRelativeTo(null);

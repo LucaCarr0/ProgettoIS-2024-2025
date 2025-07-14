@@ -1,11 +1,12 @@
 package boundary;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -38,6 +39,8 @@ public class LoginForm extends JFrame {
 	}
 
 	public LoginForm() {
+		Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
 		Theme theme = ThemeManager.getTheme();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -1,6 +1,7 @@
 package boundary;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
@@ -30,6 +31,8 @@ public class RegistrationForm extends JFrame {
 	private JLabel resultLabel;
 
 	public RegistrationForm() {
+		Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
 		Theme theme = ThemeManager.getTheme();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,15 +25,22 @@ import controller.ControllerPoetUp;
 import dto.PoesiaDTO;
 
 public class PoesieRaccoltaFrame extends JFrame {
-
+	
+	private JFrame parent;
+	private int raccoltaid;
+	private String titoloraccolta;
     public PoesieRaccoltaFrame(JFrame parentFrame, int raccoltaId, String titoloRaccolta) {
+    	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
+		setIconImage(icon);
+    	parent=parentFrame;
+    	raccoltaid=raccoltaId;
+    	titoloraccolta=titoloRaccolta;
         setTitle("Poesie in \"" + titoloRaccolta + "\"");
         setSize(900, 600);
         setLocationRelativeTo(parentFrame);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         Color primaryColor = new Color(60, 164, 238);
-        Color accentColor = new Color(255, 122, 89);
         Color bgColor = new Color(235, 243, 255);
         Color cardColor = new Color(255, 255, 255);
         Color textColor = new Color(44, 62, 80);
@@ -135,10 +144,16 @@ public class PoesieRaccoltaFrame extends JFrame {
 
             listPanel.add(card);
             listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            
         }
-
+       
 
         setVisible(true);
+        
+    }
+    public void aggiornaLista() {
+        this.dispose();
+        new PoesieRaccoltaFrame(this.parent,this.raccoltaid,this.titoloraccolta); // oppure puoi passare parentFrame se vuoi ripristinare il riferimento
     }
 
 
