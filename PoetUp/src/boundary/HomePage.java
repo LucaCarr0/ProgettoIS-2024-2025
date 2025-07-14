@@ -67,9 +67,9 @@ public class HomePage extends JFrame {
 		// 3 = accent1 (per like)
 		// 4 = secondary background / cards
 
-		Color textColor = theme.getPalette().get(0);       // prima usavi Color(245, 248, 250)
-		//Color primaryColor = theme.getPalette().get(1);    // prima usavi Color(60, 164, 238)
-		//Color cardColor = theme.getPalette().get(4);       // sostituisce Color.cyan
+		Color textColor = theme.getPalette().get(0);      
+		//Color primaryColor = theme.getPalette().get(1);    
+		//Color cardColor = theme.getPalette().get(4);       
 
 		contentPane.setBackground(theme.getPalette().get(2)); // backgroundPrimary
 		setContentPane(contentPane);

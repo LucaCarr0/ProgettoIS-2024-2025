@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import boundary.theme.Theme;
+import boundary.theme.ThemeManager;
 import controller.ControllerPoetUp;
 import dto.PoesiaDTO;
 
@@ -33,6 +35,7 @@ public class PoesieRaccoltaFrame extends JFrame {
 	private JFrame parent;
 	private int raccoltaid;
 	private String titoloraccolta;
+	
     public PoesieRaccoltaFrame(JFrame parentFrame, int raccoltaId, String titoloRaccolta) {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
@@ -43,12 +46,13 @@ public class PoesieRaccoltaFrame extends JFrame {
         setSize(900, 600);
         setLocationRelativeTo(parentFrame);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        Theme theme = ThemeManager.getTheme();
 
-        Color primaryColor = new Color(60, 164, 238);
-        Color bgColor = new Color(235, 243, 255);
-        Color cardColor = new Color(255, 255, 255);
-        Color textColor = new Color(44, 62, 80);
-
+        Color primaryColor = theme.getPalette().get(1);
+        Color accentColor = theme.getPalette().get(4);
+        Color bgColor = theme.getPalette().get(2);
+        Color cardColor = theme.getPalette().get(3);
+        //Color textColor = theme.getPalette().get(0);
         Font titleFont = new Font("Segoe UI", Font.BOLD, 24);
         Font cardFont = new Font("Segoe UI", Font.PLAIN, 14);
 
@@ -59,7 +63,7 @@ public class PoesieRaccoltaFrame extends JFrame {
 
         JLabel titleLabel = new JLabel(titoloRaccolta);
         titleLabel.setFont(titleFont);
-        titleLabel.setForeground(textColor);
+        titleLabel.setForeground(accentColor);
         titleLabel.setBounds(0, 10, getWidth(), 40);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(titleLabel);

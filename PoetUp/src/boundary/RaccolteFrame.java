@@ -46,13 +46,19 @@ public class RaccolteFrame extends JFrame {
         setSize(900, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parentFrame);
-
+        
+       // mappa colori: palette index:
+     		// 0 = textPrimary
+     		// 1 = primary
+     		// 2 = backgroundPrimary
+     		// 3 = accent1 (per like)
+     		// 4 = secondary background / cards
         // Colori
-        Color primaryColor = theme.getTextSecondary();
-        Color accentColor = theme.getBorderColor();
-        Color bgColor = theme.getHighlightColor();
-        Color cardColor = theme.getTextSecondary();
-        Color textColor = theme.getAccentColor();
+        Color primaryColor = theme.getPalette().get(1);
+        Color accentColor = theme.getPalette().get(4);
+        Color bgColor = theme.getPalette().get(2);
+        Color cardColor = theme.getPalette().get(3);
+        //Color textColor = theme.getPalette().get(0);
 
         Font titleFont = new Font("Segoe UI", Font.BOLD, 24);
         Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
@@ -64,7 +70,7 @@ public class RaccolteFrame extends JFrame {
 
         JLabel titleLabel = new JLabel("Raccolte");
         titleLabel.setFont(titleFont);
-        titleLabel.setForeground(textColor);
+        titleLabel.setForeground(accentColor);
         titleLabel.setBounds(0, 10, getWidth(), 40);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         contentPane.add(titleLabel);
