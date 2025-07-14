@@ -136,6 +136,29 @@ public class RaccoltaDAO {
 	    return ret;
 	}
 
+	public int getIdRaccolta() {
+	    int id = -1;
+
+	    String query = "SELECT id FROM Raccolte WHERE titolo = '" + this.getTitolo() + "'";
+
+	    System.out.println(query);
+
+	    try {
+	        ResultSet rs = DBConnectionManager.selectQuery(query);
+
+	        if (rs.next()) {
+	            id = rs.getInt("id");
+	        }
+
+	        rs.close();
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return id;
+	}
+
+
 
 
 }

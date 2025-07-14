@@ -6,6 +6,7 @@ import dto.PoesiaCompletaDTO;
 import dto.PoesiaDTO;
 import entity.EntityPoesia;
 import entity.EntityRaccolta;
+import entity.EntityUtente;
 
 public class FacadePoesie {
 
@@ -32,7 +33,18 @@ public class FacadePoesie {
 		int ritorno = poesia.commenta(testo, idPoesia);
 		return ritorno;
 	}
-	
+
+	public static Integer eliminaPoesia(int idPoesia) {
+		EntityPoesia poesia = new EntityPoesia();
+		Integer result = poesia.eliminaPoesia(idPoesia);
+		return result;
+	}
+
+	public static Integer spostaPoesia(String titolo_raccolta, int idPoesia) {
+		EntityPoesia poesia = new EntityPoesia();
+		Integer result = poesia.spostaPoesia(titolo_raccolta, idPoesia);
+		return result;
+	}
 	
 
 }

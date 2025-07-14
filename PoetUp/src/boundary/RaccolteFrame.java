@@ -237,5 +237,12 @@ public class RaccolteFrame extends JFrame {
         contentPane.add(addBtn);
 
         setVisible(true);
+        
+        
+    }
+    
+    public void aggiornaLista() {
+        this.dispose();
+        new RaccolteFrame(null); // oppure puoi passare parentFrame se vuoi ripristinare il riferimento
     }
 }

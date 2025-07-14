@@ -1,24 +1,8 @@
 package boundary;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-
+import javax.swing.*;
 import controller.ControllerPoetUp;
 import dto.CommentoDTO;
 import dto.PoesiaCompletaDTO;
@@ -34,7 +18,6 @@ public class PoesiaFrame extends JFrame {
         this.id_poesia = id_poesia;
         this.autore = autore;
 
-        // Recupero dati poesia
         PoesiaCompletaDTO poesia = ControllerPoetUp.visualizzaPoesia(id_poesia, autore);
 
         setTitle(poesia.getTitolo());
@@ -57,6 +40,70 @@ public class PoesiaFrame extends JFrame {
         mainPanel.setBackground(bgColor);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
+
+     // 🔹 Pannello top con pulsante X
+        if (parentFrame instanceof PoesieRaccoltaFrame) {
+        	JPanel topPanel = new JPanel(new BorderLayout());
+            topPanel.setBackground(bgColor);
+
+            JButton xButton = new JButton("X");
+            xButton.setFocusPainted(false);
+            xButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            xButton.setBackground(new Color(255, 100, 100));
+            xButton.setForeground(Color.WHITE);
+            xButton.setPreferredSize(new Dimension(45, 25));
+
+            topPanel.add(xButton, BorderLayout.EAST);
+
+            // Inserisci topPanel in alto
+            mainPanel.add(topPanel);
+
+            // 🔹 Azione sul pulsante X
+            xButton.addActionListener(e -> {
+                String[] options = {"Elimina poesia", "Sposta in un'altra raccolta"};
+                String scelta = (String) JOptionPane.showInputDialog(
+                        this,
+                        "Cosa vuoi fare con questa poesia?",
+                        "Gestione poesia",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+
+                if (scelta == null) return;
+
+                if (scelta.equals("Elimina poesia")) {
+                    int conferma = JOptionPane.showConfirmDialog(
+                            this,
+                            "Sei sicuro di voler eliminare questa poesia?",
+                            "Conferma eliminazione",
+                            JOptionPane.YES_NO_OPTION);
+
+                    if (conferma == JOptionPane.YES_OPTION) {
+                        String esito = ControllerPoetUp.eliminaPoesia(id_poesia);
+                        JOptionPane.showMessageDialog(this, esito);
+                        if (parentFrame instanceof HomePage) {
+                            ((HomePage) parentFrame).popolaFeed();
+                        } else if (parentFrame instanceof RaccolteFrame) {
+                            ((RaccolteFrame) parentFrame).aggiornaLista(); // Deve esistere
+                        }
+                        dispose();
+                    }
+                } else if (scelta.equals("Sposta in un'altra raccolta")) {
+                    String titolo = JOptionPane.showInputDialog(this, "Inserisci il titolo della raccolta di destinazione:");
+                    if (titolo != null && !titolo.trim().isEmpty()) {
+                        String esito = ControllerPoetUp.spostaPoesia(titolo.trim(), id_poesia);
+                        JOptionPane.showMessageDialog(this, esito);
+                        if (parentFrame instanceof RaccolteFrame) {
+                            ((RaccolteFrame) parentFrame).aggiornaLista(); // Deve esistere
+                        } else if (parentFrame instanceof HomePage) {
+                            ((HomePage) parentFrame).popolaFeed();
+                        }
+                    }
+                }
+            });
+        }
+        
 
         // Titolo
         JLabel titleLabel = new JLabel(poesia.getTitolo(), SwingConstants.RIGHT);
@@ -116,17 +163,15 @@ public class PoesiaFrame extends JFrame {
         likePanel.setBackground(bgColor);
 
         final boolean[] liked = {poesia.isAlreadyLiked()};
-        Color likeColorActive = new Color(220, 50, 50);
-
         JLabel cuore = new JLabel(liked[0] ? "\u2665" : "\u2661");
         cuore.setFont(new Font("Segoe UI", Font.PLAIN, 24));
-        cuore.setForeground(liked[0] ? likeColorActive : Color.GRAY);
-        cuore.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cuore.setForeground(liked[0] ? likeColor : Color.GRAY);
+        cuore.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         int[] conteggio = {poesia.getContatoreLike()};
         JLabel likeCount = new JLabel(String.valueOf(conteggio[0]));
         likeCount.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        likeCount.setForeground(likeColorActive);
+        likeCount.setForeground(likeColor);
 
         cuore.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -137,7 +182,7 @@ public class PoesiaFrame extends JFrame {
                     poesia.setAlreadyLiked(liked[0]);
                     if (liked[0]) {
                         cuore.setText("\u2665");
-                        cuore.setForeground(likeColorActive);
+                        cuore.setForeground(likeColor);
                         conteggio[0]++;
                     } else {
                         cuore.setText("\u2661");
@@ -175,7 +220,6 @@ public class PoesiaFrame extends JFrame {
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(likePanel);
 
-        // Commenti panel come campo di istanza
         commentiPanel = new JPanel();
         commentiPanel.setLayout(new BoxLayout(commentiPanel, BoxLayout.Y_AXIS));
         commentiPanel.setBackground(bgColor);
@@ -189,10 +233,8 @@ public class PoesiaFrame extends JFrame {
         mainPanel.add(Box.createVerticalStrut(15));
         mainPanel.add(commentiScroll);
 
-        // Popola commenti inizialmente
         popolaCommenti();
 
-        // Bottone chiudi
         JButton closeBtn = new JButton("Chiudi");
         closeBtn.setBackground(accentColor);
         closeBtn.setForeground(Color.WHITE);

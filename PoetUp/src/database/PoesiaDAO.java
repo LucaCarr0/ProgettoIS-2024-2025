@@ -268,5 +268,40 @@ public class PoesiaDAO {
 	}
 
 
+	public int deletePoesia() {
+		int ret = 0;
+
+	    String query = "DELETE FROM Poesie WHERE id = " + this.getId();
+
+	    System.out.println(query);
+	    try {
+	        ret = DBConnectionManager.deleteQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; // errore durante l'esecuzione
+	    }
+
+	    return ret;
+	}
+	
+	public int aggiornaSuDB_raccolta() {
+	    int ret = 0;
+
+	    String query = "UPDATE Poesie SET raccolta = '" + this.getRaccolta() + "' " +
+	                   "WHERE id = " + this.getId();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1;
+	    }
+
+	    return ret;
+	}
+
+
 
 }

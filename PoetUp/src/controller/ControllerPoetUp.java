@@ -106,6 +106,16 @@ public class ControllerPoetUp {
 		}
 
 	}
+	
+	public static String eliminaPoesia(int idPoesia)  {
+		Integer result = FacadePoesie.eliminaPoesia(idPoesia);
+		
+		if(result == -1) {
+			return "Errore durante l'eliminazione della Poesia.";
+		} else {
+			return "Poesia eliminata con successo!";
+		}
+	}
 
 	public static PoesiaCompletaDTO visualizzaPoesia(int id_poesia,String autore) {
 		PoesiaCompletaDTO poesia = FacadePoesie.visualizzaPoesia(id_poesia,autore);
@@ -141,6 +151,16 @@ public class ControllerPoetUp {
 	public static String generaReport(Date dataInizio, Date dataFine) {
 		String report=FacadeUtenti.generaReport(dataInizio,dataFine);
 		return report;
+	}
+	
+	public static String spostaPoesia(String titolo_raccolta, int idPoesia) {
+		Integer result = FacadePoesie.spostaPoesia(titolo_raccolta, idPoesia);
+		
+		if(result == -1) {
+			return "Errore durante lo spostamento della Poesia.";
+		} else {
+			return "Poesia spostata con successo!";
+		}
 	}
 	
 

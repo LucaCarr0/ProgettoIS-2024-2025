@@ -9,6 +9,7 @@ import java.util.List;
 import database.ApprezzamentoDAO;
 import database.CommentoDAO;
 import database.PoesiaDAO;
+import database.RaccoltaDAO;
 import database.UtenteDAO;
 import dto.CommentoDTO;
 import dto.PoesiaCompletaDTO;
@@ -21,7 +22,7 @@ import session.SessioneUtente;
 public class EntityPoesia implements Comparable<EntityPoesia>{
 	private String titolo,testo,tag;
 	private boolean visibilita;
-	private String autore;
+	private String autore, raccolta;
 	private int id;
 	private Date datapubblicazione;
 	private int contatoreLike;
@@ -105,6 +106,14 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		this.autore = autore;
 	}
 
+	public String getRaccolta() {
+		return raccolta;
+	}
+
+	public void setRaccolta(String raccolta) {
+		this.raccolta = raccolta;
+	}
+	
 	@Override
 	public int compareTo(EntityPoesia o) {
 	    if (this.datapubblicazione == null && o.datapubblicazione == null) {
@@ -328,6 +337,40 @@ public class EntityPoesia implements Comparable<EntityPoesia>{
 		return id_comm;
 		
 	}
+
+	public Integer eliminaPoesia(int idPoesia) {
+		this.setId(idPoesia);
+		int res = this.eliminaDaDB();
+		return res;
+	}
+	
+	public int eliminaDaDB() {
+		PoesiaDAO poesiaDao = new PoesiaDAO();
+		poesiaDao.setId(this.id);
+		int res = poesiaDao.deletePoesia();
+		return res;
+	}
+
+	public Integer spostaPoesia(String titolo_raccolta, int idPoesia) {
+		
+		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
+		raccoltaDao.setTitolo(titolo_raccolta);
+		int idRaccolta_dest = raccoltaDao.getIdRaccolta();
+		System.out.println(idRaccolta_dest + "idPoesia: " + this.getId());
+		
+		PoesiaDAO poesiaDao = new PoesiaDAO();
+		poesiaDao.setId(idPoesia);
+		poesiaDao.setRaccolta(idRaccolta_dest);
+		
+		int res = poesiaDao.aggiornaSuDB_raccolta();
+		
+		return res;
+	}
+
+	
+
+
+
 	
 
 }
