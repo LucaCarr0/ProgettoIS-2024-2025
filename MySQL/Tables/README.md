@@ -1,1 +1,0 @@
-Tabelle del database 
