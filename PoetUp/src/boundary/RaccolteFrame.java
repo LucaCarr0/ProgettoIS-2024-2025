@@ -30,6 +30,10 @@ import dto.RaccoltaDTO;
 
 public class RaccolteFrame extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Theme theme;
 
     public RaccolteFrame(JFrame parentFrame) {
@@ -38,7 +42,7 @@ public class RaccolteFrame extends JFrame {
     	
     	this.theme = ThemeManager.getTheme();
     	
-        setTitle("Le tue Raccolte");
+        setTitle("Raccolte");
         setSize(900, 600);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(parentFrame);
@@ -58,7 +62,7 @@ public class RaccolteFrame extends JFrame {
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        JLabel titleLabel = new JLabel("Le tue Raccolte");
+        JLabel titleLabel = new JLabel("Raccolte");
         titleLabel.setFont(titleFont);
         titleLabel.setForeground(textColor);
         titleLabel.setBounds(0, 10, getWidth(), 40);

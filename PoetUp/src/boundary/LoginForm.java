@@ -22,6 +22,10 @@ import boundary.theme.ThemeManager;
 
 public class LoginForm extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField emailField;
 	private JPasswordField passwordField;

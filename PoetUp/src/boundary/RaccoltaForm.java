@@ -18,7 +18,12 @@ import controller.ControllerPoetUp;
 
 public class RaccoltaForm extends JFrame {
 
-    public RaccoltaForm(JFrame parentFrame,JFrame home) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public RaccoltaForm(JFrame parentFrame,JFrame home) {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
         setTitle("Nuova Raccolta");
@@ -92,7 +97,10 @@ public class RaccoltaForm extends JFrame {
                 JOptionPane.showMessageDialog(this, "Il titolo non può contenere caratteri speciali.", "Errore", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            if (descrizione.length() > 255) {
+                JOptionPane.showMessageDialog(this, "La descrizione non può superare i 255 caratteri.", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             String esito = ControllerPoetUp.addRaccolta(titolo,descrizione);
             if (esito.equals("Raccolta Creata")) {

@@ -9,7 +9,11 @@ import dto.PoesiaCompletaDTO;
 
 public class PoesiaFrame extends JFrame {
 
-    private JPanel commentiPanel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel commentiPanel;
     private JScrollPane commentiScroll;
     private int id_poesia;
     private String autore;

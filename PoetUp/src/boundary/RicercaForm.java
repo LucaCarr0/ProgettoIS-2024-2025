@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
@@ -14,7 +13,11 @@ import dto.PoesiaDTO;
 
 public class RicercaForm extends JFrame {
 
-    private JPanel contentPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JTextField searchField;
     private JPanel resultsPanel;
     private JScrollPane scrollPane;

@@ -1,6 +1,5 @@
 package boundary;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -33,7 +32,11 @@ import controller.ControllerPoetUp;
 
 public class ReportForm extends JFrame {
 
-    private JPanel contentPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JTextArea reportArea;
     private Theme theme;
 

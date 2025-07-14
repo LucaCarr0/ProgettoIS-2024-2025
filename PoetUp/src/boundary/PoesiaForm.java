@@ -13,7 +13,8 @@ import controller.ControllerPoetUp;
 
 public class PoesiaForm extends JFrame {
 
-    private JPanel contentPane;
+    private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JTextField titoloField;
     private JTextArea testoArea;
     private JTextField tagField;
@@ -30,7 +31,7 @@ public class PoesiaForm extends JFrame {
         Theme theme = ThemeManager.getTheme();
         Color backgroundColor = theme.getPalette().get(2);
         Color contrastColor = theme.getPalette().get(3);
-        Color secondaryContrast = theme.getPalette().get(3);
+        //Color secondaryContrast = theme.getPalette().get(3);
         Color textColor = theme.getPalette().get(4);
         Color buttonPrimary = theme.getPalette().get(5);
         Color buttonSecondary = theme.getPalette().get(5);

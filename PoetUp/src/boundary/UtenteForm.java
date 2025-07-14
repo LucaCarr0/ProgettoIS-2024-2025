@@ -33,7 +33,11 @@ import dto.ProfiloPersonaleDTO;
 
 public class UtenteForm extends JFrame {
 
-    private JPanel contentPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
     private JLabel immagineProfiloLabel;
 
     private JTextField campoNome;
@@ -202,12 +206,13 @@ public class UtenteForm extends JFrame {
         String bio = bioArea.getText().trim();
         String immaginePath = profilo.getImmagineProfilo();
 
-        if (nome.isEmpty() || cognome.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nome e Cognome sono obbligatori.");
+        
+        if (bio.length()>500) {
+            JOptionPane.showMessageDialog(this, "Biografia troppo lunga!");
             return;
         }
 
-        if (dataNascitaStr.equals("yyyy-MM-dd") || dataNascitaStr.isEmpty()) {
+        if (dataNascitaStr.equals("yyyy-MM-dd")) {
             JOptionPane.showMessageDialog(this, "Inserire una data di nascita valida.");
             return;
         }

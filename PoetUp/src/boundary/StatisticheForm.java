@@ -9,7 +9,11 @@ import dto.StatisticheDTO;
 import facade.FacadeUtenti;
 
 public class StatisticheForm extends JFrame {
-    private Theme theme;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Theme theme;
     private StatisticheDTO statistiche;
 
     public StatisticheForm(JFrame HomePage) {

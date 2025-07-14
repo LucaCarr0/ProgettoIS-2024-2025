@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Color;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +22,7 @@ import controller.ControllerPoetUp;
 
 public class RegistrationForm extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;

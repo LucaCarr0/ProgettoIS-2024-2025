@@ -38,11 +38,19 @@ import session.SessioneUtente;
 
 public class HomePage extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel menuPanel;
+	private JPanel logoutPanel;
+	private JPanel topButtonsPanel;
 	private JPanel listPanel;  
+	private JButton logoutButton;
+	private JButton reloadButton;
 
-
+	
 	public HomePage() {
 		Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
@@ -75,16 +83,17 @@ public class HomePage extends JFrame {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(200, 40, 300, 40);
 		contentPane.add(titleLabel);
-		// ≡ Pannello in alto a destra per il Logout
-		JPanel logoutPanel = new JPanel();
+		// Pannello in alto a destra per il Logout
+		logoutPanel = new JPanel();
 		logoutPanel.setLayout(new BoxLayout(logoutPanel, BoxLayout.X_AXIS));
 		logoutPanel.setBackground(theme.getPalette().get(2));
-		logoutPanel.setBounds(580, 20, 100, 30);  // posizionato all'incrocio dei pali
+		logoutPanel.setBounds(580, 20, 100, 30);  
 
-		JButton logoutButton = new JButton("Logout");
+		logoutButton = new JButton("Logout");
 		logoutButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		logoutButton.setFocusPainted(false);
 		logoutButton.setBackground(theme.getPalette().get(3));
+	
 		logoutButton.setForeground(theme.getPalette().get(5));
 		logoutButton.addActionListener(e -> {
 		    int conf = JOptionPane.showConfirmDialog(this, "Sei sicuro di voler uscire?", 
@@ -101,12 +110,12 @@ public class HomePage extends JFrame {
 
 		contentPane.add(logoutPanel);
 		// Pannello con pulsanti di controllo
-		JPanel topButtonsPanel = new JPanel();
+		topButtonsPanel = new JPanel();
 		topButtonsPanel.setLayout(new BoxLayout(topButtonsPanel, BoxLayout.X_AXIS));
 		topButtonsPanel.setBackground(theme.getPalette().get(2));
 		topButtonsPanel.setBounds(100, 70, 480, 30);
 
-		JButton reloadButton = new JButton("Ricarica");
+		reloadButton = new JButton("Ricarica");
 		reloadButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		reloadButton.setFocusPainted(false);
 		reloadButton.setBackground(theme.getPalette().get(3));
@@ -223,6 +232,14 @@ public class HomePage extends JFrame {
 		Theme theme = ThemeManager.getTheme();
 		contentPane.setBackground(theme.getPalette().get(2));
 		menuPanel.setBackground(theme.getPalette().get(2));
+		logoutPanel.setBackground(theme.getPalette().get(2));
+	    topButtonsPanel.setBackground(theme.getPalette().get(2));
+	    reloadButton.setBackground(theme.getPalette().get(3));
+	    logoutButton.setBackground(theme.getPalette().get(3));
+	    reloadButton.setForeground(theme.getPalette().get(5));
+	    logoutButton.setForeground(theme.getPalette().get(5));
+	    listPanel.setBackground(theme.getPalette().get(2));
+
 		getContentPane().setBackground(theme.getPalette().get(2));
 
 		for (Component c : contentPane.getComponents()) {
@@ -238,7 +255,8 @@ public class HomePage extends JFrame {
 	
 	public void popolaFeed() {
 	    listPanel.removeAll();  // pulisci il pannello
-
+	    
+	    
 	    ArrayList<PoesiaDTO> poesie = ControllerPoetUp.visualizzaFeed();
 		Theme theme = ThemeManager.getTheme();
 
@@ -253,7 +271,15 @@ public class HomePage extends JFrame {
 		
 
 	    Font cardFont = new Font("Segoe UI", Font.PLAIN, 14);
-
+	    if (poesie.isEmpty()) {
+	        JLabel emptyLabel = new JLabel("Nessuna poesia disponibile.");
+	        emptyLabel.setForeground(theme.getPalette().get(0));
+	        emptyLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+	        emptyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+	        listPanel.add(Box.createVerticalGlue());
+	        listPanel.add(emptyLabel);
+	        listPanel.add(Box.createVerticalGlue());
+	    } else {
 	    for (int i = 0; i < 5 && i < poesie.size(); i++) {
 	        PoesiaDTO poesia = poesie.get(i);
 	        JPanel card = new JPanel(new BorderLayout());
@@ -319,6 +345,7 @@ public class HomePage extends JFrame {
 	        listPanel.add(card);
 	        listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 			listPanel.setBackground(theme.getPalette().get(2));
+	    }
 	    }
 
 	    listPanel.revalidate();

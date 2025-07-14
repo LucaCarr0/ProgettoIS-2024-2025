@@ -22,7 +22,8 @@ import javax.swing.SwingConstants;
 
 public class SelettoreImmagineProfilo extends JDialog {
 
-    private String immagineSelezionata;
+    private static final long serialVersionUID = 1L;
+	private String immagineSelezionata;
 
     public SelettoreImmagineProfilo(JFrame parent) {
         super(parent, "Seleziona immagine profilo", true);
