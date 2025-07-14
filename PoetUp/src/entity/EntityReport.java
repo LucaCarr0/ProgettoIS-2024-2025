@@ -12,7 +12,8 @@ public class EntityReport {
 	private String leadAutori;
 	private String leadTag;
 	private int nPoesiePubblicate;
-	
+	private Date datainizio;
+	private Date datafine;
 	
 	
 	
@@ -28,6 +29,8 @@ public class EntityReport {
 		report.setLeadPoesie(this.getLeadPoesie());
 		report.setLeadTag(this.getLeadTag());
 		report.setnPoesiePubblicate(this.getnPoesiePubblicate());
+		report.setDatafine(datafine);
+		report.setDatainizio(datainizio);
 		return report.scrivisuDB();
 		
 	}
@@ -56,6 +59,26 @@ public class EntityReport {
 	}
 	public void setnPoesiePubblicate(int nPoesiePubblicate) {
 		this.nPoesiePubblicate = nPoesiePubblicate;
+	}
+
+
+	public Date getDatainizio() {
+		return datainizio;
+	}
+
+
+	public void setDatainizio(Date datainizio) {
+		this.datainizio = datainizio;
+	}
+
+
+	public Date getDatafine() {
+		return datafine;
+	}
+
+
+	public void setDatafine(Date datafine) {
+		this.datafine = datafine;
 	}
 	
 }
