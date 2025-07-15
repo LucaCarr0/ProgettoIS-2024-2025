@@ -51,6 +51,11 @@ public class CommentaFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Inserisci un commento prima di inviare.", "Errore", JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            if (testo.length()>255) {
+                JOptionPane.showMessageDialog(this, "Il commento deve essere minore di 255 caratteri", "Errore", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
 
             boolean successo = ControllerPoesie.commenta(idPoesia, testo); 
             if (successo) {

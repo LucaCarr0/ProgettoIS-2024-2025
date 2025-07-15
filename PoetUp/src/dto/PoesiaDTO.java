@@ -1,13 +1,13 @@
 package dto;
 
 public class PoesiaDTO {
-    private String titolo;
-    private String autore;
-    private int like;
-    private String data;
-    private String tag;
-    private String testo;
-    private int id;
+    protected String titolo;
+    protected String autore;
+    protected int like;
+    protected String data;
+    protected String tag;
+    protected String testo;
+    protected int id;
 
     public PoesiaDTO() {}
 

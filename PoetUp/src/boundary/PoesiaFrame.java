@@ -160,7 +160,7 @@ public class PoesiaFrame extends JFrame {
         cuore.setForeground(liked[0] ? accentColor : textColor);
         cuore.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        int[] conteggio = {poesia.getContatoreLike()};
+        int[] conteggio = {poesia.getLike()};
         JLabel likeCount = new JLabel(String.valueOf(conteggio[0]));
         likeCount.setFont(new Font("Segoe UI", Font.BOLD, 16));
         likeCount.setForeground(textColor);
