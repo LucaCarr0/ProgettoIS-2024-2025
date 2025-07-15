@@ -36,7 +36,7 @@ public class SelettoreImmagineProfilo extends JDialog {
         JScrollPane scrollPane = new JScrollPane(panel);
         add(scrollPane, BorderLayout.CENTER);
 
-        List<String> immagini = caricaNomiImmagini(); // es: "/res/pfp/avatar1.png"
+        List<String> immagini = caricaNomiImmagini(); // "/res/pfp/avatar1.png"
 
         for (String path : immagini) {
             ImageIcon icon = resizeIcon(path, 80, 80);
@@ -66,8 +66,7 @@ public class SelettoreImmagineProfilo extends JDialog {
     }
 
     private List<String> caricaNomiImmagini() {
-        // Qui puoi caricare i nomi delle immagini manualmente
-        // o in alternativa elencare da file system in fase di deploy
+       
         List<String> paths = new ArrayList<>();
         String[] nomi = {
             "pfp1.jpg", "pfp2.jpg", "pfp3.jpg", "pfp4.jpg", "pfp5.jpg",
