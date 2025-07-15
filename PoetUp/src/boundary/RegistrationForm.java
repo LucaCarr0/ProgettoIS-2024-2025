@@ -132,7 +132,7 @@ public class RegistrationForm extends JFrame {
     					resultLabel.setText("Nickname non valido: massimo 28 caratteri, solo lettere, numeri e underscore.");
     					resultLabel.setForeground(theme.getHighlightColor());
     					return;
-}				}else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
+				}else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$")) {
 					resultLabel.setText("Formato email non valido.");
 					resultLabel.setForeground(theme.getHighlightColor());
 					return;
