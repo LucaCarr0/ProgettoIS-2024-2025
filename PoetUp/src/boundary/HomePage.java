@@ -83,7 +83,8 @@ public class HomePage extends JFrame {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(200, 40, 300, 40);
 		contentPane.add(titleLabel);
-		// Pannello in alto a destra per il Logout
+		
+		
 		logoutPanel = new JPanel();
 		logoutPanel.setLayout(new BoxLayout(logoutPanel, BoxLayout.X_AXIS));
 		logoutPanel.setBackground(theme.getPalette().get(2));
@@ -109,7 +110,7 @@ public class HomePage extends JFrame {
 		logoutPanel.add(logoutButton);
 
 		contentPane.add(logoutPanel);
-		// Pannello con pulsanti di controllo
+		
 		topButtonsPanel = new JPanel();
 		topButtonsPanel.setLayout(new BoxLayout(topButtonsPanel, BoxLayout.X_AXIS));
 		topButtonsPanel.setBackground(theme.getPalette().get(2));
@@ -121,6 +122,15 @@ public class HomePage extends JFrame {
 		reloadButton.setBackground(theme.getPalette().get(3));
 		reloadButton.setForeground(theme.getPalette().get(5));
 		reloadButton.addActionListener(e -> popolaFeed());
+		reloadButton.setBorder(BorderFactory.createCompoundBorder(
+			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1), // Colore coerente col tema
+			    BorderFactory.createEmptyBorder(5, 15, 5, 15) // Padding interno: top, left, bottom, right
+			));
+		logoutButton.setBorder(BorderFactory.createCompoundBorder(
+			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1),
+			    BorderFactory.createEmptyBorder(5, 15, 5, 15)
+			));
+
 
 		topButtonsPanel.add(reloadButton);
 		topButtonsPanel.add(Box.createHorizontalStrut(10)); // spazio tra i pulsanti
@@ -239,6 +249,14 @@ public class HomePage extends JFrame {
 	    reloadButton.setForeground(theme.getPalette().get(5));
 	    logoutButton.setForeground(theme.getPalette().get(5));
 	    listPanel.setBackground(theme.getPalette().get(2));
+	    reloadButton.setBorder(BorderFactory.createCompoundBorder(
+			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1), // Colore coerente col tema
+			    BorderFactory.createEmptyBorder(5, 15, 5, 15) // Padding interno: top, left, bottom, right
+			));
+		logoutButton.setBorder(BorderFactory.createCompoundBorder(
+			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1),
+			    BorderFactory.createEmptyBorder(5, 15, 5, 15)
+			));
 
 		getContentPane().setBackground(theme.getPalette().get(2));
 
@@ -254,14 +272,14 @@ public class HomePage extends JFrame {
 	}
 	
 	public void popolaFeed() {
-	    listPanel.removeAll();  // pulisci il pannello
+	    listPanel.removeAll();  
 	    
 	    
 	    ArrayList<PoesiaDTO> poesie = ControllerPoetUp.visualizzaFeed();
 		Theme theme = ThemeManager.getTheme();
 
 	    
-	    // Prendi i colori e font dal tema corrente
+	    
 		Color cardColor = theme.getPalette().get(3);   // prova 3
 		Color primaryColor = theme.getPalette().get(1);
 		Color textColor = theme.getPalette().get(5);   

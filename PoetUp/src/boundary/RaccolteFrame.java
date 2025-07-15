@@ -25,7 +25,7 @@ import javax.swing.WindowConstants;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
-import controller.ControllerPoetUp;
+import controller.ControllerUtenti;
 import dto.RaccoltaDTO;
 
 public class RaccolteFrame extends JFrame {
@@ -86,7 +86,7 @@ public class RaccolteFrame extends JFrame {
 
         // === QUI DEVI RECUPERARE LE RACCOLTE DAL DATABASE ===
 
-        ArrayList<RaccoltaDTO> raccolte = ControllerPoetUp.getRaccolteByUtente();
+        ArrayList<RaccoltaDTO> raccolte = ControllerUtenti.getRaccolteByUtente();
 
         for (RaccoltaDTO raccolta : raccolte) {
             JPanel card = new JPanel();
@@ -202,7 +202,7 @@ public class RaccolteFrame extends JFrame {
                     }
 
                     // Salvataggio
-                    String messaggio = ControllerPoetUp.modificaRaccolta(titoloInput, descrizioneInput, raccolta.getId());
+                    String messaggio = ControllerUtenti.modificaRaccolta(titoloInput, descrizioneInput, raccolta.getId());
                     JOptionPane.showMessageDialog(modificaFrame, messaggio);
 
                     if (messaggio.equals("Raccolta aggiornata con successo!")) {
@@ -218,7 +218,7 @@ public class RaccolteFrame extends JFrame {
             eliminaBtn.addActionListener(e -> {
                 int conferma = JOptionPane.showConfirmDialog(this, "Eliminare la raccolta '" + raccolta.getTitolo() + "'?", "Conferma", JOptionPane.YES_NO_OPTION);
                 if (conferma == JOptionPane.YES_OPTION) {
-                    String risultato = ControllerPoetUp.eliminaRaccolta(raccolta.getId());
+                    String risultato = ControllerUtenti.eliminaRaccolta(raccolta.getId());
                     JOptionPane.showMessageDialog(this, risultato);
 
                     if (risultato.equals("Raccolta eliminata con successo!")) {

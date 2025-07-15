@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
-import controller.ControllerPoetUp;
+import controller.ControllerUtenti;
 import dto.PoesiaDTO;
 
 public class PoesieRaccoltaFrame extends JFrame {
@@ -80,7 +80,7 @@ public class PoesieRaccoltaFrame extends JFrame {
         // Caricamento poesie della raccolta
         System.out.println("id raccolta: "+raccoltaId);
 
-        ArrayList<PoesiaDTO> poesie = ControllerPoetUp.getPoesieByRaccolta(raccoltaId);
+        ArrayList<PoesiaDTO> poesie = ControllerUtenti.getPoesieByRaccolta(raccoltaId);
         System.out.println(poesie);
         for (PoesiaDTO element : poesie) {
         	System.out.println(element.getTitolo());

@@ -11,6 +11,8 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -28,7 +30,7 @@ import javax.swing.WindowConstants;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
-import controller.ControllerPoetUp;
+import controller.ControllerUtenti;
 import dto.ProfiloPersonaleDTO;
 
 public class UtenteForm extends JFrame {
@@ -52,7 +54,7 @@ public class UtenteForm extends JFrame {
     public UtenteForm(JFrame HomePage) {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
-        this.profilo = ControllerPoetUp.getProfiloUtente();
+        this.profilo = ControllerUtenti.getProfiloUtente();
 
         this.theme = ThemeManager.getTheme();
 
@@ -228,7 +230,19 @@ public class UtenteForm extends JFrame {
             JOptionPane.showMessageDialog(this, "Formato data non valido. Usa yyyy-MM-dd.");
             return;
         }
+        LocalDate oggi = LocalDate.now();
+        LocalDate data;
 
+        try {
+            data = LocalDate.parse(dataNascitaStr);
+            if (data.isAfter(oggi)) {
+                JOptionPane.showMessageDialog(this, "La data di nascita non può essere nel futuro.");
+                return;
+            }
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Data non valida.");
+            return;
+        }
         Date dataNascita;
         try {
             dataNascita = Date.valueOf(dataNascitaStr);
@@ -237,7 +251,7 @@ public class UtenteForm extends JFrame {
             return;
         }
 
-        String messaggio = ControllerPoetUp.modificaProfilo(nome, cognome, dataNascita, bio, immaginePath);
+        String messaggio = ControllerUtenti.modificaProfilo(nome, cognome, dataNascita, bio, immaginePath);
         JOptionPane.showMessageDialog(this, messaggio);
         if (messaggio.equals("Profilo aggiornato con successo!")) {
             this.dispose();

@@ -2,7 +2,8 @@ package boundary;
 
 import javax.swing.*;
 import java.awt.*;
-import controller.ControllerPoetUp;
+
+import controller.ControllerPoesie;
 
 public class CommentaFrame extends JFrame {
 
@@ -51,7 +52,7 @@ public class CommentaFrame extends JFrame {
                 return;
             }
 
-            boolean successo = ControllerPoetUp.commenta(idPoesia, testo); 
+            boolean successo = ControllerPoesie.commenta(idPoesia, testo); 
             if (successo) {
                 JOptionPane.showMessageDialog(this, "Commento inviato con successo!", "Successo", JOptionPane.INFORMATION_MESSAGE);
                 ((PoesiaFrame) parentFrame).aggiornaCommenti();

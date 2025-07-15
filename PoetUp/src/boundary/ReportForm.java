@@ -28,7 +28,7 @@ import javax.swing.border.LineBorder;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
-import controller.ControllerPoetUp;
+import controller.ControllerUtenti;
 
 public class ReportForm extends JFrame {
 
@@ -86,7 +86,7 @@ public class ReportForm extends JFrame {
 
         JTextField dataInizioField = new JTextField();
         dataInizioField.setBounds(startX + 30 + 5, yPos, fieldWidth, fieldHeight);
-        dataInizioField.setForeground(theme.getTextSecondary());
+        dataInizioField.setForeground(theme.getTextPrimary());
         dataInizioField.setText("yyyy-mm-dd");
         addPlaceholderBehavior(dataInizioField);
         contentPane.add(dataInizioField);
@@ -99,7 +99,7 @@ public class ReportForm extends JFrame {
 
         JTextField dataFineField = new JTextField();
         dataFineField.setBounds(startX + 30 + 5 + fieldWidth + 20 + 15 + 5, yPos, fieldWidth, fieldHeight);
-        dataFineField.setForeground(theme.getTextSecondary());
+        dataFineField.setForeground(theme.getTextPrimary());
         dataFineField.setText("yyyy-mm-dd");
         addPlaceholderBehavior(dataFineField);
         contentPane.add(dataFineField);
@@ -144,7 +144,7 @@ public class ReportForm extends JFrame {
                 java.sql.Date dataInizio = java.sql.Date.valueOf(dataInizioLD);
                 java.sql.Date dataFine = java.sql.Date.valueOf(dataFineLD);
 
-                reportArea.setText(ControllerPoetUp.generaReport(dataInizio,dataFine));
+                reportArea.setText(ControllerUtenti.generaReport(dataInizio,dataFine));
 
             } catch (DateTimeParseException ex) {
                 JOptionPane.showMessageDialog(this, "Data non valida. Controlla giorno, mese e anno.", "Errore", JOptionPane.ERROR_MESSAGE);

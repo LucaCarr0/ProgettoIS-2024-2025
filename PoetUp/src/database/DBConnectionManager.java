@@ -1,35 +1,48 @@
 package database;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class DBConnectionManager {
 
 	public static String url = "jdbc:mysql://localhost:3306/";
 	public static String dbName = "mydb";
 	public static String driver = "com.mysql.cj.jdbc.Driver";
-	public static String userName = "root";
-	public static String password = "Lololo89."; //Lololo89. //admin //Napoli1926$
-
+	public static String userName ;
+	public static String password;
+	public static String path_prop="app/properties.txt";
+	
 
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
-
-		//1. configurare il drivermanger
+		File file = new File(path_prop);
+		try(Scanner scanner = new Scanner(file)){
+			System.setIn(new FileInputStream(file));
+			userName=scanner.nextLine();
+			password=scanner.nextLine();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
 		Connection conn = null;
-		Class.forName(driver); //com.mysql.cj.jdbc.Driver
+		Class.forName(driver); 
 
-		//2. crea la connessione tramite il driver manager
+	
 		conn = DriverManager.getConnection(url+dbName,userName,password);
 
-		//3. restituisce la connessione
+		
 		return conn;
 	}
 
 	public static void closeConnection(Connection c) throws SQLException {
 
-		// chiudo la conessione
+		
 		c.close();
 	}
 

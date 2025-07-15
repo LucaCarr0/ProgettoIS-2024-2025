@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import controller.ControllerPoetUp;
+import controller.ControllerUtenti;
 
 public class RaccoltaForm extends JFrame {
 
@@ -102,7 +102,7 @@ public class RaccoltaForm extends JFrame {
                 return;
             }
 
-            String esito = ControllerPoetUp.addRaccolta(titolo,descrizione);
+            String esito = ControllerUtenti.addRaccolta(titolo,descrizione);
             if (esito.equals("Raccolta Creata")) {
                 JOptionPane.showMessageDialog(this, esito);
                 this.dispose(); // chiudi il form

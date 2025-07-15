@@ -9,7 +9,7 @@ import javax.swing.*;
 
 import boundary.theme.Theme;
 import boundary.theme.ThemeManager;
-import controller.ControllerPoetUp;
+import controller.ControllerUtenti;
 
 public class PoesiaForm extends JFrame {
 
@@ -122,7 +122,7 @@ public class PoesiaForm extends JFrame {
                 String tag = tagField.getText().trim();
                 String raccolta = raccoltaField.getText().trim();
 
-                String esito = ControllerPoetUp.pubblicazionePoesia(titolo, testo, tag, raccolta, visibilita);
+                String esito = ControllerUtenti.pubblicazionePoesia(titolo, testo, tag, raccolta, visibilita);
                 if (esito.equals("Poesia Pubblicata!")) {
                     JOptionPane.showMessageDialog(this, esito);
                     parentFrame.dispose();
@@ -193,12 +193,11 @@ public class PoesiaForm extends JFrame {
             showError("Il testo può contenere massimo 500 caratteri e solo lettere, numeri, spazi e i seguenti simboli: , . ! ? : ;");
             return false;
         }
-
-        if (!tag.matches("^(#[^\\s#]+)+$")) {
-            showError("Il campo Tag deve contenere uno o più tag, ognuno iniziando con '#' e senza spazi o simboli '#' consecutivi.");
+        if (!tag.matches("^(#([a-zA-ZÀ-ÿ0-9]+))+$")) {
+            showError("Il campo Tag deve essere del formato: '#abc#bca' e non può contenere caratteri speciali.");
             return false;
         }
-
+        
         if (!raccolta.matches("^[a-zA-ZÀ-ÿ0-9 ]+$")) {
             showError("Il campo Raccolta può contenere solo lettere, numeri e spazi.");
             return false;

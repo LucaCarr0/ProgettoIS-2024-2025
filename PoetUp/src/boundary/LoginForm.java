@@ -56,7 +56,7 @@ public class LoginForm extends JFrame {
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 
-		// Titolo
+		
 		JLabel titleLabel = new JLabel("Accedi a POET UP!");
 		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
 		titleLabel.setForeground(theme.getTextPrimary());
@@ -64,7 +64,7 @@ public class LoginForm extends JFrame {
 		titleLabel.setBounds(200, 50, 300, 50);
 		contentPane.add(titleLabel);
 
-		// Email
+		
 		JLabel emailLabel = new JLabel("Email:");
 		emailLabel.setBounds(200, 130, 100, 25);
 		emailLabel.setForeground(theme.getTextSecondary());
@@ -74,7 +74,7 @@ public class LoginForm extends JFrame {
 		emailField.setBounds(200, 160, 300, 30);
 		contentPane.add(emailField);
 
-		// Password
+		
 		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setBounds(200, 210, 100, 25);
 		passwordLabel.setForeground(theme.getTextSecondary());
@@ -84,13 +84,13 @@ public class LoginForm extends JFrame {
 		passwordField.setBounds(200, 240, 300, 30);
 		contentPane.add(passwordField);
 
-		// Etichetta risultato
+		
 		resultLabel = new JLabel("");
 		resultLabel.setBounds(200, 280, 300, 51);
 		resultLabel.setForeground(theme.getHighlightColor());
 		contentPane.add(resultLabel);
 
-		// Bottone Login
+		
 		JButton loginButton = new JButton("Login");
 		loginButton.setBackground(theme.getButtonColor());
 		loginButton.setForeground(theme.getTextPrimary());
@@ -134,7 +134,7 @@ public class LoginForm extends JFrame {
 			}
 		});
 
-		// Bottone Registrazione
+		
 		JButton registerButton = new JButton("Non sei registrato?");
 		registerButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		registerButton.setBounds(200, 391, 300, 30);

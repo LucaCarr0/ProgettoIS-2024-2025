@@ -1,0 +1,109 @@
+package controller;
+
+import java.sql.Date;
+import java.util.ArrayList;
+
+import dto.PoesiaDTO;
+import dto.ProfiloPersonaleDTO;
+import dto.RaccoltaDTO;
+import dto.StatisticheDTO;
+import facade.FacadePoesie;
+import facade.FacadeUtenti;
+
+public class ControllerUtenti {
+	
+
+	public static String addRaccolta(String titolo, String descrizione) {
+
+		Integer result = FacadeUtenti.addRaccolta(titolo,descrizione);
+		if(result == -1) {
+			return "Creazione fallita";
+		} else {
+			return "Raccolta Creata";
+		}
+	}
+
+	public static String pubblicazionePoesia(String titolo, String testo, String tag, String raccolta,
+			boolean visibilita) {
+		Integer result = FacadeUtenti.pubblicazionePoesia(titolo,testo,tag,raccolta,visibilita);
+		if(result == -1) {
+			return "Creazione fallita";
+		} else {
+			return "Poesia Pubblicata!";
+		}
+	}
+
+	public static String spostaPoesia(String titolo_raccolta, int idPoesia) {
+		Integer result = FacadePoesie.spostaPoesia(titolo_raccolta, idPoesia);
+		
+		if(result == -1) {
+			return "Errore durante lo spostamento della Poesia.";
+		} else {
+			return "Poesia spostata con successo!";
+		}
+	}
+	
+	public static String modificaProfilo(String nome, String cognome, Date dataNascita, String biografia,String immagineProfilo) {
+
+	    Integer result = FacadeUtenti.modificaProfilo(nome, cognome, dataNascita, biografia,immagineProfilo);
+
+	    if(result == -1) {
+			return "Errore durante la modifica del profilo.";
+		} else {
+			return "Profilo aggiornato con successo!";
+		}
+
+	}
+
+	public static ProfiloPersonaleDTO getProfiloUtente() {
+		ProfiloPersonaleDTO profilo = FacadeUtenti.getProfiloUtente();
+		return profilo;
+	}
+
+	public static ArrayList<RaccoltaDTO> getRaccolteByUtente() {
+		ArrayList<RaccoltaDTO> raccolte = FacadeUtenti.getRaccolteByUtente();
+		return raccolte;
+	}
+
+	public static String modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
+		Integer result = FacadeUtenti.modificaRaccolta(titolo, descrizione, id_raccolta);
+
+	    if(result == -1) {
+			return "Errore durante la modifica della Raccolta.";
+		} else {
+			return "Raccolta aggiornata con successo!";
+		}
+
+	}
+
+	public static String eliminaRaccolta(int id_raccolta) {
+		Integer result = FacadeUtenti.eliminaRaccolta(id_raccolta);
+
+	    if(result == -1) {
+			return "Errore durante l'eliminazione della Raccolta.";
+		} else {
+			return "Raccolta eliminata con successo!";
+		}
+
+	}
+		
+
+	public static ArrayList<PoesiaDTO> getPoesieByRaccolta(int raccoltaId) {
+		ArrayList<PoesiaDTO> poesie = FacadePoesie.getPoesieByRaccolta(raccoltaId);
+		return poesie;
+	}
+	
+	
+	public static StatisticheDTO getStatistiche() {
+	    StatisticheDTO statistiche = FacadeUtenti.getStatistiche();
+	    return statistiche;
+	}
+
+	
+
+	public static String generaReport(Date dataInizio, Date dataFine) {
+		String report=FacadeUtenti.generaReport(dataInizio,dataFine);
+		return report;
+	}
+	
+}
