@@ -32,7 +32,7 @@ public class StatisticheForm extends JFrame {
         setContentPane(mainPanel);
         mainPanel.setLayout(null);
 
-        // === Left Panel (Poesia) ===
+       
         JPanel leftPanel = new JPanel();
         leftPanel.setBounds(0, 0, 440, 523);
         leftPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 15));
@@ -86,7 +86,7 @@ public class StatisticheForm extends JFrame {
         poesiaWrapper.add(poesiaContent);
         leftPanel.add(poesiaWrapper);
 
-        // === Right Panel (Stat) ===
+       
         JPanel rightPanel = new JPanel();
         rightPanel.setBounds(440, 0, 260, 445);
         rightPanel.setPreferredSize(new Dimension(260, 0));
@@ -104,7 +104,7 @@ public class StatisticheForm extends JFrame {
         statBox.add(createIconStatPanel("/res/commento.png", String.valueOf(statistiche.getTotaleCommenti()), "Totale commenti"));
         rightPanel.add(statBox);
 
-        // === Bottom Home Button ===
+        
         JButton homeButton = createCircleButton("/res/home.png", 48);
         JPanel bottomRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         bottomRightPanel.setBounds(0, 445, 700, 68);
