@@ -77,7 +77,7 @@ public class PoesieRaccoltaFrame extends JFrame {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         contentPane.add(scrollPane);
 
-        // Caricamento poesie della raccolta
+        
         System.out.println("id raccolta: "+raccoltaId);
 
         ArrayList<PoesiaDTO> poesie = ControllerUtenti.getPoesieByRaccolta(raccoltaId);
@@ -90,11 +90,11 @@ public class PoesieRaccoltaFrame extends JFrame {
         	System.out.println("id poesia da interfaccia: "+poesia.getId());
             JPanel card = new JPanel();
             card.setLayout(new BorderLayout());
-            card.setMaximumSize(new Dimension(480, 80)); // Stessa larghezza dello scrollPane
+            card.setMaximumSize(new Dimension(480, 80)); 
             card.setBackground(cardColor);
             card.setBorder(BorderFactory.createLineBorder(primaryColor, 1));
 
-            // ==== PANEL SINISTRO ====
+           
             JPanel leftPanel = new JPanel();
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
             leftPanel.setBackground(cardColor);
@@ -108,7 +108,7 @@ public class PoesieRaccoltaFrame extends JFrame {
             autore.setFont(cardFont);
             leftPanel.add(autore);
 
-            // ==== PANEL DESTRO ====
+            
             JPanel rightPanel = new JPanel();
             rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
             rightPanel.setBackground(cardColor);
@@ -131,7 +131,7 @@ public class PoesieRaccoltaFrame extends JFrame {
             card.add(leftPanel, BorderLayout.CENTER);
             card.add(rightPanel, BorderLayout.EAST);
 
-            // === Mouse events ===
+            
             card.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -161,7 +161,7 @@ public class PoesieRaccoltaFrame extends JFrame {
     }
     public void aggiornaLista() {
         this.dispose();
-        new PoesieRaccoltaFrame(this.parent,this.raccoltaid,this.titoloraccolta); // oppure puoi passare parentFrame se vuoi ripristinare il riferimento
+        new PoesieRaccoltaFrame(this.parent,this.raccoltaid,this.titoloraccolta); 
     }
 
 
