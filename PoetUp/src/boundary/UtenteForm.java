@@ -55,8 +55,9 @@ public class UtenteForm extends JFrame {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
         this.profilo = ControllerUtenti.getProfiloUtente();
-
-        this.theme = ThemeManager.getTheme();
+        ThemeManager tema_app=ThemeManager.getInstance();
+		this.theme= tema_app.getTheme();
+        
 
         setTitle("Profilo");
         setBounds(100, 100, 700, 550);
@@ -209,30 +210,27 @@ public class UtenteForm extends JFrame {
         String immaginePath = profilo.getImmagineProfilo();
 
         //VALIDAZIONE INPUT
-    	if (nome.length() > 40 || cognome.length() > 40 ||
-        	!nome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$") ||
-        	!cognome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$")) {
+        if ((!nome.isEmpty() && (nome.length() > 40 || !nome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$"))) ||
+        	    (!cognome.isEmpty() && (cognome.length() > 40 || !cognome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$")))) {
 
-        JOptionPane.showMessageDialog(this, "Nome e cognome devono contenere solo lettere (massimo 40 caratteri).");
-        return;
-    	}
+        	    JOptionPane.showMessageDialog(this, "Nome e cognome devono contenere solo lettere (massimo 40 caratteri).");
+        	    return;
+        	}
         if (bio.length()>500) {
             JOptionPane.showMessageDialog(this, "Biografia troppo lunga!");
             return;
         }
 
-        if (dataNascitaStr.equals("yyyy-MM-dd")) {
-            JOptionPane.showMessageDialog(this, "Inserire una data di nascita valida.");
-            return;
-        }
-
-        if (!dataNascitaStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        
+        if (!dataNascitaStr.equals("yyyy-MM-dd") && !dataNascitaStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
             JOptionPane.showMessageDialog(this, "Formato data non valido. Usa yyyy-MM-dd.");
             return;
         }
         LocalDate oggi = LocalDate.now();
         LocalDate data;
-
+        Date dataNascita=null;
+        if (!dataNascitaStr.equals("yyyy-MM-dd")) {
+        	
         try {
             data = LocalDate.parse(dataNascitaStr);
             if (data.isAfter(oggi)) {
@@ -243,14 +241,14 @@ public class UtenteForm extends JFrame {
             JOptionPane.showMessageDialog(this, "Data non valida.");
             return;
         }
-        Date dataNascita;
+        
         try {
             dataNascita = Date.valueOf(dataNascitaStr);
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Errore: data non valida.");
             return;
         }
-
+        }
         String messaggio = ControllerUtenti.modificaProfilo(nome, cognome, dataNascita, bio, immaginePath);
         JOptionPane.showMessageDialog(this, messaggio);
         if (messaggio.equals("Profilo aggiornato con successo!")) {

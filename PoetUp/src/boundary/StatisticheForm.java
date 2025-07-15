@@ -20,7 +20,9 @@ public class StatisticheForm extends JFrame {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
         caricaStatistiche();
-        this.theme = ThemeManager.getTheme();
+        ThemeManager tema_app=ThemeManager.getInstance();
+		this.theme= tema_app.getTheme();
+        
 
         setTitle("Statistiche");
         setSize(700, 550);

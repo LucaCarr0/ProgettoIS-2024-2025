@@ -36,7 +36,7 @@ public class EntityAmministratore extends EntityUtente{
 	    report.setLeadTag(autore_tag.get(1));
 	    
 	    
-	    // Trova poesie con più like e calcolo contatorePoesie
+	    // Trova poesie con più like e calcolo numero poesie totali
 	    calcolaTopPoesie(poesieDB,dataInizio,dataFine,report);
 	    StringBuilder report_string= new StringBuilder();
 	    if(report.salvasuDB()==-1) {
@@ -45,7 +45,7 @@ public class EntityAmministratore extends EntityUtente{
 	    }
 	    else {
 	    
-	    // Costruzione del report
+	    // Costruzione del report, non serve un DTO per mostrare sull'interfaccia questa serie di informazioni
 	    report_string.append(">>> REPORT <<<\n");
 	    report_string.append("Periodo: " + dataInizio + " -> " + dataFine + "\n\n");
 	    report_string.append("Poesie pubblicate: " + report.getnPoesiePubblicate() +"\n");

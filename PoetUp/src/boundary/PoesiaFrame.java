@@ -24,7 +24,8 @@ public class PoesiaFrame extends JFrame {
         setIconImage(icon);
         this.id_poesia = id_poesia;
         this.autore = autore;
-        Theme theme = ThemeManager.getTheme();
+        ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();
 
         PoesiaCompletaDTO poesia = ControllerPoesie.visualizzaPoesia(id_poesia, autore);
 
@@ -96,8 +97,10 @@ public class PoesiaFrame extends JFrame {
                     }
                     String esito = ControllerUtenti.spostaPoesia(titolo.trim(), id_poesia);
                     JOptionPane.showMessageDialog(this, esito);
+                    if(esito.equals("Poesia spostata con successo!")) {
                     PoesieRaccoltaFrame parent = (PoesieRaccoltaFrame) parentFrame;
                     parent.aggiornaLista();
+                    }
                 }
             });
         }
@@ -266,7 +269,8 @@ public class PoesiaFrame extends JFrame {
     }
 
     private JPanel creaCommentoBox(CommentoDTO commento) {
-        Theme theme = ThemeManager.getTheme();
+    	ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();
         JPanel commentoBox = new JPanel();
         commentoBox.setLayout(new BoxLayout(commentoBox, BoxLayout.Y_AXIS));
         commentoBox.setBackground(theme.getBackgroundPrimary());

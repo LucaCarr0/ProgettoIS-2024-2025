@@ -7,6 +7,23 @@ public class EntityApprezzamento {
 	private int id_autore;
 	private int id;
 
+	public int salvaSuDB(int idPoesia) {
+		ApprezzamentoDAO likeDao = new ApprezzamentoDAO();
+		likeDao.setId_utente(this.getId_autore());
+		likeDao.setId_poesia(idPoesia);
+		int res = likeDao.ScriviSuDB();
+		System.out.println(idPoesia);
+		return res;
+	}
+
+	public int eliminaDaDB() {
+		ApprezzamentoDAO likeDao = new ApprezzamentoDAO();
+		likeDao.setId_utente(this.getId_autore());
+		likeDao.setId_poesia(this.getId_poesia());
+		int ret = likeDao.eliminaDaDB();
+		return ret;
+	}
+
 	public EntityApprezzamento() {
 
 	}
@@ -26,30 +43,13 @@ public class EntityApprezzamento {
 	public void setId_autore(int id_autore) {
 		this.id_autore = id_autore;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id_apprezzamento) {
 		this.id = id_apprezzamento;
-	}
-
-	public int salvaSuDB(int idPoesia) {
-		ApprezzamentoDAO likeDao=new ApprezzamentoDAO();
-		likeDao.setId_utente(this.getId_autore());
-		likeDao.setId_poesia(idPoesia);
-		int res=likeDao.ScriviSuDB();
-		System.out.println(idPoesia);
-		return res;
-	}
-
-	public int eliminaDaDB() {
-		ApprezzamentoDAO likeDao=new ApprezzamentoDAO();
-		likeDao.setId_utente(this.getId_autore());
-		likeDao.setId_poesia(this.getId_poesia());
-		int ret = likeDao.eliminaDaDB();
-		return ret;
 	}
 
 }

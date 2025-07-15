@@ -9,45 +9,48 @@ import dto.StatisticheDTO;
 import entity.EntityAmministratore;
 import entity.EntityUtente;
 
-public class FacadeUtenti {
+//Facade che fornisce un'interfaccia semplificata per le operazioni relative agli utenti e amministratori,
+//nascondendo la complessità delle entità sottostanti (EntityUtente, EntityAmministratore).
+//Include funzionalità per la gestione del profilo utente, pubblicazione poesie, raccolte e statistiche.
 
+public class FacadeUtenti {
 
 	public static Integer pubblicazionePoesia(String titolo, String testo, String tag, String raccolta,
 			boolean visibilita) {
-		EntityUtente utente= new EntityUtente();
-		Integer result = utente.pubblicazionePoesia(titolo,testo,tag,raccolta,visibilita);
+		EntityUtente utente = new EntityUtente();
+		Integer result = utente.pubblicazionePoesia(titolo, testo, tag, raccolta, visibilita);
 		return result;
 	}
 
 	public static Integer addRaccolta(String titolo, String descrizione) {
-		EntityUtente utente= new EntityUtente();
-		Integer result = utente.addRaccolta(titolo,descrizione);
+		EntityUtente utente = new EntityUtente();
+		Integer result = utente.addRaccolta(titolo, descrizione);
 		return result;
 	}
 
-	public static Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia, String immaginePath) {
-		EntityUtente utente= new EntityUtente();
+	public static Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia,
+			String immaginePath) {
+		EntityUtente utente = new EntityUtente();
 		Integer result = utente.modificaProfilo(nome, cognome, dataNascita, biografia, immaginePath);
-        return result;
-    }
-
+		return result;
+	}
 
 	public static ProfiloPersonaleDTO getProfiloUtente() {
-		EntityUtente utente= new EntityUtente();
+		EntityUtente utente = new EntityUtente();
 		ProfiloPersonaleDTO profilo = utente.getProfiloUtente();
-        return profilo;
+		return profilo;
 	}
 
 	public static ArrayList<RaccoltaDTO> getRaccolteByUtente() {
-		EntityUtente utente= new EntityUtente();
+		EntityUtente utente = new EntityUtente();
 		ArrayList<RaccoltaDTO> raccolte = utente.getRaccolteByUtente();
-        return raccolte;
+		return raccolte;
 	}
 
 	public static Integer modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
-		EntityUtente utente= new EntityUtente();
+		EntityUtente utente = new EntityUtente();
 		Integer result = utente.modificaRaccolta(titolo, descrizione, id_raccolta);
-        return result;
+		return result;
 	}
 
 	public static Integer eliminaRaccolta(int id_raccolta) {
@@ -55,16 +58,16 @@ public class FacadeUtenti {
 		Integer result = utente.eliminaRaccolta(id_raccolta);
 		return result;
 	}
-	
+
 	public static StatisticheDTO getStatistiche() {
-		EntityUtente utente= new EntityUtente();
-	    StatisticheDTO statistiche = utente.getStatistiche();
-	    return statistiche;
+		EntityUtente utente = new EntityUtente();
+		StatisticheDTO statistiche = utente.getStatistiche();
+		return statistiche;
 	}
 
 	public static String generaReport(Date dataInizio, Date dataFine) {
-		EntityAmministratore admin=new EntityAmministratore();
-		String report= admin.generaReport(dataInizio,dataFine);
+		EntityAmministratore admin = new EntityAmministratore();
+		String report = admin.generaReport(dataInizio, dataFine);
 		return report;
 	}
 }

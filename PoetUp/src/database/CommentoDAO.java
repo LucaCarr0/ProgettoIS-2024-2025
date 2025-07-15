@@ -26,7 +26,7 @@ public class CommentoDAO {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-				while(rs.next()) { //finche ho un risultato
+				while(rs.next()) { 
 
 				CommentoDAO commento_temp=new CommentoDAO();
 
@@ -60,7 +60,7 @@ public class CommentoDAO {
 	        ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
 	    } catch (ClassNotFoundException | SQLException e) {
 	        e.printStackTrace();
-	        ret = -1; // segnala errore di scrittura
+	        ret = -1; 
 	    }
 
 	    return ret;

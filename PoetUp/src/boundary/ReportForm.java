@@ -43,8 +43,9 @@ public class ReportForm extends JFrame {
     public ReportForm(JFrame parent) {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
+		ThemeManager tema_app=ThemeManager.getInstance();
+		this.theme=tema_app.getTheme();
         
-        this.theme = ThemeManager.getTheme();
         
         setTitle("Report");
         setBounds(100, 100, 700, 550);

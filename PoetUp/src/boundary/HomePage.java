@@ -59,8 +59,8 @@ public class HomePage extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 
-		Theme theme = ThemeManager.getTheme();
-		// mappa colori: palette index:
+		ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();		// mappa colori: palette index:
 		// 0 = textPrimary
 		// 1 = primary
 		// 2 = backgroundPrimary
@@ -176,10 +176,10 @@ public class HomePage extends JFrame {
 		icon3.addActionListener(e -> new StatisticheForm(this).setVisible(true));
 		icon4.addActionListener(e -> new ReportForm(this).setVisible(true));
 		icon5.addActionListener(e -> {
-			if (ThemeManager.getCurrentType() == ThemeType.CHIARO) {
-				ThemeManager.setTheme(ThemeType.SCURO);
+			if (tema_app.getCurrentType() == ThemeType.CHIARO) {
+				tema_app.setTheme(ThemeType.SCURO);
 			} else {
-				ThemeManager.setTheme(ThemeType.CHIARO);
+				tema_app.setTheme(ThemeType.CHIARO);
 			}
 			applyTheme();
 		});
@@ -239,7 +239,8 @@ public class HomePage extends JFrame {
 	}
 
 	private void applyTheme() {
-		Theme theme = ThemeManager.getTheme();
+		ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();
 		contentPane.setBackground(theme.getPalette().get(2));
 		menuPanel.setBackground(theme.getPalette().get(2));
 		logoutPanel.setBackground(theme.getPalette().get(2));
@@ -276,7 +277,8 @@ public class HomePage extends JFrame {
 	    
 	    
 	    ArrayList<PoesiaDTO> poesie = ControllerPoetUp.visualizzaFeed();
-		Theme theme = ThemeManager.getTheme();
+	    ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();
 
 	    
 	    

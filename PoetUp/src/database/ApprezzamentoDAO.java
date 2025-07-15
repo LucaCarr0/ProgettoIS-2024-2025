@@ -18,7 +18,7 @@ public class ApprezzamentoDAO {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-				while(rs.next()) { //finche ho un risultato
+				while(rs.next()) { 
 
 				ApprezzamentoDAO apprezzamento = new ApprezzamentoDAO();
 
@@ -33,6 +33,44 @@ public class ApprezzamentoDAO {
 		}
 		return apprezzamentiPoesia;
 	}
+
+
+
+	public int ScriviSuDB() {
+	    int ret = 0;
+
+	    String query = "INSERT INTO Apprezzamenti(autore, poesia) VALUES (" + this.id_utente + ", " + this.id_poesia + ")";
+	    
+	    try {
+	        ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; 
+	    }
+
+	    return ret;
+	}
+
+
+	public int eliminaDaDB() {
+		int ret = 0;
+
+	    String query = "DELETE FROM Apprezzamenti WHERE autore = " + this.getId_utente() + " AND poesia = " + this.getId_poesia();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; 
+	    }
+
+	    return ret;
+	}
+
+
+
 
 
 	public int getId_utente() {
@@ -63,42 +101,5 @@ public class ApprezzamentoDAO {
 	public void setId_poesia(int id_poesia) {
 		this.id_poesia = id_poesia;
 	}
-
-
-	public int ScriviSuDB() {
-	    int ret = 0;
-
-	    String query = "INSERT INTO Apprezzamenti(autore, poesia) VALUES (" + this.id_utente + ", " + this.id_poesia + ")";
-	    
-	    try {
-	        ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1; // segnala errore di scrittura
-	    }
-
-	    return ret;
-	}
-
-
-	public int eliminaDaDB() {
-		int ret = 0;
-
-	    String query = "DELETE FROM Apprezzamenti WHERE autore = " + this.getId_utente() + " AND poesia = " + this.getId_poesia();
-
-	    System.out.println(query);
-
-	    try {
-	        ret = DBConnectionManager.UpdateQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1; // errore durante eliminazione
-	    }
-
-	    return ret;
-	}
-
-
-
 
 }

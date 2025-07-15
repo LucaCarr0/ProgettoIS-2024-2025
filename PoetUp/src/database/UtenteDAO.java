@@ -27,7 +27,7 @@ public class UtenteDAO {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			ret = -1; //per segnalare l'errore di scrittura
+			ret = -1; 
 		}
 
 		return ret;
@@ -35,7 +35,7 @@ public class UtenteDAO {
 
 	public ArrayList<UtenteDAO> getListaUtenti(){
 
-		//creo il la lista di appoggio
+		
 		ArrayList<UtenteDAO> lista_utenti_temp = new ArrayList<>();
 
 		String query = "SELECT * FROM Utenti;";
@@ -44,8 +44,7 @@ public class UtenteDAO {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-				while(rs.next()) { //finche ho un risultato
-
+				while(rs.next()) { 
 				UtenteDAO utente_temp = new UtenteDAO();
 
 				utente_temp.setEmail(rs.getString("email"));
@@ -55,10 +54,10 @@ public class UtenteDAO {
 				lista_utenti_temp.add(utente_temp);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
-		return lista_utenti_temp; //ritorno la lista
+		return lista_utenti_temp; 
 	}
 
 

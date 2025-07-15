@@ -18,7 +18,7 @@ public class RaccoltaDAO {
 
 	public ArrayList<RaccoltaDAO> getRaccoltedaDB(){
 
-		//creo il la lista di appoggio
+		
 		ArrayList<RaccoltaDAO> lista_raccolte_db = new ArrayList<>();
 		String query = "SELECT * FROM Raccolte WHERE utente = "+id_utente+";";
 
@@ -26,7 +26,7 @@ public class RaccoltaDAO {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-				while(rs.next()) { //finche ho un risultato
+				while(rs.next()) { 
 
 				RaccoltaDAO raccolta_DAO = new RaccoltaDAO();
 
@@ -56,7 +56,7 @@ public class RaccoltaDAO {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			ret = -1; //per segnalare l'errore di scrittura
+			ret = -1; 
 		}
 
 		return ret;
@@ -114,7 +114,7 @@ public class RaccoltaDAO {
 	        ret = DBConnectionManager.UpdateQuery(query);
 	    } catch (ClassNotFoundException | SQLException e) {
 	        e.printStackTrace();
-	        ret = -1; // per segnalare l'errore di scrittura
+	        ret = -1; 
 	    }
 
 	    return ret;
@@ -130,7 +130,7 @@ public class RaccoltaDAO {
 	        ret = DBConnectionManager.deleteQuery(query);
 	    } catch (ClassNotFoundException | SQLException e) {
 	        e.printStackTrace();
-	        ret = -1; // errore durante l'esecuzione
+	        ret = -1; 
 	    }
 
 	    return ret;

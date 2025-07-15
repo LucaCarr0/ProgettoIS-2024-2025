@@ -24,7 +24,7 @@ public class PoesiaDAO {
 
 					ResultSet rs = DBConnectionManager.selectQuery(query);
 
-						while(rs.next()) { //finche ho un risultato
+						while(rs.next()) { 
 
 
 
@@ -44,7 +44,9 @@ public class PoesiaDAO {
 				}
 		}
 
-
+	// Per prevenire sql injection abbiamo utilizzato il replace per sostituire gli apici singoli con i doppi apici,
+	// il che permette allo stesso tempo di avere più libertà nella scrittura della poesia e protezione da possibili input malevoli
+	
 	public int ScriviSuDB() {
 
 		int ret = 0;
@@ -53,7 +55,7 @@ public class PoesiaDAO {
 	    String dataFormattata = sdf.format(this.datapubblicazione);
 	    String titoloSQL = this.titolo.replace("'", "''");
 	    String testoSQL = this.testo.replace("'", "''");
-	    // Costruzione query SQL
+	    
 	    String query = "INSERT INTO Poesie (titolo, body, tag, visibilita, dataPubblicazione, contatoreLike, autore, raccolta) VALUES ('"
 	                 + titoloSQL + "', '"
 	                 + testoSQL + "', '"
@@ -71,7 +73,7 @@ public class PoesiaDAO {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			ret = -1; //per segnalare l'errore di scrittura
+			ret = -1; 
 		}
 
 		return ret;
@@ -79,7 +81,7 @@ public class PoesiaDAO {
 
 
 	public ArrayList<PoesiaDAO> getPoesieUtentedaDB() {
-		//creo il la lista di appoggio
+		
 				ArrayList<PoesiaDAO> lista_poesie_db_utente = new ArrayList<>();
 				String query = "SELECT * FROM Poesie WHERE autore = "+autore+";";
 
@@ -87,7 +89,7 @@ public class PoesiaDAO {
 
 					ResultSet rs = DBConnectionManager.selectQuery(query);
 
-						while(rs.next()) { //finche ho un risultato
+						while(rs.next()) { 
 
 						PoesiaDAO poesiaDAO = new PoesiaDAO();
 
@@ -109,7 +111,7 @@ public class PoesiaDAO {
 				return lista_poesie_db_utente;
 		}
 	public ArrayList<PoesiaDAO> getPoesieRaccoltadaDB() {
-		//creo il la lista di appoggio
+		
 				ArrayList<PoesiaDAO> lista_poesie_db_utente = new ArrayList<>();
 				System.out.println("raccolta id: "+raccolta);
 				String query = "SELECT * FROM Poesie WHERE raccolta = "+raccolta+";";
@@ -118,7 +120,7 @@ public class PoesiaDAO {
 
 					ResultSet rs = DBConnectionManager.selectQuery(query);
 
-						while(rs.next()) { //finche ho un risultato
+						while(rs.next()) { 
 
 						PoesiaDAO poesiaDAO = new PoesiaDAO();
 
@@ -151,7 +153,7 @@ public class PoesiaDAO {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-				while(rs.next()) { //finche ho un risultato
+				while(rs.next()) { 
 
 				PoesiaDAO poesiaDAO = new PoesiaDAO();
 
@@ -172,6 +174,80 @@ public class PoesiaDAO {
 		}
 		return lista_poesie_pubbliche;
 	}
+	public int aggiornaSuDB_aggiunta() {
+	    int ret = 0;
+
+	    String query = "UPDATE Poesie SET contatoreLike = contatoreLike + 1 " +
+	                   "WHERE id = " + this.getId();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1;
+	    }
+
+	    return ret;
+	}
+
+	
+	public int aggiornaSuDB_rimozione() {
+	    int ret = 0;
+
+	    String query = "UPDATE Poesie SET contatoreLike = contatoreLike - 1 " +
+	                   "WHERE id = " + this.getId();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1;
+	    }
+
+	    return ret;
+	}
+
+
+	public int deletePoesia() {
+		int ret = 0;
+
+	    String query = "DELETE FROM Poesie WHERE id = " + this.getId();
+
+	    System.out.println(query);
+	    try {
+	        ret = DBConnectionManager.deleteQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1; 
+	    }
+
+	    return ret;
+	}
+	
+	public int aggiornaSuDB_raccolta() {
+	    int ret = 0;
+
+	    String query = "UPDATE Poesie SET raccolta = '" + this.getRaccolta() + "' " +
+	                   "WHERE id = " + this.getId();
+
+	    System.out.println(query);
+
+	    try {
+	        ret = DBConnectionManager.UpdateQuery(query);
+	    } catch (ClassNotFoundException | SQLException e) {
+	        e.printStackTrace();
+	        ret = -1;
+	    }
+
+	    return ret;
+	}
+
+
+
 
 
 
@@ -231,78 +307,5 @@ public class PoesiaDAO {
 	}
 
 
-	public int aggiornaSuDB_aggiunta() {
-	    int ret = 0;
-
-	    String query = "UPDATE Poesie SET contatoreLike = contatoreLike + 1 " +
-	                   "WHERE id = " + this.getId();
-
-	    System.out.println(query);
-
-	    try {
-	        ret = DBConnectionManager.UpdateQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1;
-	    }
-
-	    return ret;
-	}
-
 	
-	public int aggiornaSuDB_rimozione() {
-	    int ret = 0;
-
-	    String query = "UPDATE Poesie SET contatoreLike = contatoreLike - 1 " +
-	                   "WHERE id = " + this.getId();
-
-	    System.out.println(query);
-
-	    try {
-	        ret = DBConnectionManager.UpdateQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1;
-	    }
-
-	    return ret;
-	}
-
-
-	public int deletePoesia() {
-		int ret = 0;
-
-	    String query = "DELETE FROM Poesie WHERE id = " + this.getId();
-
-	    System.out.println(query);
-	    try {
-	        ret = DBConnectionManager.deleteQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1; // errore durante l'esecuzione
-	    }
-
-	    return ret;
-	}
-	
-	public int aggiornaSuDB_raccolta() {
-	    int ret = 0;
-
-	    String query = "UPDATE Poesie SET raccolta = '" + this.getRaccolta() + "' " +
-	                   "WHERE id = " + this.getId();
-
-	    System.out.println(query);
-
-	    try {
-	        ret = DBConnectionManager.UpdateQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1;
-	    }
-
-	    return ret;
-	}
-
-
-
 }

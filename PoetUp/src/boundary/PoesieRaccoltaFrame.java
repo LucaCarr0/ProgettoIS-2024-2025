@@ -46,7 +46,8 @@ public class PoesieRaccoltaFrame extends JFrame {
         setSize(900, 600);
         setLocationRelativeTo(parentFrame);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        Theme theme = ThemeManager.getTheme();
+        ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();
 
         Color primaryColor = theme.getPalette().get(1);
         Color accentColor = theme.getPalette().get(4);

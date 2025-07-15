@@ -45,7 +45,8 @@ public class LoginForm extends JFrame {
 	public LoginForm() {
 		Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
-		Theme theme = ThemeManager.getTheme();
+		ThemeManager tema_app=ThemeManager.getInstance();
+		Theme theme = tema_app.getTheme();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);

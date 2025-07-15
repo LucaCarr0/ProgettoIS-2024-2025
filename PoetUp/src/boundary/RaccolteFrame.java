@@ -39,8 +39,9 @@ public class RaccolteFrame extends JFrame {
     public RaccolteFrame(JFrame parentFrame) {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
+		ThemeManager tema_app=ThemeManager.getInstance();
+		this.theme = tema_app.getTheme();
     	
-    	this.theme = ThemeManager.getTheme();
     	
         setTitle("Raccolte");
         setSize(900, 600);

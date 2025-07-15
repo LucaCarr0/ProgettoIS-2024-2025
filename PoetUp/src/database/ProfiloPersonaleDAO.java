@@ -17,14 +17,17 @@ public class ProfiloPersonaleDAO {
 	public ProfiloPersonaleDAO(){
 
 	}
-
+	
+	/**
+	 * Metodo utilizzato solo per l'inizializzazione del profilo, prevede il set di nickname e id utente, settando a null tutti gli altri campi
+	 * 
+	 * @return id_autogenerato
+	 */
 	public int SalvaInDB() {
 
 		int ret = 0;
 
-		/*String query = "INSERT INTO ProfiliPersonali(nome, cognome, immagineProfilo, biografia, nickname, dataNascita, utente) " +
-	               "VALUES ('" + nome + "', '" + cognome + "', '" + immagineProfilo + "', '" + biografia +
-	               "', '" + nickname + "', " + "NULL" +  ", '" + id_utente+"')";		*/
+		
 		String query = "INSERT INTO ProfiliPersonali(nome, cognome, immagineProfilo, biografia, nickname, dataNascita, utente) " +
 	               "VALUES (NULL, NULL, NULL, NULL, '" + nickname + "', NULL, " + id_utente + ")";
 
@@ -36,7 +39,7 @@ public class ProfiloPersonaleDAO {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			ret = -1; //per segnalare l'errore di scrittura
+			ret = -1; 
 		}
 
 		return ret;
@@ -46,19 +49,26 @@ public class ProfiloPersonaleDAO {
 
 		int ret = 0;
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	    String dataFormattata = sdf.format(this.dataNascita);
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 String dataNascitaSql;
+		 	
+		 	//Per passare NULL non servono gli apici
+		 
+		    if (this.dataNascita != null) {
+		        dataNascitaSql = "'" + sdf.format(this.dataNascita) + "'";
+		    } else {
+		        dataNascitaSql = "NULL";
+		    }
 
+		    String query = "UPDATE ProfiliPersonali SET " +
+		                   "nome = '" + this.getNome() + "', " +
+		                   "cognome = '" + this.getCognome() + "', " +
+		                   "dataNascita = " + dataNascitaSql + ", " +  
+		                   "biografia = '" + this.getBiografia() + "', " +
+		                   "immagineProfilo = '" + this.getImmagineProfilo() + "' " +
+		                   "WHERE utente = " + this.getId_utente();
 
-	    String query = "UPDATE ProfiliPersonali SET " +
-	               "nome = '" + this.getNome() + "', " +
-	               "cognome = '" + this.getCognome() + "', " +
-	               "dataNascita = '" + dataFormattata + "', " +
-	               "biografia = '" + this.getBiografia() + "', " +
-	               "immagineProfilo= '"+ this.getImmagineProfilo() + "'" +
-	               "WHERE utente = " + this.getId_utente();
-
-	    System.out.println(query);
+		    System.out.println(query);
 		try {
 
 			ret = DBConnectionManager.UpdateQuery(query);
@@ -66,11 +76,38 @@ public class ProfiloPersonaleDAO {
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			ret = -1; //per segnalare l'errore di scrittura
+			ret = -1; 
 		}
 
 		return ret;
 
+	}
+	
+	public ProfiloPersonaleDAO caricaProfiloUtente() {
+		ProfiloPersonaleDAO profiloTrovato= new ProfiloPersonaleDAO();
+		String query = "SELECT * FROM ProfiliPersonali WHERE utente = "+id_utente+";";
+
+		try {
+
+			ResultSet rs = DBConnectionManager.selectQuery(query);
+
+				while(rs.next()) { 
+
+				profiloTrovato.setNickname(rs.getString("nickname"));
+				profiloTrovato.setNome(rs.getString("nome"));
+				profiloTrovato.setCognome(rs.getString("cognome"));
+				profiloTrovato.setImmagineProfilo(rs.getString("immagineProfilo"));
+				profiloTrovato.setBiografia(rs.getString("biografia"));
+				profiloTrovato.setDataNascita(rs.getDate("dataNascita"));
+
+
+
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+
+			e.printStackTrace();
+		}
+		return profiloTrovato;
 	}
 
 
@@ -123,32 +160,7 @@ public class ProfiloPersonaleDAO {
 		this.dataNascita = dataNascita;
 	}
 
-	public ProfiloPersonaleDAO caricaProfiloUtente() {
-		ProfiloPersonaleDAO profiloTrovato= new ProfiloPersonaleDAO();
-		String query = "SELECT * FROM ProfiliPersonali WHERE utente = "+id_utente+";";
-
-		try {
-
-			ResultSet rs = DBConnectionManager.selectQuery(query);
-
-				while(rs.next()) { //finche ho un risultato
-
-				profiloTrovato.setNickname(rs.getString("nickname"));
-				profiloTrovato.setNome(rs.getString("nome"));
-				profiloTrovato.setCognome(rs.getString("cognome"));
-				profiloTrovato.setImmagineProfilo(rs.getString("immagineProfilo"));
-				profiloTrovato.setBiografia(rs.getString("biografia"));
-				profiloTrovato.setDataNascita(rs.getDate("dataNascita"));
-
-
-
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-
-			e.printStackTrace();
-		}
-		return profiloTrovato;
-	}
+	
 
 
 

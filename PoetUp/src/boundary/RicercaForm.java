@@ -35,7 +35,9 @@ public class RicercaForm extends JFrame {
     	Image icon = new ImageIcon(getClass().getResource("/res/logo.png")).getImage();
 		setIconImage(icon);
         this.parentFrame = parent;
-        this.theme = ThemeManager.getTheme();
+        ThemeManager tema_app=ThemeManager.getInstance();
+		this.theme= tema_app.getTheme();
+        
         // Carica i colori dalla palette del tema
         this.textColor = theme.getPalette().get(0);    // esempio: colore testo
         this.primaryColor = theme.getPalette().get(1); // esempio: colore primario

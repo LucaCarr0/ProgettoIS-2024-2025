@@ -40,7 +40,7 @@ public class ReportDAO {
 
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
-				ret = -1; //per segnalare l'errore di scrittura
+				ret = -1;
 			}
 
 			return ret;

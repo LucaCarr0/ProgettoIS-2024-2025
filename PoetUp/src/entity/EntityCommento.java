@@ -4,12 +4,36 @@ import java.sql.Date;
 
 import database.CommentoDAO;
 
-public class EntityCommento implements Comparable<EntityCommento>{
+public class EntityCommento implements Comparable<EntityCommento> {
 	private String testo;
 	private int id_poesia;
 	private int id_autore;
 	private Date dataPubblicazione;
 
+	@Override
+	public int compareTo(EntityCommento o) {
+		if (this.dataPubblicazione == null && o.dataPubblicazione == null) {
+			return 0;
+		} else if (this.dataPubblicazione == null) {
+			return -1;
+		} else if (o.dataPubblicazione == null) {
+			return 1;
+		} else {
+			// uso il compareTo di Date
+			return this.dataPubblicazione.compareTo(o.getDataPubblicazione());
+		}
+	}
+
+	public int salvasuDB() {
+
+		CommentoDAO commento = new CommentoDAO();
+		commento.setDataPubblicazione(this.dataPubblicazione);
+		commento.setId_autore(this.id_autore);
+		commento.setId_poesia(this.id_poesia);
+		commento.setTesto(this.testo);
+		return commento.ScriviSuDB();
+
+	}
 
 	public EntityCommento() {
 
@@ -18,18 +42,23 @@ public class EntityCommento implements Comparable<EntityCommento>{
 	public int getId_poesia() {
 		return id_poesia;
 	}
+
 	public void setId_poesia(int id_poesia) {
 		this.id_poesia = id_poesia;
 	}
+
 	public int getId_autore() {
 		return id_autore;
 	}
+
 	public void setId_autore(int id_autore) {
 		this.id_autore = id_autore;
 	}
+
 	public String getTesto() {
 		return testo;
 	}
+
 	public void setTesto(String testo) {
 		this.testo = testo;
 	}
@@ -41,31 +70,5 @@ public class EntityCommento implements Comparable<EntityCommento>{
 	public void setDataPubblicazione(Date dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
 	}
-
-	@Override
-	public int compareTo(EntityCommento o) {
-	    if (this.dataPubblicazione == null && o.dataPubblicazione == null) {
-	        return 0;
-	    } else if (this.dataPubblicazione == null) {
-	        return -1;
-	    } else if (o.dataPubblicazione == null) {
-	        return 1;
-	    } else {
-	    	//uso il compareTo di Date
-	        return this.dataPubblicazione.compareTo(o.getDataPubblicazione());
-	    }
-	}
-
-	public int salvasuDB() {
-		
-		CommentoDAO commento= new CommentoDAO();
-		commento.setDataPubblicazione(this.dataPubblicazione);
-		commento.setId_autore(this.id_autore);
-		commento.setId_poesia(this.id_poesia);
-		commento.setTesto(this.testo);
-		return commento.ScriviSuDB();
-		
-	}
-
 
 }
