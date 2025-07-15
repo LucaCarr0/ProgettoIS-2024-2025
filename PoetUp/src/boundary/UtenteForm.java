@@ -65,7 +65,7 @@ public class UtenteForm extends JFrame {
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        // Sfondo con metodo dedicato
+        
         contentPane.setBackground(theme.getBackgroundPrimary());
         setContentPane(contentPane);
 
@@ -88,7 +88,7 @@ public class UtenteForm extends JFrame {
         immagineProfiloLabel.setBounds(30, 30, 120, 120);
         immagineProfiloLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         immagineProfiloLabel.setOpaque(true);
-        // Colore sfondo e bordo da theme con metodi dedicati
+       
         immagineProfiloLabel.setBackground(theme.getBackgroundSecondary());
         immagineProfiloLabel.setBorder(BorderFactory.createLineBorder(theme.getBackgroundTertiary(), 1));
         immagineProfiloLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,7 +134,7 @@ public class UtenteForm extends JFrame {
             contentPane.add(campi[i]);
         }
 
-        // Placeholder campoData
+        
         campoData.setForeground(theme.getBackgroundTertiary());
         campoData.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
@@ -154,7 +154,7 @@ public class UtenteForm extends JFrame {
             }
         });
 
-        // Biografia
+        
         JLabel bioLabel = new JLabel("Biografia:");
         bioLabel.setForeground(textColor);
         bioLabel.setFont(labelFont);
@@ -167,14 +167,14 @@ public class UtenteForm extends JFrame {
         scroll.setBounds(fieldX, startY + etichette.length * spacing, 300, 140);
         contentPane.add(scroll);
 
-        // Pulsante Salva
+       
         JButton salvaButton = new JButton("Salva");
         salvaButton.setBounds(fieldX, startY + etichette.length * spacing + 150, 100, 30);
         salvaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         salvaButton.addActionListener(e -> salvaProfilo());
         contentPane.add(salvaButton);
 
-        // Imposta valori dal DTO
+        
         campoNome.setText(profilo.getNome());
         campoCognome.setText(profilo.getCognome());
         if (profilo.getDataNascita() != null) {
@@ -208,7 +208,7 @@ public class UtenteForm extends JFrame {
         String bio = bioArea.getText().trim();
         String immaginePath = profilo.getImmagineProfilo();
 
-        // Controllo nome e cognome
+        //VALIDAZIONE INPUT
     	if (nome.length() > 40 || cognome.length() > 40 ||
         	!nome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$") ||
         	!cognome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$")) {
