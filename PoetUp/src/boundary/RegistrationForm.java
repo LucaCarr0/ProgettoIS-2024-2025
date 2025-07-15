@@ -123,7 +123,7 @@ public class RegistrationForm extends JFrame {
 				String email = textField_1.getText();
 				String pwd = new String(passwordField_1.getPassword());
 				String confirmPwd = new String(passwordField.getPassword());
-
+				//VALIDAZIONE INPUT
 				if (nickname.isEmpty() || email.isEmpty() || pwd.isEmpty() || confirmPwd.isEmpty()) {
 					resultLabel.setText("Tutti i campi sono obbligatori.");
 					resultLabel.setForeground(theme.getHighlightColor());
