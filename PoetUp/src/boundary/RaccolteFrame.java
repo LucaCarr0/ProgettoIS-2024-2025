@@ -84,7 +84,7 @@ public class RaccolteFrame extends JFrame {
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         contentPane.add(scrollPane);
 
-        // === QUI DEVI RECUPERARE LE RACCOLTE DAL DATABASE ===
+        
 
         ArrayList<RaccoltaDTO> raccolte = ControllerUtenti.getRaccolteByUtente();
 
@@ -145,7 +145,7 @@ public class RaccolteFrame extends JFrame {
             eliminaBtn.setFocusPainted(false);
             card.add(eliminaBtn);
 
-            // Azioni pulsanti
+           
             modificaBtn.addActionListener(e -> {
                 JFrame modificaFrame = new JFrame("Modifica Raccolta");
                 modificaFrame.setSize(400, 250);
@@ -179,7 +179,7 @@ public class RaccolteFrame extends JFrame {
                     String titoloInput = campoTitoloInput.getText().trim();
                     String descrizioneInput = campoDescrizioneInput.getText().trim();
 
-                    // === Controlli sul titolo ===
+                    //VALIDAZIONE INPUT
                     if (titoloInput.isEmpty()) {
                         JOptionPane.showMessageDialog(modificaFrame, "Il titolo non può essere vuoto.");
                         return;
@@ -195,20 +195,20 @@ public class RaccolteFrame extends JFrame {
                         return;
                     }
 
-                    // === Controllo sulla descrizione ===
+                   
                     if (descrizioneInput.length() > 255) {
                         JOptionPane.showMessageDialog(modificaFrame, "La descrizione non può superare i 255 caratteri.");
                         return;
                     }
 
-                    // Salvataggio
+                    
                     String messaggio = ControllerUtenti.modificaRaccolta(titoloInput, descrizioneInput, raccolta.getId());
                     JOptionPane.showMessageDialog(modificaFrame, messaggio);
 
                     if (messaggio.equals("Raccolta aggiornata con successo!")) {
                         modificaFrame.dispose();
                         this.dispose();
-                        new RaccolteFrame(parentFrame); // Ricarica la finestra aggiornata
+                        new RaccolteFrame(parentFrame); 
                     }
                 });
 
@@ -226,7 +226,7 @@ public class RaccolteFrame extends JFrame {
                         parentFrame.dispose();         // chiude la vecchia home
                         HomePage nuovaHome = new HomePage();
                         nuovaHome.setLocationRelativeTo(this);
-                        nuovaHome.setVisible(true);    // MOSTRA la nuova home
+                        nuovaHome.setVisible(true);    // mostra la nuova home
                         this.dispose();
                         new RaccolteFrame(nuovaHome); // Ricarica finestra aggiornata
                     }
@@ -239,7 +239,7 @@ public class RaccolteFrame extends JFrame {
             listPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         }
 
-        // Bottone "+"
+       
         JButton addBtn = new JButton("+");
         addBtn.setFont(new Font("Segoe UI", Font.BOLD, 28));
         addBtn.setForeground(Color.WHITE);
