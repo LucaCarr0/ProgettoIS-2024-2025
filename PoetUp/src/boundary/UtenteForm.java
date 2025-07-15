@@ -206,7 +206,14 @@ public class UtenteForm extends JFrame {
         String bio = bioArea.getText().trim();
         String immaginePath = profilo.getImmagineProfilo();
 
-        
+        // Controllo nome e cognome
+    	if (nome.length() > 40 || cognome.length() > 40 ||
+        	!nome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$") ||
+        	!cognome.matches("^[a-zA-ZàèéìòùÀÈÉÌÒÙ\\s]+$")) {
+
+        JOptionPane.showMessageDialog(this, "Nome e cognome devono contenere solo lettere (massimo 40 caratteri).");
+        return;
+    	}
         if (bio.length()>500) {
             JOptionPane.showMessageDialog(this, "Biografia troppo lunga!");
             return;
