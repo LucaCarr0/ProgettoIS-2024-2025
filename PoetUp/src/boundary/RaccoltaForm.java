@@ -31,7 +31,7 @@ public class RaccoltaForm extends JFrame {
         setLocationRelativeTo(parentFrame);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        // Colori e font coerenti con RegistrationForm
+        
         Color primaryColor = new Color(60, 164, 238);
         Color bgColor = new Color(245, 248, 250);
         Color textColor = new Color(44, 62, 80);
@@ -105,9 +105,9 @@ public class RaccoltaForm extends JFrame {
             String esito = ControllerUtenti.addRaccolta(titolo,descrizione);
             if (esito.equals("Raccolta Creata")) {
                 JOptionPane.showMessageDialog(this, esito);
-                this.dispose(); // chiudi il form
-                parentFrame.dispose(); // chiudi finestra raccolte vecchia
-                new RaccolteFrame(home); // riapri aggiornata
+                this.dispose(); 
+                parentFrame.dispose(); 
+                new RaccolteFrame(home); 
             } else {
                 JOptionPane.showMessageDialog(this,esito, "Errore", JOptionPane.ERROR_MESSAGE);
             }
