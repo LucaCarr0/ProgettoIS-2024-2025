@@ -71,11 +71,11 @@ public class HomePage extends JFrame {
 		//Color primaryColor = theme.getPalette().get(1);    
 		//Color cardColor = theme.getPalette().get(4);       
 
-		contentPane.setBackground(theme.getPalette().get(2)); // backgroundPrimary
+		contentPane.setBackground(theme.getPalette().get(2)); 
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
 
-		//Font cardFont = new Font("Segoe UI", Font.PLAIN, 15);
+		
 
 		JLabel titleLabel = new JLabel("POET UP - Home");
 		titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
@@ -123,8 +123,8 @@ public class HomePage extends JFrame {
 		reloadButton.setForeground(theme.getPalette().get(5));
 		reloadButton.addActionListener(e -> popolaFeed());
 		reloadButton.setBorder(BorderFactory.createCompoundBorder(
-			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1), // Colore coerente col tema
-			    BorderFactory.createEmptyBorder(5, 15, 5, 15) // Padding interno: top, left, bottom, right
+			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1), 
+			    BorderFactory.createEmptyBorder(5, 15, 5, 15) 
 			));
 		logoutButton.setBorder(BorderFactory.createCompoundBorder(
 			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1),
@@ -133,7 +133,7 @@ public class HomePage extends JFrame {
 
 
 		topButtonsPanel.add(reloadButton);
-		topButtonsPanel.add(Box.createHorizontalStrut(10)); // spazio tra i pulsanti
+		topButtonsPanel.add(Box.createHorizontalStrut(10)); 
 		
 		contentPane.add(topButtonsPanel);
 
@@ -250,8 +250,8 @@ public class HomePage extends JFrame {
 	    logoutButton.setForeground(theme.getPalette().get(5));
 	    listPanel.setBackground(theme.getPalette().get(2));
 	    reloadButton.setBorder(BorderFactory.createCompoundBorder(
-			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1), // Colore coerente col tema
-			    BorderFactory.createEmptyBorder(5, 15, 5, 15) // Padding interno: top, left, bottom, right
+			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1), 
+			    BorderFactory.createEmptyBorder(5, 15, 5, 15) 
 			));
 		logoutButton.setBorder(BorderFactory.createCompoundBorder(
 			    BorderFactory.createLineBorder(theme.getPalette().get(3), 1),
@@ -280,7 +280,7 @@ public class HomePage extends JFrame {
 
 	    
 	    
-		Color cardColor = theme.getPalette().get(3);   // prova 3
+		Color cardColor = theme.getPalette().get(3);   
 		Color primaryColor = theme.getPalette().get(1);
 		Color textColor = theme.getPalette().get(5);   
 		Color dateColor = theme.getPalette().get(5);
