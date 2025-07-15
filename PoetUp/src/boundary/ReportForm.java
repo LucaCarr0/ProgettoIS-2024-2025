@@ -112,7 +112,7 @@ public class ReportForm extends JFrame {
         generaButton.addActionListener(e -> {
             String inizio = dataInizioField.getText().trim();
             String fine = dataFineField.getText().trim();
-
+	    //VALIDAZIONE INPUT
             if (!inizio.matches("\\d{4}-\\d{2}-\\d{2}") || !fine.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 JOptionPane.showMessageDialog(this, "Il formato deve essere yyyy-MM-dd, con solo numeri e trattini.", "Errore", JOptionPane.ERROR_MESSAGE);
                 return;
