@@ -95,11 +95,11 @@ public class EntityUtente {
 	public Integer modificaProfilo(String nome, String cognome, Date dataNascita, String biografia,
 			String immaginePath) {
 		// this.setId(SessioneUtente.getIdUtente());
-		EntityProfiloPersonale profiloPersonale = new EntityProfiloPersonale();
+		profilo = new EntityProfiloPersonale();
 		int idUtente = SessioneUtente.getIdUtente();
 
-		profiloPersonale.aggiornaProfilo(nome, cognome, dataNascita, biografia, immaginePath);
-		int res = profiloPersonale.aggiornaSuDB(idUtente);
+		profilo.aggiornaProfilo(nome, cognome, dataNascita, biografia, immaginePath);
+		int res = profilo.aggiornaSuDB(idUtente);
 
 		return res;
 	}
@@ -253,23 +253,6 @@ public class EntityUtente {
 			raccolte_dto.add(raccolta_temp);
 		}
 		return raccolte_dto;
-	}
-
-	public Integer modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
-		EntityRaccolta raccolta = new EntityRaccolta();
-		int idUtente = SessioneUtente.getIdUtente();
-
-		raccolta.aggiornaRaccolta(titolo, descrizione, id_raccolta);
-		int res = raccolta.aggiornaSuDB(idUtente);
-
-		return res;
-	}
-
-	public Integer eliminaRaccolta(int id_raccolta) {
-		EntityRaccolta raccolta = new EntityRaccolta();
-		raccolta.eliminaRaccolta(id_raccolta);
-		int res = raccolta.eliminaDaDB();
-		return res;
 	}
 
 	public EntityProfiloPersonale getProfilo() {

@@ -6,6 +6,7 @@ import java.util.Collections;
 import database.PoesiaDAO;
 import database.RaccoltaDAO;
 import dto.PoesiaDTO;
+import session.SessioneUtente;
 
 public class EntityRaccolta {
 	private int id;
@@ -93,8 +94,36 @@ public class EntityRaccolta {
 		return res;
 	}
 
-	public void eliminaRaccolta(int id_raccolta) {
-		this.setId(id_raccolta);
+	public Integer spostaPoesia(String titolo_raccolta, int idPoesia) {
+		int res = -1;
+		RaccoltaDAO raccoltaDao = new RaccoltaDAO();
+		raccoltaDao.setTitolo(titolo_raccolta);
+		this.id = raccoltaDao.getIdRaccolta();
+		System.out.println(id + "idPoesia: " + this.getId());
+		if (id != -1) {
+			PoesiaDAO poesiaDao = new PoesiaDAO();
+			poesiaDao.setId(idPoesia);
+			poesiaDao.setRaccolta(id);
+
+			res = poesiaDao.aggiornaSuDB_raccolta();
+		}
+		return res;
+	}
+
+	public Integer modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
+		EntityRaccolta raccolta = new EntityRaccolta();
+		int idUtente = SessioneUtente.getIdUtente();
+		raccolta.aggiornaRaccolta(titolo, descrizione, id_raccolta);
+		int res = raccolta.aggiornaSuDB(idUtente);
+
+		return res;
+	}
+
+	public Integer eliminaRaccolta(int id_raccolta) {
+		EntityRaccolta raccolta = new EntityRaccolta();
+		raccolta.setId(id_raccolta);
+		int res = raccolta.eliminaDaDB();
+		return res;
 	}
 
 	public String getTitolo() {

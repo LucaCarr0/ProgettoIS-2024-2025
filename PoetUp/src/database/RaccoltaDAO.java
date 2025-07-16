@@ -11,22 +11,20 @@ public class RaccoltaDAO {
 	private int id_utente;
 	private int id;
 
-
 	public RaccoltaDAO() {
 
 	}
 
-	public ArrayList<RaccoltaDAO> getRaccoltedaDB(){
+	public ArrayList<RaccoltaDAO> getRaccoltedaDB() {
 
-		
 		ArrayList<RaccoltaDAO> lista_raccolte_db = new ArrayList<>();
-		String query = "SELECT * FROM Raccolte WHERE utente = "+id_utente+";";
+		String query = "SELECT * FROM Raccolte WHERE utente = " + id_utente + ";";
 
 		try {
 
 			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-				while(rs.next()) { 
+			while (rs.next()) {
 
 				RaccoltaDAO raccolta_DAO = new RaccoltaDAO();
 
@@ -47,16 +45,16 @@ public class RaccoltaDAO {
 
 		int ret = 0;
 
-		String query = "INSERT INTO Raccolte(titolo, descrizione, utente) VALUES ('" + this.titolo + "', '" + this.descrizione + "', '" + this.id_utente +"')";
+		String query = "INSERT INTO Raccolte(titolo, descrizione, utente) VALUES ('" + this.titolo.replace("'", "''")
+				+ "', '" + this.descrizione + "', '" + this.id_utente + "')";
 		System.out.println(query);
 		try {
 
 			ret = DBConnectionManager.insertQueryReturnGeneratedKey(query);
 
-
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			ret = -1; 
+			ret = -1;
 		}
 
 		return ret;
@@ -66,99 +64,87 @@ public class RaccoltaDAO {
 		return descrizione;
 	}
 
-
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-
 
 	public int getId_utente() {
 		return id_utente;
 	}
 
-
 	public void setId_utente(int id_utente) {
 		this.id_utente = id_utente;
 	}
-
 
 	public String getTitolo() {
 		return titolo;
 	}
 
-
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
 
-
 	public int getId() {
 		return id;
 	}
-
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	public int updateRaccolta() {
-	    int ret = 0;
+		int ret = 0;
 
-	    String query = "UPDATE Raccolte SET " +
-	                   "titolo = '" + this.getTitolo() + "', " +
-	                   "descrizione = '" + this.getDescrizione() + "' " +
-	                   "WHERE id = " + this.getId();
+		String query = "UPDATE Raccolte SET " + "titolo = '" + this.getTitolo().replace("'", "''") + "', "
+				+ "descrizione = '" + this.getDescrizione() + "' " + "WHERE id = " + this.getId();
 
-	    System.out.println(query);
-	    try {
-	        ret = DBConnectionManager.UpdateQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1; 
-	    }
+		System.out.println(query);
+		try {
+			ret = DBConnectionManager.UpdateQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			ret = -1;
+		}
 
-	    return ret;
+		return ret;
 	}
 
 	public int deleteRaccolta() {
-	    int ret = 0;
+		int ret = 0;
 
-	    String query = "DELETE FROM Raccolte WHERE id = " + this.getId();
+		String query = "DELETE FROM Raccolte WHERE id = " + this.getId();
 
-	    System.out.println(query);
-	    try {
-	        ret = DBConnectionManager.deleteQuery(query);
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	        ret = -1; 
-	    }
+		System.out.println(query);
+		try {
+			ret = DBConnectionManager.deleteQuery(query);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			ret = -1;
+		}
 
-	    return ret;
+		return ret;
 	}
 
 	public int getIdRaccolta() {
-	    int id = -1;
+		int id = -1;
 
-	    String query = "SELECT id FROM Raccolte WHERE titolo = '" + this.getTitolo() + "'";
+		String query = "SELECT id FROM Raccolte WHERE titolo = '" + this.getTitolo().replace("'", "''") + "'";
 
-	    System.out.println(query);
+		System.out.println(query);
 
-	    try {
-	        ResultSet rs = DBConnectionManager.selectQuery(query);
+		try {
+			ResultSet rs = DBConnectionManager.selectQuery(query);
 
-	        if (rs.next()) {
-	            id = rs.getInt("id");
-	        }
+			if (rs.next()) {
+				id = rs.getInt("id");
+			}
 
-	        rs.close();
-	    } catch (ClassNotFoundException | SQLException e) {
-	        e.printStackTrace();
-	    }
+			rs.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 
-	    return id;
+		return id;
 	}
-
-
-
 
 }

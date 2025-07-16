@@ -45,8 +45,8 @@ public class FacadePoesie {
 	}
 
 	public static Integer spostaPoesia(String titolo_raccolta, int idPoesia) {
-		EntityPoesia poesia = new EntityPoesia();
-		Integer result = poesia.spostaPoesia(titolo_raccolta, idPoesia);
+		EntityRaccolta raccolta = new EntityRaccolta();
+		Integer result = raccolta.spostaPoesia(titolo_raccolta, idPoesia);
 		return result;
 	}
 

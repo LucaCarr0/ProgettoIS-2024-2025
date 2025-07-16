@@ -7,6 +7,7 @@ import dto.ProfiloPersonaleDTO;
 import dto.RaccoltaDTO;
 import dto.StatisticheDTO;
 import entity.EntityAmministratore;
+import entity.EntityRaccolta;
 import entity.EntityUtente;
 
 //Facade che fornisce un'interfaccia semplificata per le operazioni relative agli utenti e amministratori,
@@ -48,14 +49,14 @@ public class FacadeUtenti {
 	}
 
 	public static Integer modificaRaccolta(String titolo, String descrizione, int id_raccolta) {
-		EntityUtente utente = new EntityUtente();
-		Integer result = utente.modificaRaccolta(titolo, descrizione, id_raccolta);
+		EntityRaccolta raccolta = new EntityRaccolta();
+		Integer result = raccolta.modificaRaccolta(titolo, descrizione, id_raccolta);
 		return result;
 	}
 
 	public static Integer eliminaRaccolta(int id_raccolta) {
-		EntityUtente utente = new EntityUtente();
-		Integer result = utente.eliminaRaccolta(id_raccolta);
+		EntityRaccolta raccolta = new EntityRaccolta();
+		Integer result = raccolta.eliminaRaccolta(id_raccolta);
 		return result;
 	}
 

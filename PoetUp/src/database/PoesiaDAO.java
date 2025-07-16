@@ -53,7 +53,7 @@ public class PoesiaDAO {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	    String dataFormattata = sdf.format(this.datapubblicazione);
-	    String titoloSQL = this.titolo.replace("'", "''");
+		String titoloSQL = this.titolo.replace("'", "''");
 	    String testoSQL = this.testo.replace("'", "''");
 	    
 	    String query = "INSERT INTO Poesie (titolo, body, tag, visibilita, dataPubblicazione, contatoreLike, autore, raccolta) VALUES ('"
